@@ -1,0 +1,6 @@
+* kafka todo list
+** 10篇以上高质量的博文
+** kafka源码研读
+
+** kafka的架构玩法和其他系统的整合
+** jira，stackoverflow上的问题看看
