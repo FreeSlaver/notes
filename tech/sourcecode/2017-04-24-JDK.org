@@ -1,0 +1,85 @@
+* JDK Source Code
+** TODO util
+**** Collection 集合
+     java.lang.Iterable:
+     java.util.Iterator
+     java.util.function.Consumer
+     取代Enumeration，区别有2点：
+     1. 迭代器允许访问者在遍历集合的时候移除元素
+     2. 方法名改进了
+     java.lang.Runnable:
+     优先于Thread，因为只需要重写run方法，而不需要重写Thread的其他方法。这很重要，
+     因为除非需要修改或者增强父类的功能，否则不要去继承一个类。
+     我个人认为的还有：1.Runnable足够简洁；2.不会影响它继承实现其他类；3.可以直接
+     传递给Thread和一些例如Executors等。
+
+     java.lang.Thread
+     每个线程都有优先级，cpu时间分片优先执行高优先级的线程。线程中产生的线程默认继承
+     创建线程的优先级，当且仅当创建线程是守护线程，它才是守护线程。
+
+     JVM启动时，只有一个非守护线程（就是用来调用指定类的main方法的）。
+     JVM遇到以下情况退出：1.Runtime.exit(code)方法被调用并且通过了安全管理器security
+     manager；2.所有的非守护线程都挂了。
+     L1814 线程的看不太懂，为什么不看别人如何解释了？
+
+**** Concurrent 并发
+     Java.util.concurrent.Executor:
+     执行者，
+     * class SerialExecutor implements Executor {
+ *   final Queue<Runnable> tasks = new ArrayDeque<Runnable>();
+ *   final Executor executor;
+ *   Runnable active;
+ *
+ *   SerialExecutor(Executor executor) {
+ *     this.executor = executor;
+ *   }
+ *
+ *   public synchronized void execute(final Runnable r) {
+ *     tasks.offer(new Runnable() {
+ *       public void run() {
+ *         try {
+ *           r.run();
+ *         } finally {
+ *           scheduleNext();
+ *         }
+ *       }
+ *     });
+ *     if (active == null) {
+ *       scheduleNext();
+ *     }
+ *   }
+ *
+ *   protected synchronized void scheduleNext() {
+ *     if ((active = tasks.poll()) != null) {
+ *       executor.execute(active);
+ *     }
+ *   }
+ * }
+     线程中的代码是优先于提交到Executor中的线程的代码执行的？
+
+     java.util.concurrent.ExecutorService:
+     shutdown方法会执行完之前提交的任务，然后再关闭；
+     shutdownNow方法会阻止等待的任务启动，并且尝试停掉正在运行的任务。
+     当停止以后，没有正在运行的任务，也没等待的任务，并且不能提交任务。
+     有几个问题：怎么取消一个任务？怎么等待一个任务完成？
+     取消一个任务是通过Interrupt方法。
+     * void shutdownAndAwaitTermination(ExecutorService pool) {
+ *   pool.shutdown(); // Disable new tasks from being submitted
+ *   try {
+ *     // Wait a while for existing tasks to terminate
+ *     if (!pool.awaitTermination(60, TimeUnit.SECONDS)) {
+ *       pool.shutdownNow(); // Cancel currently executing tasks
+ *       // Wait a while for tasks to respond to being cancelled
+ *       if (!pool.awaitTermination(60, TimeUnit.SECONDS))
+ *           System.err.println("Pool did not terminate");
+ *     }
+ *   } catch (InterruptedException ie) {
+ *     // (Re-)Cancel if current thread also interrupted
+ *     pool.shutdownNow();
+ *     // Preserve interrupt status
+ *     Thread.currentThread().interrupt();
+ *   }
+ * }}
+     catch后面的代码无法理解啊。
+
+     java.util.concurbrent.Callable:为什么要抛出异常？我想是一种对外通知策略。

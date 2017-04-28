@@ -1,0 +1,74 @@
+* Kafka Offset Management
+** OffsetCommit
+   OffsetCommitRequest => ConsumerGroup [TopicName [Partition Offset Metadata]]
+   ConsumerGroup => string
+   TopicName => string
+   Partition => int32
+   Offset => int64
+   Metadata => string
+   这个Metadata可以添加任意的元数据信息和offset一起提交。可以是一个文件名，包含processor的状态信息，
+   或者一小段的状态信息。它就是一个普通的字符串，当client拉取offset时，会被一起传递到client。
+   （貌似这个字段上可以做文章，然后做一些事务相关性或者自定的offset管理之类的？）
+
+** OffsetFetch
+   这个api读取消费者前面一个commit提交的offset。
+
+** 实现自定义的offset管理
+   因为拉取offset的请求会返回offset的信息，所以可以另外存储。
+   ZK不适合提供一种高速读写的服务，因为ZK的写入会穿越每一个节点，因此没有分片能力，也支持扩展写入。
+
+** Offset Storage Requirements
+   1. High write load: it should be okay if consumers want to commit after every message if they need to do that
+   (it will be slower, but the system shouldn't collapse). We need to be able to horizontally scale offset writes.
+   2. Durability: once an offset is written it can't be lost even if a server crashes or disappears.
+   3. Consistent reads: all reads must return the last written value--no "eventual consistency" can be apparent.
+   4. Small data size. A consumer-group/topic/partition/offset tuple should be no more than 64 bytes in memory
+   even with all the inefficiencies of jvm object overhead assuming the strings are interned and a compact lookup structure.
+   So each 1GB of memory could potentially support ~16 million entries.
+   5. Transactionality across updates for multiple topic/partitions. The current implementation doesn't have this property,
+   which is basically a bug. For example if you subscribe to N partitions in one consumer process and we mix those together
+   into one iterator, when you call commit() it should not be possible for some of these offsets to get saved and some not
+   as that leaves you in an inconsistent state. To fix the current implementation we would need to switch to ZK multi-write (only available in 3.4.x).
+
+** Implementation Proposal实现提议
+   I propose we make use of replication support and keyed topics and store the offset commits in Kafka as a topic. This would make offset positions consistent, fault tolerant, and partitioned.
+    we would keep an in-memory structure that mapped group/topic/partition to the latest offset for fast retrieval.
+*** Some Questions
+    1. How do we partition data in this topic?
+    2. What is the format of these messages?
+    3. How do we ensure the atomicity of updates?
+    4. Which brokers can handle an offset update or fetch?
+
+如果offset超过了设置的保留时间，1. offset日志文件添加墓碑；2. 从cache中移除
+
+** Recommended Settings
+   1. replication.factor>=3；
+   2. min.insync.replicas >=2
+   3. unclean.leader.election.enable=false
+   4. offsets.commit.required.acsk=-1
+
+** Obsolete Design
+*** Offset Management
+    https://cwiki.apache.org/confluence/display/KAFKA/Inbuilt+Consumer+Offset+Management
+    有两种实现，一种是ZookeeperOffsetManager，一种是DefaultOffsetManager。
+    ZK的实现比较简单，就是读取，更新offset值就行了。
+    DefaultOffsetManager的实现较复杂，主要就是每个Broker有
+    一张内存表，存了消费者的offset值，能迅速响应offset的读取，提交请求。但是Broker的这张表只维
+    护offset partition在此Broker上是leader partition的相关offset。当发送leader切换时，就需要从进行
+    相应的更新，从log中读取消费者offset信息进行增加，或者去掉部分消费者的offset信息。
+
+*** Offset Commit
+    1. 消费者有个内嵌的生产者向Broker提交offset信息。
+    2. Broker的leader partition保存到本地
+    3. 等待follower replica同步，响应给leader partition
+    4. 更新消费者offset内存表或者ZK信息
+    5. 响应用户
+    有个问题，怎么发现leader的？
+
+*** Offset Fetch
+    1. 消费者随机向一个存活的Broker A发送拉取offset请求
+    2. Broker A判断请求的offset的leader partition所在Broker B。
+    3. Broker A将请求再次转发给判断出leader partition的Broker B。
+    4. Broker B发现自己不是leader partition就再次判断，转发请求；
+       是的话，就返回offset信息给Broker A。
+    5. Broker A将offset信息汇总返回个消费者。

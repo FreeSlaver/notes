@@ -1,8 +1,0 @@
-* Binary Tree
-** Concept
-   - root： 根节点
-   - parent：父节点
-   - children：子节点
-
- The topmost node in the tree is called the root.
-Every node (excluding a root) in a tree is connected by a directed edge from exactly one other node. This node is called a parent. On the other hand, each node can be connected to arbitrary number of nodes, called children. Nodes with no children are called leaves, or external nodes. Nodes which are not leaves are called internal nodes. Nodes with the same parent are called siblings.

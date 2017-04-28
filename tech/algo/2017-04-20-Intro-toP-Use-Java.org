@@ -1,0 +1,7 @@
+*Introducing to Program Using java
+** 字节流
+   1. 使用字节流更加的高效，因为没有二进制到字符之间的转换。电脑和电脑之间通信，
+使用字节流，然后存储大量数据的时候使用字节。
+   2. However, binary data is fragile in the sense that its meaning is not self-evident.
+然而二进制文件太脆弱，因为它的含义不是自描述的。（Core Procinple）核心原则。面对
+他们你不知道是什么意思，也无法处理

@@ -1,0 +1,7 @@
+* Log Collector
+** 常见开源框架
+   1. Beats
+      ELK的工具
+   2. Fluent
+      一个Ruby写的
+   3. Nxlog

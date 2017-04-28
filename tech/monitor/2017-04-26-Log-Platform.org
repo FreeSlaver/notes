@@ -1,0 +1,20 @@
+* Log Platform
+** 日志处理的一些问题
+       1. 没有统一的日志格式
+       2. 日志查询，分析，方式太低效，使用常见的Linux命令
+       3. 加重服务器负担，同步阻塞写，IO，有限的索引，日志清理
+       4. 持续性监控问题
+       5. 聚合查询，上下文查询
+Logging Solutions
+日志处理一般步骤：Collections，Transport，Parsing，Storage,Analysis,Alerting,Visualize
+Graylog2
+
+我想做的那个是这样的：
+首先各个系统产生日志，
+你这地方不要kafka有些问题，1.需要在Collector分发到其他系统，这里Collector应该只做
+收集，不分发；2. 其他系统还需要一个服务来接收通知；3. 如果Log Process挂了之类，这
+整个就玩不转了，如果在Trigger这里同时搞到快照，存到kafka就没撒问题了。
+
+** ELK
+*** 特性
+        中心化

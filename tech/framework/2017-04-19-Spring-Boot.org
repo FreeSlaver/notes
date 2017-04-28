@@ -1,0 +1,32 @@
+* Spring Boot
+** 概述
+   约定大约配置
+** 添加配置
+<parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>1.5.2.RELEASE</version>
+</parent>
+<dependencies>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+</dependencies>
+** 构建一个简单项目
+
+** Config
+*** 自定义配置文件路径
+    要注意的一点是：在项目编译的时候会处理，那就是我们那种项目结构不行。
+    添加依赖
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-configuration-processor</artifactId>
+        <optional>true</optional>
+    </dependency>
+
+** 自定义注入
+
+
+   妈的，这个配置文件不太好加，主要是不能和之前的统一，还是要用配置的方式？
+太麻烦了，现在的问题就是配置，好好想想吧，蛋疼。

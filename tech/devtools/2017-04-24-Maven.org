@@ -1,0 +1,22 @@
+* Maven 笔记
+** 目录结构
+src/main/javaApplication/Library sources
+src/main/resourcesApplication/Library resources
+src/main/filtersResource filter files
+src/main/assemblyAssembly descriptors
+src/main/configConfiguration files
+src/main/scriptsApplication/Library scripts
+src/main/webappWeb application sources
+src/test/javaTest sourcessrc/test/resourcesTest resources
+src/test/filtersTest resource filter files
+src/siteSiteLICENSE.txtProject's license
+README.txtProject's readme
+
+** 依赖有效范围
+compile编译，测试，运行。默认的依赖范围。
+test测试，如 Junit。
+runtime运行，如 JDBC。
+provided编译，测试，如 ServletAPI。
+system编译，测试，依赖于系统变量。
+
+** 名词解释
