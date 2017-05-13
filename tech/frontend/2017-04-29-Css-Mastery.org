@@ -1,0 +1,167 @@
+* Css Mastery
+** Setting the Foundation
+*** Structuing your code
+**** IDS and calss names
+     1. ID name can only be apllied to one specific  element on a page.
+     2. Class name can be applied to any number of elements on a page.
+        More powerful and useful for identifying one types of content or similar items.
+
+**** Naming your elements
+     1. Keep the names as "unpresentational" as possible.name your elements based on what they are
+        rather than how they look.也就是说给CSS命名，尽量描述清楚是和那些元素相关的。这样不会和相同效果冲突。
+        类似如何要将所有的信息改红色，css的命名使用.notification这样看到css就知道它是应用到那些元素上的。
+     2. 使用连字符比驼峰更清晰
+
+**** IDS or  Classses?
+     1. Classes should be applied to conceptually similar items that could appear in multiple
+        places on the same page.概念上相同并且会多处使用的用classes。
+     2. IDS should be applied to unique elements and something extremely specific and know never use
+        elsewhere.Or appear only once.
+     3. 一个例子，你不必要对新闻的标题，内容都设置相应的样式，比如news-titile,news-content,.etc。只需要将新闻这
+        个整体用news包裹起来，然后使用css选择器，对里面的元素进行设置样式。更加组件化。
+
+**** Divs and spans
+     1. To keep unnecessary markup to a minimun,you shuld only use a div element if there is no
+        existing element that will do the job.最少量化元素，没必要用的就不要用。
+     2. Divs should be used to group related items based on their meaning or function rather than
+        their presentation or layout.
+     3. Divs used to group block-level elements,spans be used to group or idetify inline elements.
+     4. The goal is to keep your code as lean as mean(ingful) as possible.
+
+**** Mircorformates
+     1. 想想P38的样式如何实现。这种hCard格式可以用到网站上？
+**** DTD
+     1. It is important to include a fully formed DOCTYPE declaration.
+
+** Styles to Target
+*** Selectors
+**** Common selectors
+     1. element selectors
+        p {color: black;}
+     2. Descendant selectors
+        blockquote p {padding-left: 2em;}//也就是子元素在前，父元素在后
+     3. ID selector,using a hash character
+        #intro {font-wight: bold;}
+     4. class selector,using a period
+        .date-posted {color: #ccc;}
+     //看到代码规范没？都是选择器，空格，属性，冒号，空格，分号。
+     5. Simpler approach is to use combination of type,descendat,ID,and/or class selector.
+        Instead of use two classes.
+        #main h2 {font-size: 1.8em;}
+        #sec h2 {front-size: 1.2em;}
+        <div id="main">
+            <h2>Articles</h2>
+                ...
+        </div>
+        <div id="sec">
+            <h2>News</h2>
+                ...
+        <div>
+        //可以看到这个地方不是子元素在前，而是更小范围的选择器在前。
+     6. Don't use too many classes,think the differ between them.Give a class or an ID to
+        their ancestors and target them using a descendant selector.
+
+**** Pseudo-classes 虚假类？
+     1. Style an element based on something other than the structure of the document,the state
+        of a link or form element.Then use a pseudo-class selector.
+     //也就是说要使用结构性的选择器的话，就用元素，后代，ID和类选择器；如果是根据状态等，就用虚假类选择器。
+        a:link {color: blue;}
+        a:visited {color: green;}
+        a:hover, a:focus, a:active {color: red;}
+     //看到没？也就是多个虚假类选择器，使用逗号分隔。然后元素和状态之间用冒号连接，之间不能有空格，因为定位到
+     一个具体事物。而虚假类选择器之间的空格应该是可以不用的。
+        tr:hover {backgroud-color: red;}
+        input:focus {backgroud-color: yellow;}
+
+**** Universal Selector
+     1. 最强大但最少被使用的，类似通配符，但是使用星号*。
+        去掉浏览器默认的padding和margin,
+        * {
+          padding: 0;
+          margin: 0;
+        }
+**** Child and adjacent sibling selectors
+     1. 下面的例子只有外面的li元素会有效果。
+        #nav>li {
+          background: url(folder.png) no-repeat left top;
+          padding-left: 20px;
+        }
+
+        <ul id="nav">
+          <li><a href="/home/">Home</a></li>
+          <li><a href="/services/">Services</a>
+            <ul>
+              <li><a href="/services/design/">Design</a></li>
+              <li><a href="/services/development/">Development</a></li>
+            </ul>
+          </li>
+        </ul>
+     2. target some element shares the same parent and proximity to antoher element.
+        也就是说应用到父元素毗邻的第一个子元素。
+        h2 + p {
+          font-size: 1.4em;
+          font-weight: bold;
+          color: #777;
+         }//感觉不太对。有空去试试。
+//妈的，一实验就错了，注意多看Chrome F12里面的提示，刚才我就将em写成了pm。我RI。然后先直接在h2测试下color，可以的，
+然后去style css里面实验下，也是可以的，然后就一个个样式实验，终于看到控制台里面显示一个小黄色感叹号，显示我属性的值错了。
+这整个就是和java开发一样的debug流程。
+
+**** Attribute selectors
+     1. target an element based on the existence of an attribute or the attribute's value.
+        this allows you to do some very interesting and powerful things.
+        acronym[title] {
+          border-bottom: 1px dotted #999;
+        }
+        acronym[title]:hover,acronym[title]:focus {
+          cursor: help;
+        }
+     <p>The term <acronym title="slef-contained">SCUBA</acronym> is a acronym</p>
+        属性选择器的使用就是使用[]括起来。和元素中间不要有空格。
+     2. order of importance:
+        User styles flagged as !important;
+        Author styles flagged as !important
+        Author styles
+        User styles
+        Styles applied by the brower/user agent
+        Rules with more specific selectors override those with less specific ones.//这条很重要
+//Css中很重要的一个概念是可以组合，可以继承，可以嵌套（HTML？）
+**** Specificity精确度
+     1. Each type of selector is assigned a numeric value.Specificity is calculated by adding up them.
+        Specificity broken into four levels:a,b,c,d:
+        If the style is an inline style,a equals 1.
+        b equals the total number of ID selectors
+        c equals the number of class,pseudo-class,and attribute selectors
+        d equals the number of type selectors and pseudo-element selectors
+        Examples:
+        +-----+-----+-----+
+        |Selector |Specificity |Specificity in Base10  |
+        +-----+-----+-----+
+        |div#content{}     |0,1,0,1 |101  |
+        +-----+-----+-----+
+        |p.comement .dateposted{} |0,0,2,1 |21   |
+        +-----+-----+-----+
+        2. Specificity can be extremely important when fixing bugs.
+        3. Try to make more specific by adding the ID of one of it's prents.
+           尝试给父元素一个ID使得selector更精准。
+        4. set general styles for common elements and then override them for more specific elements
+           也就是说通常从普通的大体的元素开始定义，然后覆盖重写特定的元素。因为特定的选择器起作用。
+           p {color: black;}
+           p.intro {color: grey;}//这样就指定了所有的段落都是黑色，但是段落如果是介绍的话就是灰色。
+        5. Make sure your general styles are very general while specific styles are as specific as possible
+           and never need to be overridden.
+        6. One interesting way is to add an ID or class to the body tag.
+
+**** Inheritance 继承
+     1. Any style applied directly to an element will always override an inherited style.
+        This is because inherited styles have a null specificity.
+        任何效果都会覆盖掉继承的效果，因为继承的效果没有任何优先级。H2元素都被浏览器默认效果覆盖了。
+
+*** 计划，组织和维护你的css
+**** Apply stylesheet
+     <link href="/css/basic.css"> rel="stylesheet" type="text/css"/>
+     @import url(/css/layout.css)
+     1. Breaking your CSS into multiple style sheets.import can be slower than linking to them.
+     2. More css more request and browsers can download a limited number of files from same domain.
+     3. Add a flag to each of your comment headers.Useful for search.
+        /* @group typeography*l /也就是说利于搜索，在每段CSS功能前添加特殊字符便于搜索。

@@ -1,0 +1,40 @@
+* 添加Zipkin Brave对Netty的支持
+** 思路
+   好久没搞netty了，一下就忘，妈的。
+   我来搞的话，首先是一个handler，然后里面包装成那个brave的request，response，然后丢给brave处理。
+
+   就是说BraveTracing可以产生3个类，一个是对inbound的httpRequest进行拦截，一个是对outbound的httpResponse
+进行拦截，还有一个是异常处理。关键还有个问题是client的处理，现在都是server端。
+
+
+
+蛋疼的很，我还需要写client和server端。
+//ch.pipeline().addFirst(BraveTracing.create(brave).createHttpRequestHandler());
+
+              //ch.pipeline().addLast(new SimpleChannelInboundHandler<FullHttpRequest>() {
+              //  @Override
+              //  protected void channelRead0(ChannelHandlerContext ctx,
+              //      FullHttpRequest fullHttpRequest)
+              //      throws Exception {
+              //
+              //    String httpUri = fullHttpRequest.uri();
+              //    if ("/foo".equals(httpUri)) {
+              //      ctx.writeAndFlush("bar");
+              //    } else if ("/child".equals(httpUri)) {
+              //      brave.localTracer().startNewSpan("child", "child");
+              //      brave.localTracer().finishSpan();
+              //      ctx.writeAndFlush("happy");
+              //    } else if ("/disconnect".equals(httpUri)) {
+              //      throw new Exception();
+              //    }
+              //  }
+              //});
+
+这个地方是直接从request中getHeader(header)，但是Netty中，
+是request.get()
+
+测试用例每次都很难，我R。
+首先我这个地方必须用线程，启动server，不然
+这个地方就是init的时候，需要先stop释放端口。
+
+这个createChildSpan真心不好搞。需要在里面然后，handler重新搞一个span。

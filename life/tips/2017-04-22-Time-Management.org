@@ -1,0 +1,56 @@
+* Time Management
+** From Wikipedia
+   Time management is the process of planning and exercising conscious control over the amount of time spent on specific activities-especially to
+increase effectivness,efficiency or productivity.
+   时间管理是一项计划和锻炼有意识的控制花费在特定项目上的时间的过程，特别是为了提高有效性，效率性和产出性。
+*** 几大主题
+    - Create an environment conducivve to effectiveness
+      - "get organized" -the triage of paperwork and of tasks. 有条理性的，像抢救别人一样的按照先后顺序施加手术样的来完成工作和任务。
+      - "protecting one's time" by insulation,isolation and delegation. 保护时间，通过绝缘，隔离，委托。打个比方就是：关掉手机，关掉QQ，微信，讲自己关到小房间
+        其他事物交代给别人，自己专心做一件事情。
+      - "achievement through goal-management and through goal-focus" -motivational emphasis. 通过目标管理和锁定目标注意力获取成就。
+      - "recovering from bad time-habits" -recovery from underlying psychological problesm,e.g.procrastination. 从坏的时间习惯上恢复过来，比如一些心理上
+        的基本问题，例如拖延症。
+    - Setting of priorities
+      - "Work in Priority Order" -set goals and prioritize. 在优先级顺序下工作，设定工作目标和优先级。
+      - "Set gravitational goals" -that attract actions automatically. 设置万有引力的目标，自动被吸引注意力的目标。
+    - Carrying out activity around prioritization
+      - ABC anylysis.A重要并紧急；B重要但不紧急；C不重要；
+      - Pareto anylysis.This is the idea 80% of tasks can be completed in 20% of the disposable time.The remaining 20% of tasks will take up 80% of
+        the time.因此我们应该先做那个20%的任务，也就是要花费80%时间的，因为这些是最重要的。
+    - The related process of reduction of time spend on non-priorities
+    - Incentives to modify behavior to ensure compliance wtih time-related deadlines
+
+*** 一些方法
+    多米诺效应方法：投资一次，却能多次多个方面获得产出，比如写一本书。
+*** 相关概念
+    - Project management
+    - Attention mangement
+
+** From some websites
+**** Enterprenue
+   There are only three ways to spend time:thoughts,conversations and actions.
+   1. 记录你一周的想法，谈话和活动，发现你的时间是耗费在那些无用的东西上面的。
+   2. 每天花费30分钟来计划你这天的活动，这是最重要的。
+   3. 每次电话前花5分钟思考一下你想获得什么结果。这会帮助你更清晰的知道成功的目标。
+      并且会放慢时间和你谈话，思考的节奏。电话后，再花5分钟思考一下，你是否达到目标
+      ，如果没有，是缺了什么？下一次如何弥补？
+   4. 不要被即时信息打扰，比如邮件，短信，骚扰电话，QQ，微信等社交应用
+   5. 记住你80%的成果是通过谈话和行动获得的，20%的成功是通过想法。
+**** Kent
+     Setting clear goals.
+     Beaking your goals down into discreet steps.
+     Review your progress towards your goals.
+     Test Result
+      Setting goals 3
+      Breaking down tasks into steps 6
+      Prioritising 11
+      Using Lists 12
+      Persevering when things get difficult 9
+      Organising your work and meeting deadlines 6
+      Revising for examinations 4
+      Avoiding procrastination 10
+
+** Reference
+[][Wikipaid The Time management]
+[[https://www.entrepreneur.com/article/219553][How to Manage Time With 10 Tips That Work]]

@@ -1,0 +1,16 @@
+* Linkedin Kafka Blog Note
+If a fetch request contains an offset that is out of bounds of the log it will receive an OffsetOutOfRange error. The consumer will then set its offset to either the latest or earliest valid offset according to its auto.offset.reset configuration.
+
+One typical cause of offset resets is unclean leader election.
+
+This means a consumer that was reading from the end of the log may suddenly go out of range. It is a good practice to monitor the cluster’s unclean leader election rate.
+
+Consumers commit offsets by sending the OffsetCommitRequest to a designated broker (called the offset manager). The request contains a list of partitions and consumer offsets (or positions) in those partitions. The offset manager appends keyed messages to a special __consumer_offsets topic. The key is composed of consumerGroup-topic-partition and the value is the offset. We also maintain an in-memory cache for the latest entry for a given key so that we can serve OffsetFetchRequests quickly without having to scan through the offsets topic log. If the offset manager fails for any reason, a new broker will become the offset manager and repopulate its offset cache by scanning through the offset topic.
+
+consumers通过发送一个OffsetCommitRequest到特定的broker（也就是offset manager）。请求中包含partitions列表和consumer在这些partitions的offsets。然后offset manager会将这些信息写到_consumer_offsets这个主题。key是由cg，topic，partition组成，message也就是value是offset，主题是_consumer_offsets。同时保持一个内存的offset cache，因此就不需要通过请求去遍历，得到offset值。如果offset manager挂掉了，新的broker会被选为offset manager，然后遍历_consumer_offsets主题来填充相应的offset值。
+
+Since there are transient consumers (such as console consumers) that come and go, the offset manager periodically scans through the offset cache and removes offset entries for dead consumer groups (i.e., that have not been updated in a configurable staleness period).
+挂掉的cg我们会定期取清理，通过配置一个固定时间。
+
+During a rebalance, consumers stop consuming, commit their offsets, redistribute partitions across the group, fetch offsets for newly-owned partitions and then resume consumption.
+在发送CG rebalance的时候，consumers会停止消费，提交offsets，重新分配partitions，拉取属于自己的partition的offset，然后开始消费。

@@ -1,0 +1,116 @@
+教程聚焦在解释器和“对象-函数式”的风格，已经我们的编程风格。特别强调了可维护性，清晰的表达，和利用类型系统的优势。
+
+
+为什么选择 Scala?
+- 表达能力
+  - 函数是一等公民
+  - 闭包
+- 简洁
+  - 类型推断
+  - 函数创建的文法支持
+- Java互操作性
+  - 可重用Java库
+  - 可重用Java工具
+  - 没有性能惩罚
+
+表达式
+scala> 1 + 1
+res0: Int = 2
+
+res0是解释器自动创建的变量名称，用来指代表达式的计算结果。它是Int类型，值为2。
+Scala中（几乎）一切都是表达式。
+
+匿名函数
+scala> (x: Int) => x + 1
+res2: (Int) => Int = <function1>
+这个函数为变量x进行加1操作并将结果返回。
+res2(9)
+res3: Int = 10
+因为变量res2指代了这个匿名函数名，也就是变量就是函数名。所以可以直接调用res2。
+
+你可以传递匿名函数，或将其保存成不变量。
+scala> val addOne = (x: Int) => x + 1
+//这个表达式的语义就是对不变量addOne赋值，它的值是一个匿名函数。
+addOne: (Int) => Int = <function1>
+
+每次定义都会覆盖掉上一个变量，但是val定义的，不能将变量重新指定，赋值。
+
+{ }的作用
+如果你的函数有很多表达式，可以使用{}来格式化代码，使之易读。
+def timesTwo(i: Int): Int = {
+  println("hello world")
+  i * 2
+}
+所以有些函数，表达式，一行就可以写完。
+???对匿名函数使用（这个不太还理解啊,特别是=>）
+scala> { i: Int =>
+  println("hello world")
+  i * 2
+}
+res0: (Int) => Int = <function1>
+在将一个匿名函数作为参数进行传递时，这个语法会经常被用到。
+
+表达式是完整的，等号左右两边，函数是进行运行的右边。
+n只是一个变量，可以代表一个函数，只是这个函数的返回值是一个Int。
+
+下划线_的作用（部分应用Partial allication）
+可以使用下划线_部分应用一个函数（应该有且只有一个X）；也可以使用下划线表示不同上线文中的不同事物，
+scala> def adder(m: Int, n: Int) = m + n
+adder: (m: Int,n: Int)Int
+
+scala> val add2 = adder(2, _:Int)
+add2: (Int) => Int = <function1>
+
+scala> add2(addOne（11）)
+res50: Int = 14
+
+scala>add 3(_: Int,_: Int)
+aadd3: (Int, Int) => (Int,Int)
+
+scala> add3(10)
+<console>:13: error: not enough arguments for method apply: (v1: Int, v2: Int)(I
+nt, Int) in trait Function2.
+Unspecified value parameter v2.
+       add3(10)
+           ^
+//也就是上面定义的指代了2个参数，但是只传递进来一个，所以报错。下方这个就对了。
+scala> add3(10,12)
+res28: (Int, Int) = (10,12)
+
+柯里化函数
+说白了就是将参数列表拆开，然后可以无线的动态扩展，添加参数。
+scala> (adder _).curried
+res1: (Int) => (Int) => Int = <function1>
+这个应该就是将adder这个函数进行柯里化。
+
+可变长参数
+def capitalizeAll(args: String*) = {
+  args.map { arg =>
+  arg.capitalize
+  }
+}
+
+scala> capitalizeAll("rarity", "applejack")
+res2: Seq[String] = ArrayBuffer(Rarity, Applejack)
+
+类和构造函数
+也是class，和java相同，还有个什么object。定义属性什么的和java类似。调用属性，方法和java也是一样的，也是直接用“.”。
+class Calculator{
+     //构造器
+     class Calculator(brand:String){
+          val color: String = if (brand == "TI") {
+                   "blue"
+            } else if (brand == "HP") {
+                   "black"
+            } else {
+                   "white"
+            }
+     }
+     //属性
+     val brand:String = "HP"
+     //方法
+     def add(m: Int,n: Int):Int=m+n
+}
+val cal = new Caluculator//生成类实例
+cal.brand//获取属性
+cal.add(1,2)//调用方法

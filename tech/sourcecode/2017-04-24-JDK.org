@@ -1,6 +1,60 @@
 * JDK Source Code
 ** TODO util
+**** Lang
+     java.lang.Serializable
+       为了让非序列化的子类能够序列化，子类有责任保存和恢复父类的public，protected，甚至package的字段的状态。
+       只有当子类能够访问父类的无参构造器时才能完成以上责任。如果不满足以上条件，会抛出运行时异常。
+
+       反序列化时，非序列化的类会被使用无参的public或protected构造器初始化。
+
+       如果想处理序列化和反序列化时的异常，需要实现3个私有的方法，writeObject，
+     java.lang.Comparable
+     java.lang.CharSequence
+     java.lang.Character UNFINISHED
+     java.lang.String
+       使用char数组存储；缓存String的hash值。发现一点String构造器传StringBuffer时加锁了，传StringBuilder没加锁。
+     java.lang.Appendable
+       这个接口里面学到一点就是：这个接口可能会被各种各样的子类实现，所以会有各种各样的错误处理机制，
+       因此不能保证错误，异常会被传播到调用者。所以propagete errors or exceptions to invoker is principle.
+
+       还有一个是里面的抽象方法返回的值就是一个指向Appendable的引用。所以只要一个对象它是实现了Appendable
+       这个接口的，就可以被这个引用指向过去。这个功能很强大。
+
+     java.lang.AbstractStringBuilder
+
+     java.lang.StringBuffer
+       StringBuffer是线程安全的，因为它的方法都有synchronize，而且使用了一个transient的char数组。
+       哦，其实这个数组没什么用，只是最后toString的时候将父类中的数据拷贝回来。
+     java.lang.StringBuilder
+       StringBuilder非线程安全，因为多个线程同时操作char数组，会造成数据不一致。
+     java.lang.SecurityManager
+       可以让应用实现安全机制，在敏感或者不安全的操作前进行验证，如果不允许的话，
+       抛出SecurityException。
+       Permissions fall into these categories: File, Socket, Net,
+       Security, Runtime, Property, AWT, Reflect, and Serializable.
+       L299
+     sun.security.util.SecurityConstants
+     java.lang.System
+     java.lang.Serializable
+     java.lang.RuntimePermission       L78
+
+**** Util
+     java.util.Date
+     java.util.Calendar
+     java.text.SimpleDateFormat
+     java.text.Format
+       这个抽象类可以说只有2个方法，功能，一个是格式化对象，一个是解析对象。
+     java.text.DontFieldPosition
+     java.text.DateFormat
+
+**** IO 包
+
+
+
+
 **** Collection 集合
+     java.util.Collection
+     java.util.ArrayList
      java.lang.Iterable:
      java.util.Iterator
      java.util.function.Consumer
@@ -20,7 +74,8 @@
      JVM启动时，只有一个非守护线程（就是用来调用指定类的main方法的）。
      JVM遇到以下情况退出：1.Runtime.exit(code)方法被调用并且通过了安全管理器security
      manager；2.所有的非守护线程都挂了。
-     L1814 线程的看不太懂，为什么不看别人如何解释了？
+
+     线程的看不太懂，为什么不看别人如何解释了？
 
 **** Concurrent 并发
      Java.util.concurrent.Executor:

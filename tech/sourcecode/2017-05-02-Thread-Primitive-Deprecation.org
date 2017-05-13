@@ -1,0 +1,41 @@
+* Java Thread Primitive Deprecation
+** Thread.stop
+*** Why deprecated？
+    Because it is inherently unsafe.Stopping a thread causes it to unlock all the monitors that it has locked.
+    (The monitors are unlocked as the ThreadDeath exception propagates up the stack.).
+    other threads may now view these objects in an inconsistent state. Such objects are said to be damaged.
+    When threads operate on damaged objects, arbitrary behavior can result.
+    ThreadDeath kills threads silently; thus, the user has no warning that his program may be corrupted.
+    就是说线程的stop方法是不安全的，stop一个线程会释放掉它持有的所有锁。（通过ThreadDeath异常在栈stack
+    中的广播）还有就是线程死亡是静悄悄的死去的，其他用户线程不会得到通知。
+
+*** Can catch ThreadDeath and fix?
+    In theory, perhaps, but it would vastly complicate.
+    A thread can throw a ThreadDeath exception almost anywhere.
+    A thread can throw a second ThreadDeath exception while cleaning up from the first
+
+*** Use what instead of Thread.stop?
+    最好是使用一个volatile的变量，然后线程定期去检查一个变量的值，判断线程是否要跳出。
+
+*** How to stop a thread waits for long periods(IO operate)
+    Use Thread.interrupt().The "state based" signaling machanism(blinker =null).
+    也就是说和上面的将线程对象置为null改变状态是一个机制。
+    public void stop() {
+        Thread moribund = waiter;
+        waiter = null;
+        moribund.interrupt();
+    }//为什么要将waiter置为另外的线程了？
+
+     If the method that catches the InterruptedException is not declared to throw this (checked) exception, then it should "reinterrupt itself"：
+     Thread.currentThread().interrupt();
+
+** Thread.suspend and Thread.resume
+*** Why are Thread.suspend and Thread.resume deprecated?
+    Thread.suspend is inherently deadlock-prone.
+*** Use what instead of
+    Object.wait and Object.notify.
+
+
+
+** Reference
+[[https://docs.oracle.com/javase/8/docs/technotes/guides/concurrency/threadPrimitiveDeprecation.html][Java Thread Primitive Deprecation]]

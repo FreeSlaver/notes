@@ -1,0 +1,79 @@
+* Linux常用命令
+后台启动
+java -jar xx.jar > /dev/null &
+
+nohup java -jar xx.jar
+
+看日志最后100行
+tail -n 100 filename
+
+查找进程
+ps -ef | grep nameserver
+
+查看Linux端口占用
+netstat –apn | grep 8080
+
+查看时间段内日志
+sed -n '/2016-09-09 14:37:55/,/2016-09-09 14:40:55/p' root.log
+
+查看日志在哪一行
+cat -n test.log | grep‘xx’
+
+查看100行以后的100行内容
+cat -n test.log   | tail -n +100|head -n 100
+
+查看关键字实时变化
+tail -f root.log | grep 'keyword'
+
+复制文件
+
+
+查看防火墙
+chkconfig iptables --list
+
+查看端口 lsof -i:port
+方法二：直接使用 netstat -anp | grep portno
+即：netstat –apn | grep 8080
+
+查看进程暂用端口
+netstat -nap | grep pid
+
+ps -aux | grep tomcat
+发现并没有8080端口的Tomcat进程。
+
+查看进程打开文件数
+lsof -p <pid> | wc -l
+
+查看进程各线程CPU占用
+top -H -p <Pid>
+将pid转换为16进制，得到比如44bf
+jstack <pid> | less
+然后找到里面nid=0x44bf的
+
+看文件夹大小
+du -sh kafka-ez-logs/
+
+
+[root@localhost logs]# ps -mp 74897 -o THREAD,tid,time | sort -rn
+top -H -p 74897
+显示结果如下：
+USER %CPU PRI SCNT WCHAN USER SYSTEM TID TIME
+root 10.5 19 - - - - 3626 00:12:48
+root 10.1 19 - - - - 3593 00:12:16
+
+找到了耗时最高的线程3626，占用CPU时间有12分钟了！
+
+将需要的线程ID转换为16进制格式：
+[root@localhost logs]# printf "%x\n" 3626
+e18
+
+最后打印线程的堆栈信息：
+[root@localhost logs]# jstack 2633 |grep e18 -A 30
+
+75072
+12540
+
+jstack 74897 |grep 12540 -A 30
+
+修改sh执行权限
+chmod +x start.sh

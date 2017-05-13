@@ -1,0 +1,58 @@
+* IDEA常见问题
+1.clean project
+File->Invalidate Caches
+
+2.怎么使用maven clean
+首先要在IDEA中配置maven，之后在3个地方将版本统一为jdk1.8，然后点击Run键，选择maven project，然后输入命令。
+http://blog.csdn.net/high2011/article/details/52812746
+
+3.怎么看maven jar包源码
+直接maven工具窗口，download souces.
+
+4.读取不到config目录下配置文件
+Edit Configurations–》Configuration–》Working directory，输入$MODULE_DIR$
+或重新制定当前module所在路径
+
+5.Idea中Maven怎么Debug
+直接右键，Debug。
+
+6.颜色主题
+http://color-themes.com/?view=index
+
+7.idea构建sbt项目(非常重要)
+之前遇到的一个问题就是，IDEA一直自己下载sbt相关的依赖，jar包等。需要在这里配置。
+
+-Dplay.version=2.4.11
+-Dsbt.ivy.home=D:/sbt/.ivy2
+-Dsbt.repository.config=D:/sbt/conf/repositories
+
+8 .代码格式化
+https://github.com/square/java-code-styles
+
+9. 添加maven的编辑版本等
+<properties>
+  <maven.compiler.source>1.8</maven.compiler.source>
+  <maven.compiler.target>1.8</maven.compiler.target>
+</properties>
+
+10.Gihub账号添加
+直接在全局设置，DefaultSetting里面绑定账户和密码。
+** SVN集成
+   idea和第三方的TortoiseSVN集成，有些问题，安装时需要勾选command，其次那个配置起来好像也有点问题
+
+*** 方法：
+    1. 下载sliksvn
+    https://sliksvn.com/download/
+    安装，配置环境变量（如果需要在CMD使用）
+
+    2. idea中配置
+    调出Settings->Version Control->Subversion->选择sliksvn所在目录。
+
+    3. VCS->Enable Version Control Integration...->勾选Subversion，这样VCS的菜单会改变，
+    所有SVN的操作这里都有。
+
+*** 一些问题：
+    之前的一些乌龟TouritSvn checkout下来的项目，在Idea中是无法比对的，需要重新在Idea中使用svn checkout下来并打开。
+
+*** 参考资料
+    http://www.cnblogs.com/yingsong/p/5097862.html

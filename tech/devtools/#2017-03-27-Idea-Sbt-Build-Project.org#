@@ -1,0 +1,58 @@
+* 使用Idea和Sbt构建项目
+1.配置sbt
+File | Settings | Build, Execution, Deployment | Build Tools | SBT
+里面配置。
+https://www.jetbrains.com/help/idea/2016.3/sbt.html
+2.新建一个Scala的基于sbt的项目
+
+3.可以直接导入一个已经存在的sbt项目
+（重要）https://confluence.jetbrains.com/display/IntelliJIDEA/Getting+Started+with+SBT
+
+4.非常重要
+之前遇到的一个问题就是，IDEA一直自己下载sbt相关的依赖，jar包等。需要在这里配置。
+Ctrl+Alt+S调出Settings窗口->SBT->Vm parameters填写一下内容。并且sbt-launch.jar选Custorm。
+
+-Dplay.version=2.4.11
+-Dsbt.ivy.home=D:/sbt/.ivy2
+-Dsbt.repository.config=D:/sbt/conf/repositories
+
+
+
+参考这篇文章：
+http://scalatutorials.com/beginner/2013/07/18/getting-started-with-sbt/
+以及官方文档
+1.首先sbt的环境什么的都安装OK，然后在项目目录下生成并编辑一个build.sbt的文件，内容如下
+name := "hello" //项目名称
+version := "1.0"  //
+scalaVersion := "2.10.2"  //scala版本
+2.创建项目目录结构，（当然这里可以通过gitter8之类的）
+mkdir src/main/scala
+3.创建一个helloworld.scala的文件，
+echo 'object Hi { def main(args: Array[String]) = println("Hi!") }' > hw.scala
+
+不先写build.sbt好像也是可以的。可以在build.sbt中这么写
+lazy val root = (project in file(".")).
+  settings(
+  name := "hello",
+  version := "1.0",
+  scalaVersion := "2.12.1"
+  )
+
+打jar包要求必须写name和version。
+
+创建 hello/project/build.properties 文件强制指定一个版本的sbt
+
+添加插件
+
+还可以看看这篇文章
+https://twitter.github.io/scala_school/zh_cn/sbt.html
+
+对eclipse和idea的支持
+先要添加插件，然后使用
+sbt gen-idea
+
+
+
+
+
+

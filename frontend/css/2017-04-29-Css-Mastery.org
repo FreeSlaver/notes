@@ -1,0 +1,152 @@
+* Css Mastery
+** Setting the Foundation
+*** Structuing your code
+**** IDS and calss names
+     1. ID name can only be apllied to one specific  element on a page.
+     2. Class name can be applied to any number of elements on a page.
+        More powerful and useful for identifying one types of content or similar items.
+
+**** Naming your elements
+     1. Keep the names as "unpresentational" as possible.name your elements based on what they are
+        rather than how they look.也就是说给CSS命名，尽量描述清楚是和那些元素相关的。这样不会和相同效果冲突。
+        类似如何要将所有的信息改红色，css的命名使用.notification这样看到css就知道它是应用到那些元素上的。
+     2. 使用连字符比驼峰更清晰
+
+**** IDS or  Classses?
+     1. Classes should be applied to conceptually similar items that could appear in multiple
+        places on the same page.概念上相同并且会多处使用的用classes。
+     2. IDS should be applied to unique elements and something extremely specific and know never use
+        elsewhere.Or appear only once.
+     3. 一个例子，你不必要对新闻的标题，内容都设置相应的样式，比如news-titile,news-content,.etc。只需要将新闻这
+        个整体用news包裹起来，然后使用css选择器，对里面的元素进行设置样式。更加组件化。
+
+**** Divs and spans
+     1. To keep unnecessary markup to a minimun,you shuld only use a div element if there is no
+        existing element that will do the job.最少量化元素，没必要用的就不要用。
+     2. Divs should be used to group related items based on their meaning or function rather than
+        their presentation or layout.
+     3. Divs used to group block-level elements,spans be used to group or idetify inline elements.
+     4. The goal is to keep your code as lean as mean(ingful) as possible.
+
+**** Mircorformates
+     1. 想想P38的样式如何实现。这种hCard格式可以用到网站上？
+**** DTD
+     1. It is important to include a fully formed DOCTYPE declaration.
+
+** Styles to Target
+*** Selectors
+**** Common selectors
+     1. element selectors
+        p {color: black;}
+     2. Descendant selectors
+        blockquote p {padding-left: 2em;}//也就是子元素在前，父元素在后
+     3. ID selector,using a hash character
+        #intro {font-wight: bold;}
+     4. class selector,using a period
+        .date-posted {color: #ccc;}
+     //看到代码规范没？都是选择器，空格，属性，冒号，空格，分号。
+     5. Simpler approach is to use combination of type,descendat,ID,and/or class selector.
+        Instead of use two classes.
+        #main h2 {font-size: 1.8em;}
+        #sec h2 {front-size: 1.2em;}
+        <div id="main">
+            <h2>Articles</h2>
+                ...
+        </div>
+        <div id="sec">
+            <h2>News</h2>
+                ...
+        <div>
+        //可以看到这个地方不是子元素在前，而是更小范围的选择器在前。
+     6. Don't use too many classes,think the differ between them.Give a class or an ID to
+        their ancestors and target them using a descendant selector.
+
+**** Pseudo-classes 虚假类？
+     1. Style an element based on something other than the structure of the document,the state
+        of a link or form element.Then use a pseudo-class selector.
+     //也就是说要使用结构性的选择器的话，就用元素，后代，ID和类选择器；如果是根据状态等，就用虚假类选择器。
+        a:link {color: blue;}
+        a:visited {color: green;}
+        a:hover, a:focus, a:active {color: red;}
+     //看到没？也就是多个虚假类选择器，使用逗号分隔。然后元素和状态之间用冒号连接，之间不能有空格，因为定位到
+     一个具体事物。而虚假类选择器之间的空格应该是可以不用的。
+        tr:hover {backgroud-color: red;}
+        input:focus {backgroud-color: yellow;}
+
+**** Universal Selector
+     1. 最强大但最少被使用的，类似通配符，但是使用星号*。
+        去掉浏览器默认的padding和margin,
+        * {
+          padding: 0;
+          margin: 0;
+        }
+**** Child and adjacent sibling selectors
+     1. 下面的例子只有外面的li元素会有效果。
+        #nav>li {
+          background: url(folder.png) no-repeat left top;
+          padding-left: 20px;
+        }
+
+        <ul id="nav">
+          <li><a href="/home/">Home</a></li>
+          <li><a href="/services/">Services</a>
+            <ul>
+              <li><a href="/services/design/">Design</a></li>
+              <li><a href="/services/development/">Development</a></li>
+            </ul>
+          </li>
+        </ul>
+//Css中很重要的一个概念是可以组合，可以继承，可以嵌套（HTML？）
+
+**** Attribute Selector
+     1.attribute selector use [].属性选择器使用中括号[ ]来区分。
+     2. you can apply styles based on a particular values.
+        For instance,this can be used to fix inconsistency with different browsers.
+        input[type="submit"] {cursor: pointer;}
+     3. we interested in patterns in the values of the attribute rather than exact value.
+        Match a value at the beginning of an attribute,use ^.
+        a[href^="http:"] 这个表示的是匹配href属性以http开头的？
+        Match a value at the end of an attribute,use $.
+        img[src$=".jpg"] 这个表示的是src属性以jpg结尾的。
+        Match a value anywhere in an attribute ,use *
+        a[href*="/about/"] 匹配href属性中含有about字符串的
+        Match a value in a space-separated list of strings,use ~.
+        a[ref~=next]匹配空格分隔的字符串列表中的值。估计是这样rel="befor next after"?
+        Match start of the value,use |
+        a[hreflang|=en] 就是匹配en或者en-开头的。
+
+**** Pseudo-elements
+     1. you can target the first letter of a piece of text by using the ::first-letter pseudo-element
+        也就是说可以使用
+        ::first-letter来指定第一个字母，::first-line,::before,::after等假元素。
+**** Targets and Negations
+     1. 使用:target来指定一个有ID属性的并且当前被选中的元素。
+        http://example.com/blog/1/#comment-3
+        .comment:target:not(.comment-downvoted){
+           background-color: #fffec4;//这样的就将id=comment-3的元素背景色置为浅黄。
+         }
+        //使用:not()来去除掉指定元素。
+
+**** Structural Pseudo-classes
+     1. 指定第几个元素:nth，第九个元素。用于改变表格的列
+         tr:nth-child(odd) {background: yellow;}//table row的奇数子元素。
+        接收以下几个参数odd,even,数字,表达式。
+        :nth-child(-n+3) 选中前三个子元素；
+        :nth-last-child(N) 选中最后的几个子元素
+        :only-child 唯一子元素
+        :only-of-type 某种类型的唯一子元素。
+        :nth-of-type(N) 某种类型的第几个子元素
+        :nth-last-of-type(N) 某种类型的最后几个子元素
+     2. 只匹配有4个column的元素
+        .column:nth-last-of-type(4):first-child,
+        .column:nth-last-of-type(4):first-child ~ .column{
+           //这个漂号键~是干嘛的?
+         }
+        it means that the fourth element from the end is also the first element,
+        ergo there are four elements of the same type with the .column class.
+      3. 使用:required假类选择器高亮
+         input:required { outline: 2px solid #000;}
+         input[type="email"]:valid {border-color: green;}
+         input[type="email"]:invalid {border-color: red;}
+
+****

@@ -1,0 +1,16 @@
+* Github FAQ
+* 怎么更新已fork的项目到最新代码
+  也就是说你已经有“origin”了，就是你在Gihub上fork了别人的项目的fork项目本身。
+  你可以使用任何一个名字代替“original“。
+  //在本地添加一个名称为“original”的remote仓库。
+  git remote add original  git://url-to-original-repo
+  //可以使用git remote -v 列出所有远程仓库
+  //git remote -v
+  git fetch original
+  git merge original/master
+  //处理冲突
+  //保存本地master更改
+  git add ./
+  //提交到自己的github远程仓库
+  git push
+  摘录自：http://bassistance.de/2010/06/25/git-fu-updating-your-github-fork/

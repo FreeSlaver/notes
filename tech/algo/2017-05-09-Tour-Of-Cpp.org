@@ -1,0 +1,264 @@
+* A Tour of C++笔记
+** 还是从头学起吧。
+   日啊，厚积薄发，改还的债还是要还。
+** The Basics
+*** 语法
+   std::cout << "Hello,World!\n"
+   The operator << (“put to”) writes its second argument onto its first.
+   In this case, the string literal "Hello, World!\n" is written onto the standard output stream std::cout.
+   也就是<<是一个操作符，将后面的，也即第二个参数写到第一个参数里面去。标准输出流本身也是个对象。
+
+   The std:: specifies that the name cout is to be found in the standard-library namespace (§3.3).
+   I usually leave out the std:: when discussing standard features;
+   类似Java中类中的静态方法调用。
+
+   using namespace std;// make names from std visible without std:: (§3.3)
+   类似Java中import一个类.*。这样就不需要使用std::
+
+*** Functions 函数
+    Elem* next_elem();// no argument; return a pointer to Elem (an Elem*)
+    也就是元素类型，或者叫类对象加个*就表示指向这个对象的指针，也就是指向内存地址。
+
+    void exit(int);
+    这个定义，也就是C++中没有参数名称。
+
+    double get(const vector<double>& vec,int index);
+    char& String::operator[](int index);？？？
+
+    Principle:The number of errors in code correlates strongly with the amount of code and
+    the complexity of the code.
+    错误的个数和代码的数量以及代码的复杂性强相关。
+
+    Principle：make a function forces us to name the activity and document its dependencies.
+    命名一个函数我们必须要表明它的功能，活动，并注明依赖。
+
+*** Types Variables Arithmetic 类型，变量和运算
+    • A type defines a set of possible values and a set of operations (for an object).
+    类型定义了一系列的可能值和针对对象的一系统操作
+    • An object is some memory that holds a value of some type.
+    一个对象就是内存中持有某种类型的值。
+    • A value is a set of bits interpreted according to a type.
+    一个值就是一系列的01，根据类型来展示
+    • A variable is a named object
+    一个变量就是一个被命名了的对象
+
+    C++中的常见类型
+    bool
+    char
+    int
+    double
+    unsigned：无符号整数
+
+    The size of a type is implementation-defined,can be obtained by sizeof.
+    也就是说不通的机器，类型的长度是不同的，一般的比如char是8个bit，但有的机器可能是16bit或4bit？
+    可以使用sizeof方法获取到具体长度。
+
+    C++中常见逻辑运算符？
+    x&y 按位and
+    x|y    or
+    x^y  exclusive or
+    ~x    complement
+    x&&y 逻辑and
+    x||y      逻辑or
+
+    使用下划线命名function，例如some_function.
+    使用花括号来初始化数组
+    double d1 = 2.3;
+    double d2 {3.4};
+    complex<double> z = 1;
+    complex<double> z2 {d1,d2};
+    complex<double> z3 = {1,2};
+    vector<int> v {1,2,3,4};
+
+    常量必须初始化，
+
+    使用auto关键字，可以不必什么对象类型。
+    auto b = true;
+    We use auto where we don’t have a specific reason to mention the type explicitly. “Specific reasons” include:
+    • The definition is in a large scope where we want to make the type clearly visible to readers of our code.
+    • We want to be explicit about a variable’s range or precision (e.g., double rather than float).
+    什么时候使用auto？当我们没有显著原因要去明确提醒这个类型。在大区域，类型足够清晰；明确知道变量精度。
+
+    使用auto，我们减少了信息冗余，不必写很长的类型名。面对泛型编程，特别是如果类型不知道时很有用。
+    Principle: use auto ,we avoid redundancy and writing long type names.
+    These operators are concise,convenient ,frequentyl used.
+    简洁，方便，经常使用。
+
+*** Scope and Lifetime 作用域和生命周期
+    Local scope:
+    Class scope: 类成员变量在它被作为成员的上一级对象被摧毁时摧毁。
+    Namespace scope:命名空间作用域，程序运行完被摧毁
+    Global namespace：没有定义在任何构造器中。也叫global name。
+    new的对象使用delete删除。
+
+    例子：
+    vector<int> vec; //global
+
+    struct Record {//结构体，类似java的类？
+        string name;  // class
+
+    };
+
+    void fct(int arg){
+        string motto {"Who dares win"};
+        auto p = new Record("Hume"); //p is unnamed Record?create by new
+    }
+
+*** Constants常量
+    const：意思是：我保证不会改变值。一般主要用于定义接口。
+    constexpr：意思是：在编译时期计算值。所以不能传递一个非静态变量？主要用于指定常量，只读数据。
+
+    也就是说const声明的变量不会改变，所以，右边的赋值表达式里面是可以有变量的。
+    但是constexpr右边的复制表达式里面不能有变量。例子：
+    const int dmv = 17;
+    int var = 17;
+    constexpr double max1 = 1.4*square(dmv);//OK
+    constexpr double max2 = 1.4*square(var);//这种不行，因为编译事情就需要计算出来。可以认为是一个静态
+    变量（常量）不能使用一个非静态变量。
+    const double max3= 1.4*square(var);//这种是可以的，只是后面max3不能被再次赋值。
+    double sum(const vector<double>&);/这里的&指针符号就认为是指向一个对象的内存地址就完了。
+    然后这个参数对象被进行计算时是不能被改变的。那vector里面的元素能被改变吗？
+    vector<double> v {1.2,3.4,4.5};
+    const double s1 = sum(v);
+    constexpr double s2 = sum(v);//不行。
+
+    constexpr double square(double x){return x*x};//这TM又是可以的。
+
+*** Points Arrays，Refernces 指针，数组和引用
+     A pointer variable can hold the address of an object of the appropriate type:
+     char v[6];//
+     char* p = &v[3];//p points to v's fourth element p指向v的第四个元素
+     char x = *p;// *p是p指向的对象，这句话就是将p指向的对象赋值给x。
+     In an expression, prefix unary * means “contents of” and prefix unary & means “address of.”
+     *表示取内容；&表示取内存地址。
+
+     A reference is similar to a pointer, except that you don’t need to use a prefix * to access the value referred to by the reference.
+     Also, a reference cannot be made to refer to a different object after its initialization.
+
+     那也就是说char* p =&v[3];只是将v[3]的地址赋值给了指针p。如果v[3]的实际内容变了的话，p的值还是没变。
+     但是如果将p再赋值给另外的元素的话，这个元素的值会变。
+     而char x = *p;是将指针p的内容，对象本身赋值给了x，如果*P指向的内容变了，x是不会改变的。
+
+     double sum(const vector<double>&)
+     什么意思了？就是将传入的verctor的引用初始化为常量，这样的话，引用不能变。
+
+     nullptr关键字代表null pointer。类似java中的null。
+     int count_x(char* p,char x) //char*是一个C风格的string。
+     {
+         if(p==nullptr) return 0;
+         int count = 0;
+         for(;p!=nullptr;++p){//++p是表示移动指针
+             if(*p==x){//*p是对p取值
+                 ++count;
+             }
+         }
+     }
+     老代码中使用0和NULL代替nullptr。
+
+     int count_x(char* p,char x)
+     {
+         while(p){//等价于while(p!=nullptr)，空指针，非空指针2种状态。
+             if(*p==x)
+                  ++count;
+             ++p;
+         }
+         return count;
+     }
+*** Tests 测试
+*** Advice 建议，这个里面的都是精华啊，说的写程序应该遵循的规范和准则。
+    1. Keep common and local names short and keep uncommon and nonlocal names longer
+    2. Avoid uninitialized variables。尽量避免未初始化的变量
+    3. Keep scopes small 变量使用尽量小的命名区间。
+    4. Don't say in comments what can be clearly stated in code. 如果代码能说清楚的不要用注释。
+
+** User-Defined Types 用户定义的类型
+*** Introduction
+    const modifier and the declarator operators are build-in types.
+    常量符号和操作符都是内建的类型。
+*** Structures 结构体
+    struct Vector {
+        int sz;
+        double* elem;//这个地方搞不清楚为什么？
+
+        void vector_init(Vector& v,int s){
+            v.elem = new double[s];// allocate an array of s doubles
+            // v’s elem member gets a pointer produced by the new operator
+            v.sz=s;
+        }
+    }
+    The & in Vector& indicates that we pass v by non-const reference (§1.8); that way, vector_init() can modify the vector passed to it.
+    The new operator allocates memory from an area called the free store (also known as dynamic memory and heap).
+    Objects allocated on the free store are independent of the scope from which they are created and “live” until they are destroyed using the delete operator .
+    就是说调用delete之前一直存活。
+
+    void f(Vector v,Vector& rv,Verctor* pv){
+        int i1 = v.sz;
+        int i2 = rv.sz;
+        int i4 = pv->sz; //指针访问属性
+    }
+
+*** Classes 类
+    A class is defined to have a set of members, which can be data, function, or type members.
+    The interface is defined by the public members of a class, and private members are accessible only through that interface.
+
+    class Vector{
+    public:
+        Vector(int s) :elem{new double[s]},sz{s} {} //construct a Vector
+        //首先初始化elem属性，用指针指向从随机内存中开辟的double数组。再初始化s。
+        //注意观察，都是用的大花括号{}来初始化属性，然后构造器中使用冒号：来表明初始化对象、
+        double& operator[](int i) {return elem[i];}
+
+        int size() {return sz;}
+
+     private:
+         double* elem;
+         int sz;
+      }
+      类的构建，初始化：
+      对外暴露的是接口，不是属性，然后通过接口来访问，操作属性。
+      构造器的定义是：冒号+属性+花括号，初始化。
+
+      Vector对象可能会有不同的数量的elements，但是Vector数据本身的大小是一样的，只记录了sz，第一个element的内存地址。
+      这是C++来处理不同大小对象的一种技术。new关键字来开辟内存的大小也是一样的。
+
+      struct和class没什么本质区别，只是struct成员默认public。
+*** Unions 组合
+    A union is a struct in which all members are allocated at the same address so that the union occupies only as much space as its largest member.
+
+    enum Type { str,num };
+
+    struct Entry{
+        char* name;
+        Type t;
+        char* s;
+        int i;
+    }
+    void f(Entry* p){
+        if(p->t==str) //从p指针指向的Entry对象中取属性t，判断t的值是否等于str
+            cout <<p->s; //等于，输出p指针指向的Entry对象中的s属性。
+    }
+    s和i永远不会被同时使用，所以内存空间就浪费了。因此，可以使用union。
+    union Value {
+        char* s;
+        int i;
+    }
+    其实说白了，就是将两个地址存放在一起？可以将type和union联合起来使用，naked unions尽量少使用。
+
+*** Enumerations 枚举
+    enum class Color {red,blue,green}; //定义一个枚举
+    Color col = Color::red; //从枚举中取值
+
+    enum可以运算，也就是和那个定义的顺序有关系。
+    也可以不用class，这样可以用int赋值，但是作用域缩小了。
+
+*** Advice 建议
+    Represent the distinction between an interface and an implemetation using a class
+
+** Modularity 模块化
+*** Intro 介绍
+    clearly defin the interaction among all parts.
+    The first and most important step is to distinguish between the interface to a part and its implementation.
+    最先和最重要的就是将接口和他们的实现区分开来。
+
+*** Separate Compilation
+    C++中的引入叫include，头文件。类似java中的import

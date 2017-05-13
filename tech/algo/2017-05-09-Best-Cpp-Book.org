@@ -1,0 +1,6 @@
+* 最好的C++书单
+** Introductory
+   C++ Primer
+   very thorough introduction into C++ that covers just about everything in the language in a very accessible format and in great detail.
+
+   那么我锁定的3本数就是：C++ Primer，Accelerated C++，Effective C++。

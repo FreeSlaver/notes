@@ -1,0 +1,83 @@
+* Graphs
+** Notation
+   Graph is a collection of vertices and arcs which connects vertices in the graph
+   Graph is a collection of nodes  and edges which connects vertices in the graph
+   vertices就是points，也叫nodes；arcs就是连接两点的线。
+
+   G=（V,E）
+   V is set of vertices and E is set of edges.
+
+   Vertex Node 顶点
+   Edge Arcs 边
+   An edge is represented as (startingVertex, endingVertex).
+
+   Edges are three types:
+   - Undirected Edge - An undirected egde is a bidirectional edge. If there is a undirected edge between vertices A and B then edge (A , B) is equal to edge (B , A).
+   - Directed Edge - A directed egde is a unidirectional edge. If there is a directed edge between vertices A and B then edge (A , B) is not equal to edge (B , A).
+   - Weighted Edge - A weighted egde is an edge with cost on it.
+   分为3种类型：
+   - 无向边 -也就是双向边，从A到B等价于从B到A。
+   - 有向边 -也就是边是有方向的，从A到B不等价于B到A。应该说是从B无法到A。
+   - 权重边 - 有权重的边，也就是在它上面的花费
+
+     无向图：
+     只有无向边（双向边）的图。
+     有向图：
+     只有单向边的图。
+     混合图：
+     有无向也有单向的图。
+
+     End vertics or Endpoints 结束顶点
+     The two vertices joined by an edge are called the end vertices (or endpoints) of the edge
+     就是说两个顶点之间只有一个边？
+
+     Origin 起点
+
+     Destination
+     If an edge is directed, its first endpoint is said to be origin of it and the other endpoint is said to be the destination of the edge.
+     针对一个顶点X，有向图中第一个端点为起点，和X连接的另外一个点称为目的点？
+
+     Adjacent
+     If there is an edge between vertices A and B then both A and B are said to be adjacent. In other words,
+     Two vertices A and B are said to be adjacent if there is an edge whose end vertices are A and B.
+
+** Graph Representations
+**** Three Types 3种表示方法
+   1.  Adjacency Matrix 邻接矩阵
+   2. Incidence Matrix 关联矩阵
+   3. Adjacency List 邻接表
+
+**** Adjacency Matrix 邻接矩阵 （2个领接顶点的关系）
+     使用一个VxV的矩阵表示，V代表Vertices（顶点）的个数。然后矩阵里面使用0和1表示。
+     行和列都用顶点来表示。
+     1表示从行元素到列元素是有边的（可达），0标示从行元素到列元素是无边的（不可达）
+
+**** Incidence Matrix 关联矩阵（顶点和边的关联关系）
+     使用一个VxE的矩阵表示，V代表Vertics个数，E代表Edges（边）个数。
+     行用Vertics（顶点）表示，列用Edges（边）来表示。
+     我们看的时候都是从行到列，也就是从顶点到边来看（它们之间的关系）
+     0表示顶点和边之间无联系。1表示顶点作为边的出去的点（边的起点）。-1表示顶点作为边的进入的点。（边的终点）
+
+**** Adjacency List 领接表（顶点的领接顶点list）
+     就是表示一个顶点，它的领接顶点（按照边）的集合，可以是list，array。
+
+*** Graph Traversals - DFS
+**** Techniques 遍历有两种技术
+     1. DFS (Depth First Search) 深度优先搜索
+     2. BFS（Breadth First Search）广度优先搜索
+
+**** DFS
+     使用Stack数据结构。
+     任意选择一个顶点A作为起始点，然后开始找一个领接顶点，并且未被访问的顶点B，放入stack，
+     然后找B的领接顶点，并且未被访问的顶点C，放入stack，直到没有1.未被访问的领接顶点。
+     此时开始回溯，将上一个顶点从stack中pop出来，然后判断是否有未访问的领接顶点，有，放入stack。
+     没有，继续从stack中pop出一个顶点，以此判断，直到stack中的元素为空（表明所有节点都被访问到了）
+
+**** BFS
+     使用Queue数据结构。
+     任意选择一个顶点A作为起始点，放入queue，然后将A的领接顶点B,E,D全部放入queue，然后删除A。
+     之后访问B的领接顶点，将全部未访问的领接节点C放入queue，然后删除B。
+     在访问E，将E的全部未访问领接节点F放入queue，删除E。
+     再访问D，将D的全部未访问领接节点，发现没有，删除D。
+     然后访问C，将C的全部未访问领接节点G放入queu，删除C。
+     一直重复，直到queue为空。就表示所有节点都已经访问到了。

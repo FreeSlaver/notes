@@ -1,0 +1,23 @@
+* 开源软件命名技巧，规范
+** Reference
+   https://github.com/openzipkin/openzipkin.github.io/issues/23
+** Goals 目标
+   1. Give components names that describe their purpose
+      给组件一个名称表明它们的作用，目的
+   2. One name belongs to exactly one component
+      一个名称只属于一个确切的组件
+   3. Names should have as little coupling to implementation details as possible
+      名称应该尽量少的显示实现细节
+   4. 命名不要太抽象了。
+
+** Nouns 名称
+   - reporter：任何发送追踪数据到Zipkin的东西
+   - transport：被使用来发送追踪数据的，比如HTTP,Kafka，Scribe等
+   - collector：从reporters或transports接受追踪数据的组件。
+   - storage：提供读写API用于存储追踪数据的组件。
+   - api：提供给ui获取数据的HTTP API
+   - ui：用于展示追踪数据的
+
+** 一句话描述
+   Reporters通过Transports将追踪数据发送到Zipkin Collector。Collector将追踪数据持久化
+到Storage，后面通过API查询数据，并展示到UI上。

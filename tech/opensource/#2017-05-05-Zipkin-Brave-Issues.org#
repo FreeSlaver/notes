@@ -1,0 +1,62 @@
+* Zipkin Brave Issues
+** 看过并过滤掉的issues
+   302
+** issue346
+   现在他想要的就是不管是否sampler，都有spanId，但是只有sample-header的才记录到日志里面。
+   他的实现方式是使用debug属性，这个当然可以作为标示。
+
+首先好好的如何贡献
+
+** 正在处理的issule pr
+   issue296 添加brave对netty的支持
+
+** 看过并忽略掉的pr，issule
+   pr212,issues302
+   issue138 一个应用中使用一个brave实例，然后有client端和server端，想区分开来使用不同的spanNameProvider。
+   issue189 brave对web service的拦截，使用brave-jersey就行了。
+   issue365 server端的span没有timestamp，导致uiy上无法搜索。但是却有duration，这是个bug。
+   issue330 是spring mvc和spring security相关的，就是拦截器的执行顺序无法保证。
+   issue185 是关于GRPC添加远程地址，remote addresses，应该就是调用的远程的ip地址。
+   issue199 对ipv6支持
+   issue103 好像是关于cpu时钟的精度什么的
+   issue108 记录请求的客户端ip
+   issue122 解决的是网络不稳定，丢span的问题，可能用缓存队列，但是需要考虑顺序性等。
+   issue309 依赖问题
+   issue135 无用
+   issue190 无用的，傻逼，还上传doc，zip，都不会问问题的。
+   issue157 问的zipkin中多线程如何进行追踪的。
+   issue259 是说mysql拦截的时候，生成了很多无用的child span
+   issue155 说的是使用webservice，然后jersey2混合HttpURLConnection使用，不知道有没
+   什么问题。这个也真是蛋疼。
+   issue205 搞定了。
+   issue357 没太搞明白是干嘛，好像是复活一个什么默认标签，区分local endpoint？
+  。
+   
+** 待处理的pr
+
+** 重要的pr issue
+    issue270 添加span的时候可以指定一个callable和runnable，然后运行一段代码。神奇。
+    这个地方其实实现的一个功能就是对符合特征的特定span进行一个额外的处理。比如我们之前领导要求的，如果
+    span记录到异常发生，告警出来。我当时的想法是对每个span进行判断？那么这种笨方法的话，对于很多不必要
+    的span也要进行判断了，但是如果加了这个方法的话，只有指定的span或者拦截器添加span的时候，使用这个方
+    法传入一个callback或者runnable就行了。
+
+    issue164 brave对异步回调支持，目前认为消息生产者是一个client端，消费者是个server端
+
+    issue23 这个很重要，里面有zipkin的架构图。
+
+    issue292
+
+     issue273 好像是说添加runnable和callable到span中，针对某些情况运行一些特定代码
+** 待处理的issues
+   issue386 brave添加CDI支持，Contexts&Dependence Injection
+   https://groups.google.com/forum/#!topic/microprofile/YxKba36lye4
+   issue298 就是说Server/Local/ClientTracer太重了，想解耦出来，选项有两个，显示暴露出trace context的引用，
+   或者单独提供一个api。
+
+   issue68 就是想在server端自定义serviceName，然后好在UI上展示，比如一个App Server
+   但是有两个service，这样就想显示两个serviceName。但是这个是刚开始构建Brave的时候，
+   那个localEndpoint都生成好了的。所以要改的话，需要暴露出localEndpoint的访问方法。
+
+   issue355就是说A->B->C，会丢失掉A调用B的信息，因为在B调用C的时候会清空掉A调用B
+   的span。

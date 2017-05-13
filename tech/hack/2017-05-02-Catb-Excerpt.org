@@ -1,0 +1,5 @@
+* Catb
+** How to hacking
+Note: you should specifically not try to read the entire program. You will just exhaust and frustrate yourself if you do that. Instead, use the module structure of the code to zero in on just the part you need to understand. Along the way, you will learn things about how the whole program fits together.
+
+It's a good exercise to add explanatory comments and notes to the code as you figure out things about it. This will help your memory, and will help you organize your thoughts as well.

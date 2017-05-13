@@ -1,0 +1,17 @@
+* Frontend Road Map
+** HTML
+记住至少 90% 的 HTML 标签及其语义，重点是 header、footer、article、main、section、nav、aside 这种语义特别明显的用于布局的标签。
+了解 HTML5 中 WebSQL、Web Storage（Local Storage 和 Session Storage）、应用缓存（Application Cache）、Cookie 是怎么回事，能实现什么功能。
+
+** CSS
+记住至少 90% 的 CSS 属性与写法，重点是盒模型（margin、padding、border、box-sizing）、页面布局相关（position 的用法、淘宝的双飞翼布局）、页面渲染相关（背景、阴影、字体样式等）……
+以前没有 CSS 预处理器与后处理器时，往往需要前端开发人员手写带有各种特殊前缀的私有 CSS 属性。有了这些处理器之后，只需要写标准的 CSS，如 border-radius，再用这些处理器处理一下 CSS，就能自动补齐浏览器私有 CSS 属性，实现前端页面的最大化兼容性，例如兼容 IE9、IE8 等等…
+
+
+** JavaScript
+
+** 框架BootStrap
+觉得 HTML、CSS 基础了解得差不多了，我主张先学习 Bootstrap，重点是学会 Bootstrap 的栅格系统及其原理，了解响应式网页设计是如何实现的，能够用 Bootstrap 拼出一套管理后台界面。
+Bootstrap 的进阶用法就是：自行定制 Bootstrap
+
+如果要在自己的电脑定制，需要掌握 LESS 或者 Sass（两者都是 CSS 编译器，为编写 CSS 引入了编程语言的变量、复用等特性）。
