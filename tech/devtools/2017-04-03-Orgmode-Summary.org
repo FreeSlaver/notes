@@ -64,6 +64,15 @@
     C-c C-q 然后输入标签
     C-u C-c C-q 其他标签对齐本标签
     可以使用固定的标签列表，在org-tag-alist里面配置
+
+** Links 链接
+*** Internal links
+    不像URL的就被认为是内部链接。例如 【【#my-custom-id】】会被链接到有
+    my-custom-id属性的入口。id必须唯一。
+
+    【【My Target】】或【【My Target】【Find my Target】】会在当前文件进行文字搜索。
+
+
 ** Reference
 [[http://orgmode.org/worg/org-tutorials/index.html][tutorials
 

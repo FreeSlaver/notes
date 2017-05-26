@@ -1,0 +1,30 @@
+* ISO
+** What
+   In traditional (film) photography ISO (or ASA) was the indication of how sensitive a film was to light.
+   The lower the number the lower the sensitivity of the film and the finer the grain in the shots you’re taking.
+   就是说值越低的话，影片对光的灵敏度越低，细粒度越好。
+   grain的有道解释：
+   磨料力度，晶粒度，纹理，
+
+   In Digital Photography ISO measures the sensitivity of the image sensor.
+   摄影中，ISO控制传感器的灵敏度。
+
+   Higher ISO settings are generally used in darker situations to get faster shutter speeds.
+
+** When to choose ISO
+   Ask yourself 4 questions:
+   1. Light – Is the subject well lit?
+      物体是否被很好照明
+   2. Grain – Do I want a grainy shot or one without noise?
+      我需要一个极细腻的并且没有噪点的图片吗
+   3. Tripod – Am I using a tripod?
+      我使用三脚架了没有
+   4. Moving Subject – Is my subject moving or stationary?
+      被拍摄物体是否移动
+
+** Situations use high ISO
+   Indoor Sports Events – where your subject is moving fast yet you may have limited light available.
+   Concerts – also low in light and often ‘no-flash’ zones
+   Art Galleries, Churches etc- many galleries have rules against using a flash and of course being indoors are not well lit.
+   Birthday Parties – blowing out the candles in a dark room can give you a nice moody shot which would be ruined by a bright flash.
+   Increasing the ISO can help capture the scene

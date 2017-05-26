@@ -165,3 +165,40 @@
      2. More css more request and browsers can download a limited number of files from same domain.
      3. Add a flag to each of your comment headers.Useful for search.
         /* @group typeography*l /也就是说利于搜索，在每段CSS功能前添加特殊字符便于搜索。
+
+**** Strcturing your code
+     • General styles
+       • Body styles
+       • Resets
+       • Links
+       • Headings
+       • Other eleme
+     • Helper styles
+       • Forms
+       • Notifications and errors
+       • Consistent items
+     • Page structure
+       • Headers, footers, and navigation
+       • Layout
+     • Other page furniture
+       • Page components
+       • Individual pag
+     • Overrides
+
+     我使用一个特大的，风格化的注释块来区分不同部分。
+     /* @group general styles
+     –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+
+     /* @group helper styles
+     –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+
+     /* @group page structure
+     –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+
+     /* @group page components
+     –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+
+     /* @group overrides
+     –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+
+**** Note to Self

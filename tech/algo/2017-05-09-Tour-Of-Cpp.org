@@ -262,3 +262,496 @@
 
 *** Separate Compilation
     C++中的引入叫include，头文件。类似java中的import
+    using separate compilation is an issue of how best to take advantage of a particular language implementation.
+    The best approach is to maximize modularity,represent that modularity logically through language features,
+    and then exploit the modularity physically through files for effective separate compilation.
+    利用特定的语言实现是多么棒的事情。最好的方式就是最大化模块性，通过语言的特点来逻辑的展示模块，
+    然后通过物理文件暴露出模块下。
+
+*** Namespaces 命名空间
+    namespaces as a mechanism for expressing that some declarations belong together and that their names shouldn’t clash with other names.
+    直接使用namespace命名空间::method，例如std::cout。
+    也可以在前面直接使用using std引入。
+
+*** Error Handling 异常处理
+    抛出一个异常是将异常处理的控制权转移，转交给了特定的exception handler。
+    implementation will unwind the function call stack as needed to get back to the context of that caller.
+    并且会释放掉call stack并返回到调用者的上下文环境中取。
+
+    一个函数永远不该抛出异常被定义为noexcept。
+    void user(int sz){
+        Vector v(sz);
+        iota(&v[0],&v[sz],1): // fill v with 1,2,3,4
+    }
+    如果user函数还是抛出异常，标准库中的terminate()函数会被调用，立刻停止程序。
+
+*** Invariants 不变性
+    Whenever we define a function, we should consider what its preconditions are and if feasible test them.
+
+*** Static Assertions 静态断言
+    static_assert(4<=sizeof(int), "integers ar too small");
+    int类型小于4个字节。
+    最重要的用处在用static_assert用作泛型检查。
+
+*** Advice
+    Distinguish between declarations (used as interfaces) and definitions (used as implementations)
+    区分开声明（接口）和定义（实现）
+    Use purpose-designed user-defined types as exceptions (not built-in types);
+    使用目的性设计的自定义类型作为异常类型，而不要使用内建的异常类型。
+
+** Classes 类
+*** Intro
+    Whenever our design for a program has a useful concept, idea, entity, etc.,
+    we try to represent it as a class in the program so that the idea is there
+    in the code, rather than just in our head,
+
+    By “better,” I mean more correct, easier to maintain, more efficient, more elegant,
+    easier to use, easier to read, and easier to reason about.
+
+**** Three Type Classes
+     - Concrete classes
+     - Abstract classes
+     - Classes in class hierarchies
+*** Concrete Types
+    its representation is part of its definition.
+    Vector:
+    - place objects of concrete types on the stack, in statically allocated memory, and in other objects
+    - refer to objects directly (and not just through pointers or references);
+    - initialize objects immediately and completely (e.g., using constructors
+    - copy objects
+
+*** A Type
+    By defining a default constructor you eliminate the possibility of uninitialized variables of that type.
+    C++中的操作符可以重载。
+
+
+
+*** A Container 容器
+    A container is an object holding a collection of elements,
+
+    it is not guaranteed that one is available to make unused memory available for new objects.
+    We need a mechanism to ensure that the memory allocated by the constructor is deallocated; that mechanism is a destructor:
+    我们需要将通过构造器分配的内存给释放掉，这就是解构函数的作用。
+    Vector() { delete[] elem; }
+    使用delete操作符释放，但是无需用户介入，但是要定义，之所以如此是因为：
+    Vector obeys the same rules for naming, scope, allocation, lifetime, etc.
+    也就是说我们调用一个方法，当方法运行完成了，方法里面定义的对象占用的内存空间都被释放了，
+    实现的原理好像是在线程中的stack的数据结构。
+
+    to avoid allocations in general code and keep them buried inside the implementation of well-behaved abstractions.
+
+*** Init Containers 初始化容器
+    Vector :: Vector(std :: initializer_list<double> lst)
+         :elem{new double[lst.size()]}, sz{static_cast<int>()lst.size))}
+    {
+          copy(lst.begin(),lst.end(),elem);
+    }
+*** Abstract Types 抽象类
+    Since we don’t know anything about the representation of an abstract type (not even its size), we must allocate objects on the free store (§4.2.2) and access them through references or pointers
+    抽象类就是对具体表现，实现，完全不知道。
+
+    class Container {
+    public:
+        virtual double& operator[](int) = 0;
+        virtual int size() const = 0;
+        virtual Container () {} //destructor
+    }
+    The word virtual means “may be redefined later in a class derived from this one.”
+    virtual表示后面会被其他类重新定义。就是类似java中的abstract关键字，子类必须实现。
+
+    The curious =0 syntax says the function is pure virtual;
+    that is, some class derived from Container must define the function.
+
+    A class with a pure virtual function is called an abstract class
+
+**** Use Container
+     void use(Container& c)
+     {
+
+     const int sz = c.size();
+     for (int i=0; i!=sz; ++i)
+           cout << c[i] << '\n';
+      }
+      //和java的面向接口编程是一样的，参数列表只需要是一个接口类型就行。实际传入的参数
+      可以是接口的实现类。并且执行的方法完全忽略掉实现细节（封装性？）。
+      Note how use() uses the Container interface in complete ignorance of implementation details.
+      A class that provides the interface to a variety of other classes is often called a polymorphic type.
+
+      还有一点就是接口对于其他实现的类叫做多态类型。
+      也就是接口调用方caller是完全不关心具体实现细节的。这些设计使得具体实现，程序更加flexible，
+      而且顶层向下层兼容。
+
+**** Implements 实现
+     class Vector_container : public Container{
+         Vector v;
+     public:
+         Vector_container(int s) : v(s){}
+         Vector_container() {}
+         double& operator[](In i) {return v[i];}
+         int size() const {return v.size();}
+      }
+      使用冒号public表示实现接口，
+      The :public can be read as “is derived from” or “is a subtype of.”
+
+*** Virtual Functions
+    面向接口编程是怎么知道具体调用的是那个子类的具体方法实现了？
+    The usual implementation technique is for the compiler to convert the name of a virtual function into an index into a table of pointers to functions.
+    一般的实现方式是编译器将virtual函数的名称转换为index索引，放入一个存放指针的表，指针指向函数。
+
+    That table is usually called the virtual function table or simply the vtbl.
+    虚拟函数表。
+    所以这也是为什么必须要使用引用或者指针的原因。
+
+     The implementation of the caller needs only to know the location of the pointer to the vtbl in a Container and the index used for each virtual function.
+
+**** Explicit Overriding
+     在函数后面添加override关键字。
+
+**** Benefits from Hierarchies
+     使用dynamic_cast进行转型，如果不是预期类型返回nullptr。
+     Shape* ps;
+     if(Smiley* p = dynamic_cast<Smiley*>(ps)){
+         //do sth
+     }
+     使用unique_ptr持有函数返回的对象指针。运行完作用域之后，自动被释放。
+
+*** Copy and Move
+    void test(complex z1)
+    {
+     complex z2 {z1};    // copy initialization
+     complex z3;
+     z3 = z2;            // copy assignment
+     // ...
+     }
+     Now z1, z2, and z3 have the same value because both the assignment and the initialization copied both members.
+     和java不太一样，对变量赋值，也是逐个成员拷贝。哦，这个还是浅拷贝。
+**** Copying Containers
+     resource handle-class responsible for an object accessed through a pointer.
+     资源句柄，
+     对于容器的浅拷贝是灾难，因为会改变不变性。
+
+     Copying of an object of a class is defined by two members: a copy constructor and a copy assignment:
+     拷贝构造器和拷贝赋值
+
+     //这里是在public的interface中定义的构造器
+     Vector(const Vector& a);                 // copy constructor
+     Vector& operator=(const Vector& a);      // copy assignment
+
+     //构造器拷贝
+     Vector::Vector(const Vector& a)     // copy constructor
+    :elem{new double[a.sz]},        // allocate space for elements
+    sz{a.sz}
+    {
+    for (int i=0; i!=sz; ++i)      // copy elements
+          elem[i] = a.elem[i];
+     }
+     //其实也就是将一个Vector作为参数传入Vector的构造器时候做的事情。
+
+     //赋值拷贝
+     Vector& Vector::operator=(const Vector& a)       // copy assignment
+     {
+     double* p = new double[a.sz];
+     for (int i=0; i!=a.sz; ++i)
+         p[i] = a.elem[i];
+     delete[] elem;        // delete old elements
+     elem = p;
+     sz = a.sz;
+     return *this; //有点类似java中的this
+    }
+    可以这么认为，一般赋值Vector v1 = v2;这样的话v2作为参数a传递进来，执行Vector中
+    定义的以上赋值拷贝方法，然后将对象本身返回。
+
+**** 4.6.2 Moving Containers ？？？
+     We avoid the cost of copying when we pass objects to a function by using references
+      but we can’t return a reference to a local object as the result
+
+      Vector operator+(const Vector& a, const Vector& b)
+      {
+      if (a.size()!=b.size())
+          throw Vector_size_mismatch{};
+      Vector res(a.size());
+      for (int i=0; i!=a.size(); ++i)
+         res[i]=a[i]+b[i];
+      return res;
+    }
+    //直接返回res，是将res的拷贝返回了。
+
+     Vector(Vector&& a);                     // move constructor
+     Vector& operator=(Vector&& a);          // move assignment
+     //真是日了狗，这么多的构造函数，妈的，什么移动构造函数，还搞出2个&&，真SB。
+
+     //移动构造器实现
+     Vector::Vector(Vector&& a)
+         :elem{a.elem},          // "grab the elements" from a
+         sz{a.sz}
+    {
+        a.elem = nullptr;       // now a has no elements
+        a.sz = 0;
+     }
+     The && means “rvalue reference” and is a reference to which we can bind an rvalue.
+     &&是右值引用，相对于左值引用，也就是我们一般在左边使用引用，然后在右边进行赋值。
+     很类似被函数返回的结果引用，右值引用的东西无法被赋值，
+
+     an rvalue reference is a reference to something that nobody else can assign to,
+
+**** Essential Operations
+     There are five situations in which an object is copied or moved:
+     • As the source of an assignment
+     作为赋值的源
+     • As an object initializer
+     作为一个对象的初始化器？好像就是作为参数传递到对象的构造器中。
+     • As a function argument
+     作为函数的参数
+     • As a function return value
+     作为函数的返回值
+     • As an exception
+     作为一个异常。异常因为需要广播和转移递交控制权。
+
+     class Y{
+     Public:
+         Y(Sometype);
+         Y(const Y&) = default;
+         Y(Y&&) = default;// and the default copy constructor
+     }
+
+     When a class has a pointer or a reference member, it is usually a good idea to be explicit about copy of move operations.
+     The reason is that a pointer or reference will point to something that the class needs to delete, in which case
+     the default copy would be wrong, or it points to something that the class must not delete,
+     in which case a reader of the code would like to know that.
+     当一个类有指针或者引用成员，显示的调用copy或者move操作是个好主意。
+     原因是指针或引用会指向类需要删除的东西，当默认copy操作错误时。
+     或者他们可以指向某些类一定不能删除的东西。
+
+     C++中还能这样初始化？
+     complex z1 = 3.14; // z1 becomes {3.14,0.0}
+     complex z2 = z1*2; // z2 becomes {6.28,0.0}
+     是调用了赋值构造器？
+
+     Vector v1 = 7; // OK: v1 has 7 elements
+     妈的，狗混乱的啊，C++。标准库是不准许这样将int转Vector的。
+     可以使用explicit关键字，就是明确要求必须使用显示调用构造器的方式而不是赋值的方式。
+     Vector v1(7);    // OK: v1 has 7 elements
+     Vector v2 = 7;   // error: no implicit conversion from int to Vector
+
+**** Resource Management 资源管理
+     By defining constructors, copy operations, move operations, and a destructor, a programmer can provide complete control
+     of the lifetime of a contained resource (such as the elements of a container).
+     定义这么多构造器，是为了完整的管理对象的生命周期。
+
+     Furthermore, a move constructor allows an object to move simply and cheaply from one scope to another
+     移动构造器是为了更加廉价和方便的传递对象到不同的作用域。
+
+     A resource is anything that has to be acquired and (explicitly or implicitly) released after use.
+     Examples are memory, locks, sockets, file handles, and thread handles.
+
+     Let each resource have an owner in some scope and by default be released at the end of its owners scope.
+     让每个资源在指定作用域都有所有者，并且在作用域结束时进行释放。
+
+**** RAII原则：Resource Acquisition Is Initialization
+     就是资源的请求只在初始化阶段？
+     In RAII, holding a resource is a class invariant, and is tied to object lifetime:
+     resource allocation (or acquisition) is done during object creation (specifically initialization), by the constructor,
+     while resource deallocation (release) is done during object destruction (specifically finalization), by the destructor.
+     Thus the resource is guaranteed to be held between when initialization finishes and finalization starts (holding the resources is a class invariant),
+     and to be held only when the object is alive. Thus if there are no object leaks, there are no resource leaks.
+     没有对象泄露就没有资源泄露，因为对象持有资源。
+
+     Resources can be moved from scope to scope using move semantics or “smart pointers,”
+     and shared ownership can be represented by “shared pointers”
+     资源在作用域结束时，通过move语义或者聪明的指针释放掉，通过共享指针来共享资源。
+
+     RAII only works for resources acquired and released (directly or indirectly) by stack-allocated objects, where there is a well-defined static object lifetime.
+     Heap-allocated objects which themselves acquire and release resources are common in many languages, including C++. RAII depends on heap-based objects
+     RAII只对stack栈上分配的对象有作用，heap堆上的对象他们自己请求并释放资源。
+
+     还有一个好处是即使发生异常，deconstructor也会被调用，释放资源。
+
+     资源分类就以下几种：
+     memory (string, vector, map, unordered_map, etc.),
+     files (ifstream, ofstream, etc.),
+     threads (thread),
+     locks (lock_guard, unique_lock, etc.),
+     and general objects (through unique_ptr and shared_ptr).
+
+      things that we have a finite supply of
+     有限的东西称作资源，也就是会被耗尽。
+     The result is implicit resource management that is invisible in common use and leads to low resource retention durations.
+     尽量使资源的被持有时间缩短。
+
+
+**** Suppressing Operations
+     使用基类默认的copy和move构造器是灾难，因为都用一个指针指向基类，而又不知道子类里面有哪些成员？
+     使用delete关键字，可以禁止任何操作函数。
+     Shape(const Shape&) =delete;  //无默认copy构造器。
+
+     A resource handle generally cannot be copied just by copying its members
+
+*** Advice
+    Express ideas directly in code
+    If a class has a pointer or reference member, it probably needs a destructor and non-default copy operations;
+    Use unique_ptr or shared_ptr to avoid forgetting to delete objects created using new;
+    If a class is a resource handle, it needs a constructor, a destructor, and non-default copy operations;
+
+** Templates 模板
+*** Intro
+    Vector<double>并不总是double，需要将Vector和double区分开来。
+    A template is a class or a function that we parameterize with a set of types or values.
+    这样做的目的就是为了将一般事物，如Vector和特殊事物，比如double，String区分开。
+
+*** Parameterized Types 参数化类型
+    其实和Java中的泛型差不多，只是写法不同。
+    template<typename T>
+    class Vector{
+    private:
+        T* elem;
+        int sz;
+    public:
+        explicit Vector(int s);
+        Vecotr(){delete[] elem;}
+
+        T& opperator[](int i);//[]这种是数组的取值操作符。
+        const T&  operator[](int i)  const;//返回的引用不能改变
+        int size() const {return sz;}
+    }
+    //使用typename和class是等价的。
+
+*** Function Templates
+    //定义函数模板，也就是java中的方法泛型化
+    template<typename Container, typename Value>
+    Value sum(const Container& c, Value v)
+    {
+        for (auto x : c)
+            v+=x;
+        return v;
+    }
+
+*** Concepts and Generic Programming
+    模板提供一下功能：
+    • The ability to pass types (as well as values and templates) as arguments without loss of information.
+    This implies excellent opportunities for inlining, of which current implementations take great advantage.
+    • Delayed type checking (done at instantiation time). This implies opportunities to weave together information from different contexts.
+    • The ability to pass constant values as arguments. This implies the ability to do compile-time computation.
+
+    templates provide a powerful mechanism for compile-time computation and type manipulation that can lead to very compact and efficient code
+    也就是说模板可以提供编译器的预估以及正真运行时的类型操作。也就是定义了T类型的模板代码，可以适用于多钟类型的参数运算。
+
+    支持的是一种类型，参数的多态性。
+
+*** Function Objects
+    也称作functor，function objects也就是将对象用来进行函数判断。
+    //定义
+    template<typename T>
+    class Less_than{
+        const Tval;
+    public:
+        Less_than(const T& v) :val(v) {}
+        bool operator() (const T& x) const {return x<val;}//对()进行重载
+    }
+    //初始化function object
+    Less_than<int> lti {42};
+    Less_than<string> lst {"Backus"};
+    //使用，调用function object
+    void fct(int n,const string* s){
+        bool b1 = lti(n);//比较传入的n和42大小
+        bool b2 = lts(s);
+    }
+    看到predicate了（这种描述一点都不友善，要具体，简洁，哪一章哪一节，多少页）
+**** Predicate 断言
+     count(vector,Less_than<int>{x})
+     count(strList,Less_than<String> {s})
+     Here, Less_than<int>{x} constructs an object for which the call operator compares to the int called x;
+     这里Less_than<int>{x} 构造了一个对象，调用操作符比较和x的带下。
+     count()函数好像是计数的，然后和x比较大小。但是下面的一个list string是怎么搞的？还是比较数量？
+     Less_than<string>{s} constructs an object that compares to the string called s.
+     是啊，string和string相比较，但是这个他妈的lst是个list的指针？？？
+
+     The beauty of these function objects is that they carry the value to be compared against with them.
+     We don’t have to write a separate function for each value (and each type), and we don’t have to
+     introduce nasty global variables to hold values.
+     这个函数的美妙之处在于传递参数和比较的对象。
+
+     count(vector,[&](int a){ return a<x; })
+     妈个卵，这个的意思是传递一个int参数代表vector的下标，然后取值，然后和x比较，返回bool？
+     不对，a作为后面的参数，妈的。
+     C++的简洁带来了理解上的晦涩和混乱。
+     [&](int a){ return a<x; } is called a lambda expression，exactly like Less_than<int>{x}.
+     The [&] is a capture list specifying that local names used (such as x) will be accessed through references.
+**** [ ]捕捉符号
+     [ ]捕捉符号，捕捉x,[&x]，副本[=x]，[&]捕捉所有局部变量名，[=]捕捉所有局部变量的值。
+
+     Function objecets也叫lambdas。
+
+     template<typename C, typename Oper>
+     void for_all(C& c, Oper op)    // assume that C is a container of pointers
+     {
+     for (auto& x : c)
+         op(*x);        // pass op() a reference to each element pointed to
+     }
+     //这个地方将container容器和操作符operater一起传递进去。这样的话，可用性大大增强。
+     我们可以自定义operator，来对container进行操作。如下：
+
+     void user()
+     {
+     vector<unique_ptr<Shape>> v;
+     while (cin)
+          v.push_back(read_shape(cin));
+     for_all(v,[](Shape& s){ s.draw(); });      // draw_all()
+     for_all(v,[](Shape& s){ s.rotate(45); });  // rotate_all(45)
+     }
+     //v是container，后面的[](Shape& s){s.draw();}是一个lambda表达式。
+*** Variadiac Templates
+    variadic template can accept an arbitrary number of arguments of arbitrary types。
+    尼玛，就是java中的不定长参数列表:
+
+    template<typename T, typename... Tail>
+    void f(T head, Tail... tail)
+    {
+         g(head);    // do something to head
+         f(tail...); // try again with tail
+     }
+     就是定义了一个类型T，然后有一个不变成的list，下面的函数，可以对list的第一个元素进行操作，
+     对剩下的做另外的操作。
+
+*** Aliases
+    template<typename Key, typename Value>
+    class Map {
+         // ...
+     };
+
+     template<typename Value>
+     using String_map = Map<string,Value>;
+     String_map<int> m;     // m is a Map<string,int>
+
+*** Template Compilation Model 模板编译模式
+
+*** Advice
+    Templates ability：
+    1. express algorithms that apply to many argument types
+    2. express containers
+    3. raise the level of abstraction of code
+
+    Use template aliases to simplify notation and hide implementation details
+
+** Liberary Overview
+
+** Strings and Regular Expressions
+
+*** Strings
+    Note that the replacement string need not be the same size as the substring that it is replacing.
+
+    In particular, in multi-threaded implementations, memory allocation can be relatively costly.
+    Also, when lots of strings of differing lengths are used, memory fragmentation can result.
+
+    string是basic_string的别名。
+    template<typename Char>
+    class basic_string {
+         // ... string of Char ...
+     };
+     //定义别名
+     using string = basic_string<char>
+
+     用户可以自定义任意的字符串类型，比如
+     using Jstring = basic_string<Jchar>;
+*** Regular Expressions 正则表达式
+
+**** Searching

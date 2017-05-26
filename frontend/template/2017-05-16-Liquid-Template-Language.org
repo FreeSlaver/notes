@@ -1,0 +1,118 @@
+* Liquid Template Language
+感觉我之前那种做笔记的核心方式不对，做笔记是为了什么？
+1. 记录不懂的地方，以后回头看
+2. 记录重要的但容易忘记的核心知识
+3. 以后速度复盘，捡起知识
+
+   Three categorises Objects,Tags,Filters.
+** Objects
+   使用双花括号取值。{{ xx }}
+   {{page.title}}
+** Tags
+   Tags create the logic and control flow for templates.
+   标签生成逻辑并控制模板的工作流程。
+   使用单花括号加前后百分号。 {% xx %}
+
+   Use Tags to get assigned variables and created conditions and loops.
+   {% if user%} //判断user对象是否为空
+       Hello {{user.name}}! //非空展示user的name属性
+   {% endif %}
+
+   There types Tags:Control flow,Iteration,Variable assignments.
+   标签可以分为3种类型：控制流，遍历，变量赋值。
+**** Raw
+     临时禁用掉liquid的标签处理。
+     {% raw %}
+         XX
+     {% endraw %}
+*** Control Flow
+**** if else
+    if
+    else if
+    else
+**** case when
+    case when
+    {% case handle %}
+        {% when 'cake' %}
+        This is cake
+        {% when 'cookie' %}
+        This is cookie
+        {% else %}
+        This others.
+    {% endcase %}
+*** Iteration
+- limit
+     限制遍历的数量
+     {% for item in array limit: 2 %}//只遍历2个元素。
+         {{item}}
+     {% endfor %}
+- offset
+     从指定索引开始遍历
+ - range
+     就是自己指定一个集合的范围。
+     {% assign num = 4 %}
+     {% for i in (1..num) %} //可以用..
+         {{ i }}
+     {% endfor %}
+- reversed 看到这里了
+
+*** Variable Assignments
+    {% assign tobi = "Tobi" %}
+
+    - capture 捕获字符串，并赋值给变量
+    {% capture myvariable %}
+        I am being captured.
+    {% endcapture %}
+    输出：I am being captured.
+
+    - increment
+      {% increment counter %} 每次加一，默认初始化就是0。
+
+    - decrement
+**** Comments
+     {% comment %}
+       注释，不会被输出
+     {% endcomment %}
+
+** Filters
+   Filters change the output of a Liquid object.They are used within an output and are separated by a |.
+   过滤器改变对象的输出，使用低落线和输出对象一起使用。
+   {{"/my/fancy/url" | append: ".html"}} //对路径/my/fancy/url添加.html后缀。
+
+   方法的时候是：方法名+冒号
+
+   可以使用多个过滤器，从左到右，使用低落线分割。
+   {{ "adam!" | capitalize | prepend: "Hello " }}
+
+** Operators 操作符
+   和普通编程语言没什么不同，
+   == 判断是否相等，
+   and
+   or
+   contains 也可以用于数组
+
+*** Truthy and Falsy 布尔判断
+    除了nil和false，其他都为真。
+
+*** Types 类型
+    String,Number,Boolean,Nil,Array
+    使用assign和capture对变量赋值。
+**** Nil
+      when Liquid code has no results,Nil returns.It's not a "nil" string
+**** Array
+     使用for进行遍历
+     {% for user in site.users %}
+          {{user}}
+     {%endfor%} //我擦，这里是endfor不是endif
+
+     使用标签无法直接初始化数组。
+*** Others 其他
+**** 去掉空格
+     {%- assign myvariable = "tomato" -%}
+     使用连字符去掉空格。
+
+
+
+** Reference
+   [[https://shopify.github.io/liquid/basics/introduction/][Liquid Template Language]]
+   [[https://gist.github.com/smutnyleszek/9803727][Jekyll & Liquid Cheatsheet]]

@@ -77,3 +77,6 @@ jstack 74897 |grep 12540 -A 30
 
 修改sh执行权限
 chmod +x start.sh
+
+** sed
+   截取日志

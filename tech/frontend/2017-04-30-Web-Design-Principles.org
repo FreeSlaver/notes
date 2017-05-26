@@ -1,0 +1,10 @@
+* Web Design Princinples
+** Princinples
+
+//it is not just about form(how good it looks),but also function(how easy is ti ti use).
+//Design is not just what it looks like + feels like.Design is how it workds.-steve jobs
+*** Purpose目的
+    设计这个网站的目的是什么？比如我的个人网站的话就是希望传达我个人的思想以及我的生活状态。
+
+*** Information信息
+    以最直观，最有效的方式传递信息给用户。

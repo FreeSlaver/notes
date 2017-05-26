@@ -1,0 +1,36 @@
+* 国内宽客平台
+https://www.quantopian.com/
+
+
+人人都是宽客
+
+tinysoft
+
+TB交易 交易开拓者
+
+SPT盛立，掘金量化
+
+CTP、LTS，分别是上期技术，华宝证券CTP，提供的交易接口服务。是针对有技术，有策略的团队做开发。开放程度更高，当然需要技术能力也更高。
+
+聚宽，人人皆为宽客
+https://www.joinquant.com/
+
+、金字塔、文华财经、
+
+金钱豹交易系统
+
+其中使用最为广泛和易上手的是TB，可以用来进行测试和交易
+
+tingsoft是做期货和股票（特别是股票）分析非常好用的工具，缺点是不能直接与交易相连，且软件价格不菲。
+
+至于如何学习各种软件可以上各软件官网的论坛或海洋部落(OceanTribe.org)
+
+通联数据
+
+JoinQuant
+
+http://www.hylt.net/vb/
+
+https://app.wmcloud.com/login.html?RelayState=https%3A%2F%2Fapp.wmcloud.com%2Fmercury%2Flabs%2F
+
+国外有相当多类似的项目，比如AlgoTrader、Tradelink、Marketcetera等等开源交易平台有着大量的用户和活跃的社区。目前国内据我所知只有海风的AT平台项目（基于C#），QuantBox项目目前更多只是一个柜台API的统一化封装（当然封装的非常漂亮，有兴趣的建议直接看源代码）。

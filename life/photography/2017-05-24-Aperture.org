@@ -1,0 +1,16 @@
+* Aperture 光圈 孔径
+** 草稿
+   Every time the f-stop value halves, the light-collecting area quadruples.
+   也就是说每次f值减少一半，采光的区间就会加大四倍。因为孔径是圆形的么，r的平方。
+
+** Tips
+   Aperture Setting	Relative Light	Example Shutter Speed
+   f/22                           1X                 16 seconds
+   f/16                           2X                 8 seconds
+   f/11                           4X                 4 seconds
+   f/8.0                          8X                 2 seconds
+   f/5.6                          16X               1 second
+   f/4.0                          32X               1/2 second
+   f/2.8                          64X               1/4 second
+   f/2.0                          128X             1/8 second
+   f/1.4                          256X             1/15 second

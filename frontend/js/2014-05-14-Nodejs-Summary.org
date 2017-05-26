@@ -1,0 +1,163 @@
+* Nodejs总结
+最深沉的爱源于理解
+
+Node 是一个服务器端 JavaScript 解释器，它将改变服务器应该如何工作的概念。它的目标是帮助程序员构建高度可伸缩的应用程序，编写能够处理数万条同时连接到一个（只有一个）物理机的连接代码。
+
+ Node 公开宣称的目标是 “旨在提供一种简单的构建可伸缩网络程序的方法”
+
+ 首先要清楚Node不是一个Web服务器，这十分重要。它本身并不能做任何事情。它无法像Apache那样工作。如果你希望它成为一个HTTP服务器，你必 须借助它内置库自己编写。Node.js只是计算机上执行代码的另一种方式，它是一个简单的JavaScript Runtime.
+
+Node.js从0.6版本开始研究实现了源代码级别的跨平台，因此我们可以使用不同的编译命令将同一份源代码的基础上编译为不同平台下的原生可执行代码。
+服务端的javaScript中是没有DOM和BOM的
+
+Node.js和传统的框架有很多的区别，使用了事件式编程和异步I/O
+
+Node.js是一个可以让Javascript运行在服务器端的平台哦，可以脱离浏览器的束缚运行在一般的服务器环境下，想phtyon,perl,php,ruby一样。
+Node.js是一个为实时web应用开发而诞生的平台，考虑超大规模数据要求下架构的可扩展性。这使得它摒弃了传统平台依靠多线程来实现高并发的设计思路，而采用了单线程，异步式I/O，时间驱动的查询设计模型。这些不仅t带来了巨大的性能提升还减少了多线程程序设计的复杂性，进而提高了开发效率。
+
+javascript是由ECMAScript文档对象模型DOM和浏览器对象模型BOM组成的。Node.js中所谓的javascript只是Core JavaScript，或者说是ECMAScript的一个实现，不包含DOM,BOM,或者Client JavaScript。
+
+使用Node.js你可以做到：
+具有复杂逻辑的网站
+基于社交网络的大规模web应用
+web socket服务器
+TCP/UDP套接字应用程序
+命令行工具
+交互式中断程序
+带有图形用户界面的本地应用程序
+单元测试工具
+客户端javascript编译器
+
+对于高并发的解决方案，传统的架构是多线程模型，也就是为每个业务逻辑提供一个系统线程，通过系统线程切换来弥补同步时io调用时的时间开销。Node.js便面了平凡的上下文切换，在执行的过程中会维护一个时间队列，程序在执行时进入时间循环等待下一个事件到来，每个异步式IO请求完成后悔被推送到时间队列，等待程序进程进行处理。
+
+传统的数据库查询：
+res = db.query("select * from some_table");
+res.output();
+
+Node.js:
+db.query("select * from som_table",function(res){
+     res.output();
+});
+个人注解：在这里主要是通过告诉数据库一个回调函数来实现异步的而不会进行阻塞等待，。
+
+连续按下2次Ctrl+C就可以退出Node.js的REPL模式。
+如果你有PHP开发经验会做到在成功运行PHP之前先要配置一个功能强大而附在的HTTP服务器，比如Apache，IIS,NGINX，还需要将PHP配置为HTTP服务器的模块，或者使用FastCGI协议调用PHP解释器。
+
+无论你修改了Node.js代码的哪一部分，都必须终止node.js在重新运行才行。因为node.js只有在第一次引用到某部分时才会去解析脚本文件，以后都会直接访问内存，避免重复载入，而PHP总是重新读取并解析脚本。
+
+Node.js最大的特点就是异步式I/O（非阻塞i/o）与事件精密结合的编程模式。这种模式和传统的同步式I/O现行的编程思路有很大的不同，因为控制流很多大程度上要考事件和回调函数组织，一个逻辑要拆分为若干个单元。
+
+什么是阻塞？线程在执行中如果遇到磁盘读写或网络通信，通常要耗费较长的时间，这时操作系统会剥夺这个线程的CUP控制权。使其展厅执行，同时将资源让给其他的工作线程，这种线程调度方式称为阻塞。
+
+var fs = require('fs');
+fs.readFile('file.txt','utf-8',function(err,data){//readFile返回一个字符串结果，然后调用function将readfile的结果作为参数传入function中。
+//这样的话，就会先继续执行下面的语句，直到读完文件然后调用回调函数，告诉它结果，然后将它输出。但是怎么知道这个IO读写完成了了？这个时候就需要用到事件循环监听事件，这个很想NIO中的，使用轮训。当fs接收到IO请求完成事件时，事件循环会主动调用回调函数以完成后续工作
+     if(err){
+          console.error(err);
+     }else{
+          console.log(data);
+     }
+})
+
+事件：
+Node.js所有的异步I/O操作在完成时都会发送一个事件到事件队列。事件由EventEmitter对象提供。回调函数都是通过EventEmitter来实现的。
+
+var EventEmitter = require('events').EventEmitter;
+var event = new EventEmitter();
+event.on('some_event',function(){//给event注册一个事件some_event（事件名）（也是一个监听器）,后面跟随一个funciton,定义要做的事情。
+     console.log('some_event occured');
+});
+
+setTimeout(function(){//1000毫秒之后，event实例执行（emit）some_event
+     event.emit('some_event');
+},1000);
+
+Node.js在什么时候会进入事件循环？答案是Node.js程序由事件循环开始，到事件循环结束，所有的逻辑都是事件的回调函数，所以Node.js始终在时间循环中，程序入口就是时间循环第一个时间的回调函数。（后面一句好理解）事件的回到函数在执行的过程中，可能会发出IO请求或者直接发送发射（emit）事件，执行完毕后在返回事件训话，事件循环会检查时间队列中有没有未处理的事件，直到程序结束。
+
+libev事件循环的每一次迭代，在Node.js中就是一次Tick(标记号于，滴答记录),libv不断检查是否有活动，可供检测的事件监听器，直到检测不到时才推出时间循环，进程结束。
+
+在javascript中，脚本模块的差分和组合通常使用HTML的scrip标签来实现，NODE.JS提供require函数来调用其他模块，而且模块都是基于文件的，机制十分简单。
+
+创建一个模块非常简单，Node.js提供了exports和require2个对象。群主exports是模块的公开的借口，require用于从外部获取一个模块的借口，即所获取模块的exports对象。
+
+var Hello = require('./hello.js');
+
+
+//为什么这里又要搞一个hello?而且不用var?
+hello = new Hello();
+hello.setName('song xin');
+hello.sayHello();
+
+var somePackage = require('./somepackage');//直接引用同一目录下的包名就会找到index.js,得到index.js的实例,使用package.json可以创建更复杂的包
+//也就是package.json中是定义包结构的。
+somePackage.hello();
+
+使用npm安装包的命令格式为：
+nmp[install/i] [package_name]
+Chrome Developer
+http://chromedevtools.googlecode.come/svn/update/dev/
+
+
+Node.js中的全局对象是global,所有全局变量，除了global本身以外，都是global的属性。比如console，process
+process.stdout是标准输出流，通常使用的cosole.log()想标准输出打印字符，而process.stdout.write()函数提供更底层的借口。
+process.stdin是标准输入流，初始时它是被暂停的，需要恢复，使用process.stdin.resume()，并手动编写流的事件响应函数
+process.stdin.resume();
+process.stdin.on('data',function(data)){
+     process。stdout.write('read from console：'+data.toString())；
+}；
+process.nextTick(callback)的功能是为事件循环设置一项任务，Node。js毁在下次事件循环时嗲用callback.
+
+Node.js适合IO密集型的应用，而不是计算密集型的应用，Node.js进程只有一个线程，因此在任何时刻都只有一个事件在执行，如果这个时间暂用大量的CPU时间，执行时间循环中的下一个时间就需要等待很久，因此Node.js的一个编程原罪就是尽量缩短每个事件的执行时间。process.nextTick()提供了一个这样的功能，可以把复杂的工作拆散，变成一个个较小的事件。
+
+console.trace();想标准错误流输出当前的调用栈
+
+util.inherits(constructor,superConstructor)是一个实现对象间原型继承的函数。JavaScript的面向对象特性是基于原型的
+
+var util = require('util');
+function Base(){
+     this.name = 'base';
+     this.base = 1991;
+     this.sayHello = function(){//构造器中的函数不能被继承
+          console.log('Hello '+this.name);
+     };
+};
+Base.prototype.showName = function(){//原型中定义的函数可以继承
+     console.log(this.name);
+};
+function Sub(){
+     this.name = 'sub';
+};
+util.inherits(Sub,Base);
+var objBase = new Base();
+objBase.showName();
+objBase.sayHello();
+console.log(objBase);
+var objSub = new Sub();
+objSub.showName();
+//objSub.sayHello();
+console.log(objSub);
+同时在原型中定义的属性不会被cosole.log()作为对象的属性输出
+
+util.inspect(object,[showHidden],[depth],[colors])是一个将任意对象转换成字符串的方法，通常用于调试和错误输出。
+
+events是Node.js最重要的模块，但只提供了一个对象，eventsEventEmitter。EventEmiiter的和兴就是时间发射和事件监听功能的封装。对于每个事件，EventEmitter支持若干个时间监听器。
+var events = require('events');//导入模块
+var emitter = new events.EventEmitter();//得到实例
+emitter.on('someEvent',function(args1,args2){//on方法注册事件
+     console.log('listener1',args1,args2);
+});
+
+emitter.on('someEvent',function(args1,args2){//注册的事件可以同名？
+     console.log('listener2',args1,args2);
+});
+emitter.emit('someEvent','sonsun','1990');
+
+EventEmitter.removeAllListerners([event])//移除所有的监听器
+
+EventEmitter定义了一个特殊的时间error，我们一般腰围发射error时间的对象设置监听器，避免遇到错误后整个程序崩溃。
+
+fs是用来读取文件的，语法结构为fs.readFile(filename,[encoding],[callback(err,data)]);
+fs.open(path,flags,[mode],[callback(err,fd)])
+fs.read(fd,buffer,offset,length,position,[callback(err,byteRead,buffer)])是指定从指定的文件描述符放大中读取数据并写入buffer指定的缓冲区对象。offset是buffer的写入偏移量(在buffer的第几个位置开始写入？)。length是要从文件中读取的字节数，position是文件读取的起始位置，回调函数传递比亚特是Read和buffer分别表示读取的字节数和缓冲区对象。
+
+关闭文件fs.close(fd,[callback(err)]).

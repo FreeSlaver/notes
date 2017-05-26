@@ -1,0 +1,40 @@
+* Shutter 快门
+** What
+
+This effect is used quite a bit in advertisements of cars and motorbikes, where a sense of speed and motion is communicated to the viewer by intentionally blurring the moving wheels.
+
+Landscape photographers intentionally use slow shutter speeds to create a sense of motion on rivers and waterfalls, while keeping everything else in focus.
+
+** How to Set
+
+*** Tips
+    1/500th of a second for general moving object
+    1/1000th of a second for bird photography.
+
+** Principle
+   1. In summary, high shutter speeds freeze action, while low shutter speeds create an effect of motion.
+   2. I personally shoot in “Aperture Priority” mode 99% of the time and I let my camera calculate the shutter speed for me.
+
+** Tips
+   Shutter Speed	Typical Examples
+   1 - 30+ seconds	Specialty night and low-light photos on a tripod
+   长时间到30秒的曝光用于黑夜和极低可见度，必须用三脚架
+   2 - 1/2 second	To add a silky look to flowing water
+                                      Landscape photos on a tripod for enhanced depth of field
+   2秒到1/2秒曝光用于风景拍摄中流水，得到丝绸般的效果
+   1/2 to 1/30 second	To add motion blur to the background of a moving subject
+                                       Carefully taken hand-held photos with stabilization
+   1/2到1/30的曝光用于运动模糊移动的物体，特别要注意手持拍照的稳定性
+   1/50 - 1/100 second	Typical hand-held photos without substantial zoom
+   1/50到1/100的曝光时间用于典型的手持拍摄，但不能有大幅变焦。
+   可以这么理解长枪的话，手的震动会放大影响。
+   1/250 - 1/500 second	To freeze everyday sports/action subject movement
+                                       Hand-held photos with substantial zoom (telephoto lens)
+   1/250到1/500的包裹时间，用于捕捉体育运动中的人，可以手持拍摄，大幅变焦。
+   也就是说拍摄运动会场景，要捕捉的话，快门调到1/500。
+   1/1000 - 1/4000 secondTo freeze extremely fast, up-close subject motion
+   1/1000到1/4000的曝光时间用于高速移动的物体。
+
+
+whether it results in a sharp photo
+快门速度的结果就是关心是否拍下一副很锐利额图像。

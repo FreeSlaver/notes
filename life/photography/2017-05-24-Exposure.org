@@ -1,0 +1,19 @@
+* Exposure 曝光
+** 草稿
+   determined by three settings:aperture,ISO and shutter.
+
+   aperture affects depth of field, shutter speed affects motion blur and ISO speed affects image noise.
+
+
+
+sports/action mode	Camera tries to achieve as fast a shutter speed as possible for a given exposure — ideally 1/250 seconds or faster.
+ In addition to using a low f-stop, the fast shutter speed is usually achieved by increasing the ISO speed more than would otherwise be acceptable in portrait mode.
+运动模式，相机会尝试获取更高的快门，一般是1/250以上。相较于使用低的f-stop，大光圈，相机会使用提升ISO的值。
+因为快门越快，进光的时间越少，为了完美曝光，必须提高对光的灵敏度，也就是ISO。大光圈虽然可行，但是运动的物体一般距离较远，而且不太需要景深以突出层次。
+
+Night/Low-light              Camera permits shutter speeds which are longer than ordinarily allowed for hand-held shots,
+and increases the ISO speed to near its maximum available value. However, for some cameras this setting means that
+a flash is used for the foreground, and a long shutter speed and high ISO are used to expose the background.
+夜间模式，相机会准许手持的最大快门速度，然后提升ISO到最大值。闪光灯用于前景，快门和高ISO用于背景。
+你自己大脑里面好好想想，整个的曝光过程，光线是如何进到传感器进行曝光的。闪光灯照人反射到相机，这时有可能会有高光，
+夜晚，背景太暗，太广，闪光灯照不到，只能通过高ISO和长时间的曝光来获取背景的充分曝光。

@@ -1,0 +1,21 @@
+* Google Guava Examples
+
+** Cache
+   LoadingCache<String, Long> cache = CacheBuilder.newBuilder()
+            .initialCapacity(15000)
+            .maximumSize(20000)
+            .expireAfterWrite(10, TimeUnit.MINUTES)
+            .removalListener(new RemovalListener<String, Long>() {
+              @Override
+              public void onRemoval(RemovalNotification<String, Long> notification) {
+                String sn = notification.getKey();
+                Long lastReportTime = notification.getValue();
+              }
+            })
+            .build(new CacheLoader<String, Long>() {
+              @Override
+              public Long load(String key) throws Exception {
+                //这个方法就是缓存没有的时候
+                return getFromDBOrRedis();
+              }
+            });

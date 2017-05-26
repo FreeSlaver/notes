@@ -1,0 +1,55 @@
+* Java Lambda
+** Intro
+   1. They provide a clear and concise way to represent one method interface using an expression.
+   2. Lambda expressions also improve the Collection libraries making it easier to iterate through, filter, and extract data from a Collection.
+   只有一个抽象方法的接口被看做函数接口。
+** Syntax 语法
+   一个lambda表达式由3部分组成：参数列表，箭头符号，方法体。
+   (int x,int y) -> {x+y}
+** Example 例子
+   // Runnable接口
+   Runnable r2 = () -> System.out.println("Hello world two!");
+   List<String> list = new ArrayList<String>();
+   list.add("hello");
+   list.add("world");
+   list.add("nihao");
+   list.sort((str1,str2)->{return str1.compareTo(str2)};);
+   //可以去掉参数类型，Lambda支持"target typing" 。因为list是有泛型的。
+*** Target Typing 目标类型
+    使用在以下情况：
+    - Variable declarations
+    - Assignments
+    - Return statements
+    - Array initializers
+    - Method or constructor arguments
+    - Lambda expression bodies
+    - Conditional expressions ?:
+    - Cast expressions
+
+*** DRY principle
+      Don't Repeat Yourself(DRY) principle and make your code simpler and more readable.
+      methods describe the kind of behavior that is taking place
+      可以将Lambda表达式和Map结合起来使用。
+
+
+学了就要用，将项目中的能改Lambda的都改了。
+** Collections 集合操作
+*** Iterate 遍历
+    使用forEach方法遍历。
+    List<Person> list = new ArrayList<Person>();
+    list.forEach(p -> System.println.out(p));//这里里面为毛又不要分号？
+    list.forEach(Person::printEasternName);//这里调用的是方法引用 method reference。默认参数就是p。
+*** Chaining and Filters 链式调用和过滤器
+    list.stream().filter(p -> p.age > 35).forEach(p -> System.out.println(p));
+    使用stream方法，将集合变成流，一旦消费集合中元素，元素就不在可用了。
+    而且不能在流式操作中，不能改变元素。
+
+    使用collect方法输出到另外一个集合中。
+    List<Person> newList =  list.stream().filter(p -> p.age > 35).collect(Collecotrs.toList());
+*** Getting Lazy 惰性
+    惰性，也就是说只对过滤出来的最终结果进行操作？
+
+*** Calculate Map map元素计算
+    list.parallelStream().filter(p -> p.age >35).mapToInt(p -> p.age).sum();
+    //中间还要用一个mapToInt，不够优雅啊。
+    map方法返回的是一个InputStream。parallelStream方法是一个并行的流，可以多个同时计算。

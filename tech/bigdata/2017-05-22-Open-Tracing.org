@@ -1,0 +1,19 @@
+* Open Tracing
+
+** 草稿
+layer between application/library code and various systems.
+consume tracing and causality(因果关系) data
+whthout knowledge of the underlying implementation.
+
+span上下文传播
+隐式的：使用threadlocal，global varibels or continuation-local storage.
+缺点是有性能惩罚，
+
+显式的：
+缺点是需要在应用层代码调用
+
+that said,with great power comes great opportunity for confusion.
+更大的权利带来更大的混乱的可能性。
+
+** Reference
+   [[https://github.com/opentracing/specification/blob/master/specification.md][The OpenTracing Semantic Specification]]

@@ -1,0 +1,33 @@
+* JQuery学习总结
+$(document).ready(function(){
+     这里写js方法
+
+});这个是为了防止文档在完全加载之前运行Jquery代码，如果在文档没有完全加载之前就运行函数，操作可能失败
+$(this)表示的是当前function的对象。
+在HTML5以及所有现代浏览器中JAVASCRIPT是默认脚本语言，所以不用写<script type="text/javascript"></script>也是可以的。
+使用CDN可以加快网站加载速度。CDN是网络分发。
+$(this).hide()隐藏打钱的HTML元素（当前的是说的触发了事件的事件源，比如一个按钮的点击事件中的this指代的就是button）
+$("#test").hide()隐藏id=“test”的元素
+$("p").hide()隐藏<p></p>标签的元素.
+$(".test").hide()隐藏所有class="test"的元素。
+Jquery的语法是为HTML元素的选取编制的，可以对元素执行某些操作。那么关键点就是如何通过Jquery得到指定元素，当然我们可以通过this,id,class,标签
+基础语法是：$(selector).action();
+美元符号$开头，（selector）查询和查找HTML元素，action()执行对元素的操作。
+关键点是掌握jquery选择器是如何准确的选取你希望应用效果的元素。
+Jquery允许你通过标签名，属性名，内容对HTML元素进行选择。
+Jquery CSS选择器
+$("p.intro")选取所有<p>标签中class为intro的元素
+$("p.#demo")选取所有<p>标签中id为demo的元素
+Jquery 属性选择器
+$("[href='#']")选取href属性等于#的元素。
+$("[href$='.jpg']")选取所有href值以.jpg结尾的元素。
+$("p").css("background-color","red")
+$(".intro.demo")选取所有class为intro且class为demo的元素。
+$("p:first")第一个<p>元素
+$(":input")所有input元素
+$(":text")所有type为text的input元素
+$(":enable")所有激活的input元素
+
+如何判断是否为隐藏。
+
+可选的 callback 参数是动画完成后所执行的函数名称
