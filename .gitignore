@@ -15,6 +15,13 @@ bin-release/
 *.apk
 
 private/
+product/2017-06-07-Talent-Valuation.org
+notes.iml
+temp/
+.idea
+#*
+.#*
+
 # Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
 # should NOT be excluded as they contain compiler settings and other important
 # information for Eclipse / Flash Builder.

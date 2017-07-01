@@ -1,0 +1,57 @@
+* Linux Shell Linux脚本编程
+  首先各个命令要用的非常的熟练。
+** 输入输出
+   stdin，stdout，stderr和C++的函数名是一样的。
+
+** Pipes 管道技术
+   就是一个命令执行完之后会将输出的结果作为下一个命令的输入源。
+
+** 变量
+   弱语言类型的，直接声明。局部变量使用local关键字。
+   然后记住关键的 $ 符号，可以用来取值，也可以用来执行命令。例子：
+   STR="Hello World" //规范貌似是变量大写
+   echo $STR //取值
+   echo ls //直接打印ls字符串
+   echo $(ls)  //执行ls命令，并输出
+*** $符号
+    什么时候用括号？执行命令？什么时候不用？取值？
+
+** 条件判断
+   *符号之间一定要用空格分开，不然会出错*
+   if then else if then else
+   判断条件要用中括号[]包裹；后面以分号；结尾；
+   最后一fi结束整个判断语句。
+   if [ "foo" = "foo" ] ; //分号结束
+   then
+       echo hello foo
+   fi //结束符
+
+   但是好像规范的写法是，将then放在条件判断后。
+
+** 循环
+   感觉我要很好的掌握各种命令啊。
+   3个关键字：for，while，until。
+*** for
+    关键字for do done。
+    for i in $(ls) ; do //判断语句还是要用分好结束，do关键字执行下一行代码
+        echo item: $i  //$不带括号取值
+    done // 结束for循环
+*** C风格的for
+    for i in ` seq 1 10 ` ; do //这里要用 ` ` ，用逗号的话，会认为是字符串（组成的数组）
+        echo $i
+    done
+
+*** while
+    关键字while，do，let。*条件判断要用中括号*
+    //一个实验性错误
+    COUNTER = 0  //我草，赋值不能用空格，Linux系统会认为是命令
+    //那么也就是说很多符号，命令之间要空格，是因为Linux将符号也认为是一种命令？
+    while [ $COUNTER < 10 ] ; then //then也错了，要用do，只有if采用then？
+    //<被看做是输出符，找不到10这个文件。我尼玛。也就是shell很傻逼，只会一句句执行。
+    //小于号是 -lt
+        echo COUNTER is $COUNTER  //
+        COUNTER=$COUNTER-1 //这样赋值不行，减号2边要空格，还是不行。
+        let COUNTER=COUNTER+1 //
+    done
+*** until
+    和while几乎一样，只是条件判断为真后，就会停止执行。

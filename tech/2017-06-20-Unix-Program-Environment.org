@@ -1,0 +1,79 @@
+* Unix环境编程笔记
+
+  http://www.iu.hio.no/~mark/unix/unix.html
+  一定要记录下读到哪里了，不然下次找，很浪费时间
+
+** hello
+*** Some tools
+    dbx
+    A symbolic debugger. Also gdb, xxgdb ddd.
+    make
+    A development tool for compiling large programs.
+    lex
+    A `lexer'. A program which generates C code to recognize words of text.
+    yacc
+    A `parser'. This is a tool which generates C code for checking the syntax of groups of textual words.
+    rpcgen
+    A protocol compiler which generates C code from a higher level language, for programming RPC applications.
+
+    stdin
+    The standard input - file descriptor 0.
+    stdout
+    The standard output - file descriptor 1.
+    stderr
+    The standard error - file descriptor 2.
+
+*** The file hierarchy
+    `/bin'
+    Executable (binary) programs.
+    `/etc'
+    Miscellaneous programs and configuration files.
+    /usr'
+    This contains the main meat of UNIX. This is where application software lives, together with all of the basic libraries used by the OS.
+    `/usr/bin'
+    More executables from the OS.
+    `/usr/local'
+    This is where users' custom software is normally added.
+    `/sbin'
+    A special area for statically linked system binaries.
+    `/sys'
+    This holds the configuration data which go to build the system kernel. (See below.)
+    `/export'
+    Network servers only use this.
+    `/dev, /devices'
+    A place where all the `logical devices' are collected. These are called `device nodes' in unix and are created by mknod. Logical devices are UNIX's official entry points for writing to devices. For instance, /dev/console is a route to the system console, while /dev/kmem is a route for reading kernel memory
+    `/home'
+    (Called /users on some systems.) Each user has a separate login directory where files can be kept.
+    `/var'
+    System 5 and mixed systems have a separate directory for spooling. Under old BSD systems, /usr/spool contains spool queues and system data. /var/spool and /var/adm etc are used for holding queues and system log files.
+    `/vmunix'
+    This is the program code for the unix kernel (see below). On HPUX systems with file is called `hp-ux'. On linux it is called `linux'.
+    `/kernel'
+    On newer systems the kernel is built up from a number of modules which are placed in this directory.
+
+*** Symbolic links 象征性连接
+    ln -s fromfile /other/directory/tolink
+    创造一个symbolic links代表后面的路径，就是一个别名或者指针
+    可以被C语言的readlink()方法调用
+
+*** 常用命令
+    cut
+    Extract a column in a table
+
+    We can hide the difference between different kinds of hardware by making the machine-specific part of drawing graphics entirely a problem of implementing the server on the particular hardware
+
+read to How to set up X windows
+
+
+什么鸟RSS感觉都不好用啊。我现在的需求就是怎么获取到现在互联网上
+最有价值，
+最热，
+最新，
+最感兴趣的内容
+
+如果要学习的话，我肯定是看书，或者系列教程。那么互联网的意义了？
+
+我现在有很多书签，都是之前看过的认为有价值的文章。我现在的目标就是如何一次性的，大量的获取到这些内容。
+RSS太费时间，每个分类下都有很多个RSS网站，每个网站都有很多文章。
+
+在上面我关注了21世纪网，财经网，21世纪经济报道，新财富杂志，土摩托，第一财经日报，中国家庭金融调查，财新网，尼尔森市场调查，虎嗅网，南方都市报，新京报，新浪公开课，华尔街日报中文网，农村焦点新闻，商业周刊中文版等微博，每分钟都有最新的新闻更新，还有纸媒专业记者的深度剖析。通过微博获得的信息，说实在话，比知乎大很多。

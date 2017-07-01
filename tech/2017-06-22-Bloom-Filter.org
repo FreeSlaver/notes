@@ -1,0 +1,11 @@
+* Bloom Filter 布隆过滤器
+
+** 草稿
+   A Bloom filter is a space-efficient probabilistic data structure.
+   used to test whether an element is a member of a set.
+
+   False positive matches are possible, but false negatives are not – in other words, a query returns either "possibly in set" or "definitely not in set".
+   也就是有可能会误判存在于set中。
+
+   Elements can be added to the set, but not removed (though this can be addressed with a "counting" filter); the more elements that are added to the set, the larger the probability of false positives.
+   可以丢进去，但是不能被移除，元素越多，越可能误判。

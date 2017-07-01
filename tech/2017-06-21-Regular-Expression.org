@@ -1,0 +1,11 @@
+* Regular Expressions 正则表达式
+
+*　多个 hel o匹配到helalxo
+?   单个 hel?o 匹配到helao
+^   以什么开始，^# 以#开头
+     非 ^[A-Z] 不以A到Z开头的
+[ ]  中括号中随机匹配到一个 [efg] 随机匹配到e，f或g
+-    从什么至什么，A-Z，从大写A到Z
+
+java中的破折号，转移符，需要用\\\\作为pattern，然后match到"\\"。
+

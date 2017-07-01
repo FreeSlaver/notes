@@ -1,0 +1,175 @@
+* Bit Torrent 笔记
+** BT for User
+是一个自由的发言（speech）工具。
+
+  给你自由发布的权利，以前只被少数人享有并需要特殊设备和很多金钱。
+
+  pulished by soaring bandwidth costs。被巨大的带宽费用惩罚。
+
+  废弃的电脑可以用起来。
+
+  The key to scalable and robust distribution is cooperation.
+  分布式系统的扩展性和强壮性的关键在于协同合作。
+
+  those who get your file tap into their upload capacity to give the file to others at the same time.
+  Those that provide the most to others get the best treatment in return.("Give and ye shall receive!")
+  下载的同时会上传内容给其他人。
+
+  BitTorrent is not just a concept,but has an easy -to-use implementation capable of
+  swarming downloads across unreliable networks.
+  BT不仅仅只是一个概念，而且是一种容易的实现方式，类似蜂群模式的下载，经过不可靠的网络。
+
+** BT for Dev
+   identifies content by URL
+   通过URL识别内容
+   when multiple downloads of the same file happen concurrently, the downloaders upload to each other,
+   making it possible for the file source to support very large numbers of downloaders .
+   BT的关键就在于：很多个人同时在下载同一个资源的时候，才会有明显的加速效果。
+*** consist entites
+    An ordinary web server
+    A static 'metainfo' file
+    A BitTorrent tracker
+    An 'original' downloader
+    The end user web browsers
+    The end user downloaders
+*** 启动服务
+    1. 启动一个追踪器
+    2. 启动一个web服务器
+    3. Associate the extension .torrent with mimetype application/x-bittorrent on their web server
+       将.torrent文件和html中的文件类型application/x-bittorrent关联起来。
+    4. Generate a metainfo (.torrent) file using the complete file to be served and the URL of the tracker.
+       使用完整文件生成元信息文件（.torrent）
+    5. 将元文件放到web服务器上
+    6. 或者连接到其他web页面的.torrent文件。
+    7. 启动下载器
+*** bencoding
+    字符串：长度定义在前，冒号中间，字符串最后。4:spam等价spam
+
+    整形：i在前，然后一个10进制的数字，e结尾。i3e等价于3，i-3e等价于-3负三。i-03e 是非法的
+
+    列表：l开头，e结尾，中间的元素也是bencoded的。l4:spam:eggse等价于['spam','eggs']。
+    貌似是4省略了。
+
+    字典：d开头，然后跟踪元素也是bencoded的，e结尾。
+    d3:cow4:eggs4:spam5:hello等价于{'cow':'eggs','spam':'hello'}。真蛋疼。
+    d4:spaml1:a1:bee等价于{'spam': ['a', 'b']}
+*** 元信息文件 metainfo files
+    Metainfo files (also known as .torrent files) are bencoded dictionaries with the following keys:
+    就是.torrent文件，也是bencoded的字典，使用以下keys（全部要UTF-8编码）
+    announce
+    The URL of the tracker.
+    跟踪器的URL
+    info
+    This maps to a dictionary, with keys described below.
+    info映射到一个字典表，使用下面描述的keys。
+**** info dictionary
+     name：对应到一个建议的保存文件名。
+     piece length：每片数据块的长度，一般是2的18次方256K。
+     pieces：
+     length或files：如果是length就是单个文件，代表文件长度。files是多个文件。对应到一个files的字典。
+     每个file包含2个属性length和path。
+*** Trackers 跟踪器
+**** Tracker response
+     也是bencodeded的字典。包含failure reason的key的话，代表失败。
+     不然，必须包含interval和peers2个key。
+     interval表示下载器多久请求一次。
+     peers maps to a list of dictionaries corresponding to peers, each of which contains the keys peer id, ip, and port,
+     映射到一个列表字典，里面都是装的peers，然后每个包含peer id，ip，port。
+     大概是这么个结构：
+     {
+       "interval":10000,
+       "peers" : [
+           "peers" : {
+               "peer id" : 123,
+               "ip" :127.0.0.1,
+               "port" : 6888
+           },
+           "peers" : {
+               "peer id" : 123,
+               "ip" :127.0.0.1,
+               "port" : 6888
+           }
+       ]
+     }
+*** peer protocol
+    对啊，我TM的看了这么多，为毛不自己写个？
+
+** 没看之前，自己想想大概机制
+   首先有个服务器Server，用户A准备下载文件F1，这时服务器应该做以下事情：
+   1. 将正在下载文件F1的用户A的ip记录到所有下载F1的用户队列中，让其他也在下载F1文件的用户感知到A的加入。
+      告知A目前正在下载F1的用户（或者在下载其他资源，但是本身也有F1资源的用户）
+
+   2. 用户B又加入进来，准备下载了。这时B得到了包含A在内的所有用户信息。
+      然后客户端之间就能进行通信了。
+
+      需要判断哪个用户距离我最近，有我需要的资源（这时资源就要进行切分了），所以我们经常看到种子数量。
+      数量越多的下载的越快。
+
+      但是很明显的p2p的限制也非常大，成也多人，败也少人。
+      p2p和usnet都有一个最大的好处是：资源几乎不会消失，也就是分布式，无单点故障。
+      但是这时有个问题，一般用户的机器大多时间关闭，即使不关闭，bt客户端也是关闭的。
+      这样导致了，很多资源不可用。
+
+      这里有个设想，就是分成，然后让用户将bt客户端开着，然后将高清蓝光的东西分发下去，
+      然后可以直接利用局域网传输。这样，用户就直接可以看在线高清视频。
+
+*** 几个问题
+怎么判别此用户是否有资源F1？
+通过.torrent文件，然后访问文件夹，查询文件是否存在。
+
+      ，这时新来了一个用户B，也要下载F1
+** 延伸
+  未来的互联网必然是一个极大的分布式集群，而且肯定要走BitTorrent的这种方式。
+  未来一切都在虚拟化的同时，虚拟化的技术也会应用于现实之中，也即是：极高效的连接所有人的大脑资源，
+  然后进行某些突破。
+
+  未来肯定是极度自由，同时也极度独裁统治的。
+
+  黑客帝国
+
+** 核心概念
+   导入数据库用于搜索
+   P2P Peer to Peer，对等计算。
+   通过直接交换来共享计算机资源和服务，而对等计算模型应用层形成的网络通常称为对等网络
+   
+   DHT网络
+   DHT（Distributed Hash Table，分布式哈希表）
+
+
+   tracker就不需要存储真实资源, 它只仅仅存储谁有什么该资源的信息而已
+   Tracker记录谁有什么资源。记录资源和peer的对应关系。
+
+   DHT它将原来tracker上的资源peer信息分散到了整个网络中。
+   实现了DHT协议的计算机定义为节点(node)。通常一个P2P客户端程序既是peer也是节点。
+   DHT网络有多种实现算法，例如Kademlia。
+   “peer” 是在一个 TCP 端口上监听的客户端/服务器，它实现了 BitTorrent 协议。
+   “节点” 是在一个 UDP 端口上监听的客户端/服务器，它实现了 DHT(分布式哈希表) 协议。
+   资源的标识在DHT网络中称为infohash，是一个20字节长的字符串，一般通过sha1算法获得，也就是一个类似UUID的东西。
+
+   Magnet，这里指的是磁力链接，它是一个类似URL的字符串地址。P2P软件通过磁力链接，会下载到一个种子文件，然后根据该种子文件继续真实资源的下载。
+   
+   ping
+   用于确定某个节点是否在线
+   find_node
+   用于查找某个节点，以获得其地址信息。
+   当某个节点接收到该请求后，如果目标节点不在自己的路由表里，那么就返回离目标节点较近的K个节点。
+   get_peer
+   通过资源的infohash获得资源对应的peer列表。
+   收到该请求的节点会在自己的路由表中查找该infohash，如果有收录，就返回对应的peer列表。如果没有，则返回离该infohash较近的若干个节点。
+   announce_peer
+   该请求主要目的在于通知，通知其他节点自己开始下载某个资源
+   这个消息用于构建网络中资源的peer列表。
+
+   当你得到一个磁力链接, 使用比如迅雷, 迅雷就会实例化出一个DHT节点, 加入DHT网络, 然后把磁力链接的那个40字符的infohash提取出来, "逆算"成20字节的infohash, 向离该infohash最近的几个节点发送get_peers请求, 当得到对方回复peers列表时, 迅雷又实例化出一个BT客户端, 向这些peers请求下载种子, 得到种子并打开后, 如果有tracker列表, 就会像上面的"客户端 <- tracker -> 客户端"说的那样, 如果没有, 那一定会有拥有真正资源的node列表, 那么就会向这些node请求真实资源下载.
+注: 实际上, 迅雷得到磁力链接后, 会先到它自己的种子库里下载, 然后才估计通过DHT网络下载.
+
+做一个DHT爬虫的大概步骤:
+1, 生成一个node ID.
+2, 构建路由表
+3, 加入DHT网络, 不停地使用find_node
+4, 处理ping, find_node, get_peers, announce_peer 4个请求
+5, 定时刷新路由表
+6, 持久存储路由表(可选)
+
+要想认识很多的node, 你就要先认识一个长期在线的node, 比如开源软件transmissionbt就提供了一长期在线node, 地址为: dht.transmissionbt.com:6881. 然后使用find_node向这个node请求, 
+ 如真想去实现一个DHT爬虫的话, 那么就需要看官方文档了, 里面对实现算法做了介绍, 比任何人"翻译"的博文都要详细正确得多,

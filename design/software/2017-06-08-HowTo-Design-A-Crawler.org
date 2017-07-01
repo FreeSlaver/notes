@@ -1,0 +1,22 @@
+* How to Design a Crawler 如何设计一个爬虫
+  我应该先用用webmagic，scrath之类的东西，来完成写任务，然后看看爬虫具体干嘛的。
+  感觉不适合自己的，就重新design一个。
+** Core
+   To crawler a single web page, all we need is to issue a HTTP GET request to the corresponding URL and parse the response data, which is kind of the core of a crawler.
+   爬虫的核心是：HTTP GET一个指定URL，并从返回的内容中抓取到我们需要的特定信息。
+
+   核心流程：
+   1. Start with a URL pool that contains all the websites we want to crawl.
+   2. For each URL, issue a HTTP GET request to fetch the web page content.
+   3. Parse the content (usually HTML) and extract potential URLs that we want to crawl.
+   4. Add new URLs to the pool and keep crawling.
+
+** 水平扩展，分布式功能
+   为什么需要分布式了？单机多线程爬虫的瓶颈是什么？
+   任务量太多，数据量太大，或者结果集太多，需要分布式存储。
+
+   爬虫如何支持分布式？先自己好好想想？
+   任务（URL）怎么分配？结果如何聚合？分布式后，任务的重复处理问题？以及数据的去重等，还有，如何显示
+   URL和URL，结果集与结果集之前的关联关系。
+
+   follow the robot.txt of each site.

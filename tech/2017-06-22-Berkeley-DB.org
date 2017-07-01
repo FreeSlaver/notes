@@ -1,0 +1,20 @@
+* Berkyley DB 笔记
+  嵌入式的key/value DB存储。使用C写的。
+  BDB stores arbitrary key/data pairs as byte arrays, and supports multiple data items for a single key.
+  可以存储任意的key/data的数据，以byte数组的形势，支持一个key对应到多个data的值。
+
+  Berkeley DB is not a relational database.[1]
+  非关系数据库。
+  BDB can support thousands of simultaneous threads of control or concurrent processes manipulating databases as large as 256 terabytes
+  支持成千上万同时工作的线程或者进程操作256兆兆字节大小的db。
+
+
+** Java Edition
+
+   还有个问题，怎么订阅到最新的500px照片。
+   有一个问题，这个鸟好像需要推送，加载JS，才能下载。
+   妈的，现在怎么搞？现在撒都搞不下来了，我RTM的。之前好像指定了网页还能下载下来的。
+   草草草，本来还以为多简单的，尼玛的。
+
+** 参考
+   https://en.wikipedia.org/wiki/Berkeley_DB

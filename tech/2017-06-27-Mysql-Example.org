@@ -1,0 +1,10 @@
+* Mysql常用语句
+
+** 按时间字段group by一周，一个月
+   SELECT MONTHNAME(o_date), SUM(total) 
+   FROM theTable
+   GROUP BY YEAR(o_date), MONTH(o_date)
+
+** XXX时间以内
+   1. 可以在代码里面将时间先计算出来，然后传进去
+   2. 

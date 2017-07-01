@@ -78,5 +78,34 @@ jstack 74897 |grep 12540 -A 30
 修改sh执行权限
 chmod +x start.sh
 
+** man -k
+   man -k : 查找所有和指令相关的说明。
+   apropos : 完全等价于'man -k'
+   man -k dir : 从操作手册中查找和dir命令相关的一切
+   man mkdir : 打开mkdir命令的使用说明页面
+   info coreutils 'mkdir invocation' : 打开mkdir命令更加详细的说明文档
+
+
 ** sed
    截取日志
+** grep distinct
+   awk '{print $1}' xx.log | sort -u
+** passwd
+   修改密码
+** mv
+   mv old-name new-name 修改文件名
+** env
+   查看全局的系统变量配置
+** type
+   查看命令执行路径，但是linux里面好像不行。
+rm unlink 删除文件或者link
+** cat
+   Concatenate or join together a number of files.
+   连接多个文件的，当然单个文件也能用来显示
+** less
+   An enhanced version of more
+   more指令的争增强版本。
+** chown, chgrp
+   Change owner and group of a file. 
+
+

@@ -1,0 +1,89 @@
+* Github总结
+  一定要玩转Github，这功能太强大。
+** Github的核心作用
+   1.code hosting platform;2.version control;3.collaboration
+   代码托管平台；版本控制；协同合作。
+
+   store ideas, resources, or even share and discuss things with others.
+   保存创意，资源，甚至使用Github和他人分享并讨论事情
+
+   Git is fundamentally a content-addressable filesystem with a VCS user interface
+   Git基本上是一个内容可寻址的文件系统
+
+   原来我从来没有好好的读书，读文档。
+** 核心概念
+
+*** repositories：
+    used to organize a single project.
+    用来组织一个单独的项目。
+
+    仓库是branches，tags（没杂用），commits等的集合。branch是commits的集合。
+*** branches
+    used to work on different versions of a repository at one time.
+    用来在同一时刻在不同的版本仓库上进行同时工作。（解决了对资源共享的控制）
+
+    When you create a branch off the master branch, you’re making a copy,
+    or snapshot, of master as it was at that point in time.
+    当创建一个分支的时候，其实是在当前时间对master分支进行了一个拷贝或快照。
+    对master分支的修改，需要pull到其他分支上面。
+    Github突破了同一时间只能有一个人编辑同一个文件的限制，也就是突破了文件写锁的限制。
+    解决的方案是：拷贝同一份资源，但是如果修改了同样的东西，还是会造成冲突。
+    但是大多情况下，我们是进行分工合作，所以不会修改相同的东西。
+
+    branch还有一个非常重大的用处：不会因为搞坏了master分支，需要重新回退。
+
+    不断学习，这样你的学习能力，理解力就会更上一层楼，然后就会以更快，更好的方式学习。
+
+    我草，原来可以直接这么玩。直接在别人项目的master创建一个分支，然后提交PR，要求合并。
+    比如我在linux项目的master上直接创建一个分支，
+    https://github.com/songxin1990/linux/tree/test
+    然后这个分支就会显示在我fork了的linux项目的branch栏里面。
+
+**** branch goals
+     keep bug fixes and feature work separate from master.
+     分支机制的目标：使得修改bug，添加特性能同时在master以外的不同分支上完成。
+**** create new branch
+     在github上，直接点击master分支，在下拉的输入框中输入分支名称，回车。
+
+*** commits
+    saved changes are called commits
+    commits，提交，用来保存改变。每次commits时都要有一个完整的主题，修复什么bug，完成什么功能等。
+*** Pull Requests (PR)
+    PR是Github协同合作的核心。
+    你提交一个PR，就是提出你相对于master分支的改变（一定要有不同），然后你要求别人进行代码review和合并。
+    PR展示出2个分支的diffs，不同之处。提交PR之前，你最好先确认下不同之处。
+
+    PR还可以用来：
+    share some screenshots or general ideas.分享某些快照或者创意。
+    when you're stuck and need help or advice, 当你遇到困难或者需要建议时，可以在PR中使用@某人。
+    这样的话，就不用非得等到功能完成，测试好了，才提交PR。
+
+** work flow 工作流
+   workflow:a popular way to create and review code.
+   工作流是用来创建并review代码的。新建分支时，一定要起一个描述性好的名字。
+
+   commit时候的comment非常重要，因为如果有bug，需要回退，只能通过描述性的注释。
+
+   Fork & Pull Model
+   Pull Requests provide a way to notify project maintainers about the changes you'd like them to consider.
+
+   Shared Repository Model
+   Pull Requests help start code review and conversation about proposed changes
+   before they're merged into the master branch.
+
+** Social
+*** Organizations
+    可以通过切换organization来切换dashbord。
+
+** Git Philosophy Git哲学理念
+    support distributed/offline productivity, speed and frictionless context switching.
+    无摩擦的上下文切换。
+
+    Commit early, commit often
+    Each commit represents one idea or one whole change (easier to read or revert)
+    Each branch represents one feature (or topic) (easier to read or merge)
+    Your local working directory, index and local repo are scratch pads.
+    就是一种组件化的思想，也就是将整个项目的完成切割成一个个主题，最后组装起来。
+
+    Named branches are merged with master and tested locally before being pushed to origin master.
+    先将分支版本在本地合并测试，再提交到master上去。

@@ -38,3 +38,58 @@
 这个地方就是init的时候，需要先stop释放端口。
 
 这个createChildSpan真心不好搞。需要在里面然后，handler重新搞一个span。
+
+** 答应别人的事情要干完，不要轻易许诺
+   首先来看下，新的api，servelet中是怎么实现的。
+
+   现在的学习方法是以目标驱动，然后直接，简单，暴力。只需要了解哪些必须要了解的。
+
+   反思我之前的行动，就是什么东西，都做到一半，浪费了多少时间，精力啊。
+
+   要好好看看这个mockserver是做什么的。
+
+   刚才在搞那个Netty的测试时候，就是发现其实问题的本子很简单，我在new Thread(xx).start()后，
+   netty的服务器并没有马上建立好，而这个时候http request已经发出去了，就会造成超时。
+
+   child和reportsClientAddress_XForwardedFor没通过
+
+** 源码领会
+*** Tracer
+
+   这个地方一定要完成，不能半途而废。
+   'brave.Span' is already in use
+
+   Your test may have some bugs as i can passed
+
+   reportsClientAddress 没通过啊
+   sampling也没通过
+
+   supportsPortableCustomization没通过，地址被占用
+
+   addsErrorTagOnException也没通过
+
+
+   badRequest通过。
+   reportsSpanOnException_async 是干嘛的？
+   现在估计就两个init重复()的没法通过
+
+
+   reportsClientAddress为什么不行？
+
+不行的：
+sampleDisable
+supportsPortableCustomization
+上面2个都是重复init（）
+reportClientAddress
+
+   问题在这个handler的初始化上，或者httpTracing上，无法替换。
+
+   将2个测试通过，提交PR，哈哈哈。
+   首先会调用setup，第一次生成httpTracing，然后调用 ITNettyTracing中的init()方法，
+   init方法中initializer初始化好了，server也初始化好了，然后start了
+
+   再重新初始化httpTracing，再重新init一次。
+    //p.addLast("exception", new ExceptionHandler());//Make sure this is the last line when init the pipeline.
+
+    首先好好想想，这个windows oraclejdk8本地跑起来是没问题的。
+    但是放到cicurs上面，是ubantu openjdk8，然后就报错了。refused

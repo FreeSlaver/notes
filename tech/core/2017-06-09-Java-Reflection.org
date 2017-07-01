@@ -1,0 +1,50 @@
+* Java Reflection 反射机制总结
+** 作用
+   Reflection is commonly used by programs which require the ability to examine or modify the runtime behavior of applications running in the Java virtual machine
+   主要用于检查，修改JVM中应用的运行时行为。
+
+** Classes
+   任何对象初始化时，JVM会初始化一个不变的Class实例。
+   an object, the name of class, a type, or an existing Class
+   有几种方式得到Class，对象，类名称，类型，或者也存在的class实例。
+
+   例子：
+   String s= "hello";
+   Class clazz = s.getClass():
+
+   boolean b = true;
+   Class clazz = boolean.class;
+   Class clazz = int[][][].class;
+
+*** Class.forName()
+    通过以下方式创造特定类型的数组。
+    Class cDoubleArray = Class.forName("[D"); //等价于 double[].class
+    Class cStringArray = Class.forName("[[Ljava.lang.String;");//等价于String[][].class
+*** 原始类型
+    出了直接用int.class这种来获取原始类型的class信息，还可以使用包装类型中的TYPE field。
+    Calss c = Double.TYPE;//等价于double.class
+    Class c = Void.TYPE;//等价于void.class
+
+
+** 场景实例
+   java反射可以实现的特定功能。
+*** 自动更新
+    比如一个客户端Java程序可以通过网络从服务器端下载Java类来执行，从而可以实现自动更新 的机制。
+
+    一般的做法是通过自定义类加载器下载了类字节代码之后，定义出 Class类的对象，再通过newInstance方法就可以创建出实例了。
+    不过这种做法要求客户端和服务器端都具有某个接口的定义，从服务器端下载的是 这个接口的实现。
+    这样的话才能在客户端进行所需的类型转换，并通过接口来使用这个对象实例。如果希望客户端和服务器端采用更加松散的契约的话，使用反射API就可以了。
+    两者之间的契约只需要在方法的名称和参数这个级别就足够了。服务器端Java类并不需要实现特定的接口，可以是一般的Java类。
+
+*** 动态代理
+    需要使用AOP中的方法拦截功能的地方都可以用到动态代理。Spring框架的AOP实现默认也使用动态代理。
+    不过JDK中的动态代理只支持对接口的代理，不能对一个普通的Java类提供代理。
+
+** Examining Class Modifiers and Types 检查类修饰符和类型
+   修饰符类型：
+   Access modifiers: public, protected, and private
+   Modifier requiring override: abstract
+   Modifier restricting to one instance: static
+   Modifier prohibiting value modification: final
+   Modifier forcing strict floating point behavior: strictfp
+   Annotations

@@ -1,0 +1,37 @@
+* 种子搜
+  实现BitTorrent DHT协议，爬虫的原理是利用DHT协议坚挺announce_peer消息，然后根据获得的
+metadata info下载种种，可以用来打造海盗湾，也可以进行互数据分析，注意版权和被墙的风险。
+https://www.diycode.cc/topics/225
+
+详解
+http://lime66.com/
+
+这篇好好看看，写的比较详细
+http://www.freebuf.com/articles/database/101110.html
+
+这个也可以看看
+http://www.ren1.tk/201
+5/04/10/dht_bug/
+
+下载不动
+
+
+两种爬虫，一种是连接到dht网络里，俩一种类似百度爬网页，获取页面的磁力链接和电驴链接。
+电驴和磁力链接都有唯一标识所以资源不会重复。
+
+这个关于推荐网站的也要看
+https://www.zhihu.com/question/29682242
+
+一些种子搜索的网站推荐：
+https://www.douban.com/note/528406742/
+
+种子搜索：
+1. 分标签页
+2. 有视频预览，在线观看
+3. 付费使用微信，支付宝等扫一扫
+4.
+
+先想想开发写什么好用的东西给自己用。
+CJC20FF30
+CJCDOM001T
+cjc1off30

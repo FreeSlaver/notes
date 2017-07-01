@@ -1,0 +1,127 @@
+* Crawler4J 笔记
+** 草稿
+   WebCrawler
+   CrawlController
+   继承Configurable，管理控制爬虫session
+   Parser
+   用来解析页面的
+   PageFetcher
+   用来拉取页面数据的
+   RobotstxtServer
+   被爬虫实例用来决定是否允许爬去每个页面的内容。
+
+   不搞这些爬虫之类的，先打好基础。
+
+*** 异步加载
+   Selenium+Phantomjs
+
+   我一般用PhantomJS、CasperJS这些引擎来做浏览器抓取。
+   直接在其中写JS代码来做DOM操控、分析，以文件方式输出结果。
+   让Python去调用该程序，通过读文件方式获得内容。
+
+   js代码是需要js引擎运行的，Python只能通过HTTP请求获取到HTML、CSS、JS原始代码而已。
+
+   针对某网站的，可以自己看网络请求找到返回实际内容的那些有针对性地发。如果是通用的，得用 headless browser 了，比如 PhantomJS。
+
+   一种方式是：模拟浏览器，用一些库，js引擎来执行这些js代码，
+   但是这些库安装起来好像都很麻烦 而且对内存和cpu的消耗比较大 基本上不推荐
+   还有一种方式是：手动分析。然后模拟ajax请求，先看看ajax需要的参数。
+   我草，要懂的东西还真是多啊。
+
+   网页中常常会包含相对路径的url，提取的时候需要将它转换成绝对路径
+
+   查找/photo/，可以看到我们点击一个东西，或者鼠标一上去，是用js动态计算出来的。
+
+   如何抓取那些隐藏的web数据，如何抓取ajax的页面，如何动态调整抓取频率
+** 爬虫设计关键点
+*** 工作流程
+    爬虫大致的工作流程：根据URL将对应的网页下载下来，然后提取出网页中包含的URL，再根据这些新的URL下载对应的网页，周而复始。
+*** 模块
+    Fetcher：用于根据url下载对应的网页；
+    DNS Resolver：DNS的解析；
+    Content Seen：网页内容的去重；
+    Extractor：提取网页中的url或者其它的一些内容；
+    URL Filter：过滤掉不需要下载的url；
+    URL Seen：url的去重；
+    URL Set：存储所有的url；
+    URL Frontier：类似调度器，决定接下来哪些下载哪些url对应的网页；
+
+**** Fetcher和DNS Resolver
+     对于性能要求高的爬虫系统，一般会采用epoll或者类似的技术将两个模块改成异步机制。另外，对于DNS的解析结果也会缓存下来，大大降低了DNS解析的操作。
+
+**** Content Seen
+     判断两个网页内容是否一致，一致的不会继续处理，能够显著的降低爬虫需要下载的网页数。
+**** Extractor和Url Filter
+     要考虑到所有可能的url的样式，比如网页中常常会包含相对路径的url
+     Url Filter是一个和应用密切相关的模块。
+**** Url Seen
+     Url Seen用来做url去重。Url Seen是整个爬虫系统中非常有技术含量的一个部分。
+**** Url Set
+     当url经过前面的一系列处理后就会被放入到Url Set中等待被调度抓取。
+**** URL Frontier
+     是整个爬虫系统的引擎和驱动，组织和调用其它的模块。
+
+
+** 严重问题
+   crawler4j貌似有严重问题，对于有些延时很高的URL完全忽略还是这么的，反正就是没得到页面。
+   现在要做的就是先定位出故障的位置。顺便看下这个爬虫的整个实现机制，然后自己写一个自己的爬虫。
+
+   妈个鸡的，挂了也就算了，居然也不记录。对啊，也有可能，他那个frontier目录存在导致的？？？
+   果然是因为frontier的原因导致的，但是超时了，居然不重试？
+
+** 抓取500px
+   首页新进去，通过那个json，可以得到拼装出要访问的几个url，然后到了单图片页面，怎么样访问单页面的上一个图片，
+下一个图片，这个是问题所在。如果可以的话，就能搞到所有的。
+
+还有就是根据category等的分类，作者来抓取。
+
+首页抓下来的html，我全部都看了。
+先是F12，然后看上下箭头的地方，找到了div class=arrow，然后找和arrow相关的有arrow_left
+<a class='flyout_target' href='#'>
+  <div class='arrow_left'></div>
+  Changes Required
+</a>
+{{else}}
+<a class='flyout_target' href='#'>
+  <div class='arrow_left'></div>
+  Multiple Changes Required
+</a>
+
+https://securepubads.g.doubleclick.net/gampad/ads?gdfp_req=1&amp;correlator=4299290986252950&amp;output=json_html&amp;callback=googletag.impl.pubads.callbackProxy80&amp;impl=fif&amp;eid=108809107&amp;sc=1&amp;sfv=1-0-9&amp;iu=%2F49839336%2FPhotoUnder-2016-11-1&amp;sz=728x90%7C970x90%7C468x60&amp;rc=39&amp;eri=33&amp;cookie_enabled=1&amp;abxe=1&amp;lmt=1498126080&amp;dt=1498126080948&amp;frm=20&amp;biw=1516&amp;bih=113&amp;oid=3&amp;adx=0&amp;ady=0&amp;adk=2974911994&amp;gut=v2&amp;ifi=80&amp;u_tz=480&amp;u_his=18&amp;u_h=113&amp;u_w=1516&amp;u_ah=113&amp;u_aw=1516&amp;u_cd=24&amp;u_sd=2&amp;flash=0&amp;url=https%3A%2F%2F500px.com%2Fphoto%2F3446133%2Fevolution-by-szilvia-pap-kutasi&amp;ref=https%3A%2F%2F500px.com%2F&amp;dssz=241&amp;icsg=3001709703990272&amp;std=0&amp;vrg=121&amp;vrp=121&amp;ga_vid=1847909897.1498018317&amp;ga_sid=1498125133&amp;ga_hid=1761484511
+
+这串URL是关键，我那个找到上一个图片，下一个图片什么的就是在这里找的。
+这个url并不是马上就能得到的，只有在按了向前，向后才行。
+
+*关键点，看是那个JS或者什么的，发出了请求。*
+https://api.500px.com/v1/photos?image_size[]=1&image_size[]=2&image_size[]=32&image_size[]=31&image_size[]=33&image_size[]=34&image_size[]=35&image_size[]=36&image_size[]=2048&image_size[]=4&image_size[]=14&include_tags=true&include_licensing=true&include_releases=true&expanded_user_info=true&is_following=true&ids=3387106
+点了下右箭头，出来这个了。好好看看。
+If-None-Match:W"e01483d1e9b04751247bf1d473b6ca62+20161209+e7360aabdd3e79cb6d153f4d0dc7bb72"
+
+X-CSRF-Token:+6QxOrJm2BBcW2tOFrkGed3YrNHK4GAvmZj7ubkYi8JiFmBfVguEbnx8eUtRwhKRCNwlgFR4o5TPuL7m7+5JUQ==
+
+
+首先我找到了这个js ： pubads_impl_121.js，然后看到html中这个js是由
+googletag.pubads()得到的，然后找到googletag，然后找到googletag是有http请求得到的，就是下方这行：
+<script async='async' src='https://www.googletagservices.com/tag/js/gpt.js'></script>
+  <script>
+    var googletag = googletag || {};
+    googletag.cmd = googletag.cmd || [];
+  </script>
+  <script>
+    googletag.cmd.push(function() {
+      googletag.defineSlot('/49839336/PhotoSidebar-2016-11-1', [[300, 100], [300, 250]], 'div-gpt-ad-1478893418666-0').addService(googletag.pubads());
+      googletag.defineSlot('/49839336/PhotoUnder-2016-11-1', [[728, 90], [970, 90], [468, 60]], 'div-gpt-ad-1478893418666-1').addService(googletag.pubads());
+      googletag.pubads().collapseEmptyDivs();
+      googletag.enableServices();
+    });
+  </script>
+
+
+popular页面在script中还有这个：
+<a class='button delete submit_to_prime' href='/photo/{{id}}/licensing' target='_blank'>
+我R，这个就是要去的url页面，然后就能在单张图片的页面得到drscdn的图片地址了。
+
+
+
+** 参考
+   http://blog.csdn.net/historyasamirror/article/details/7061059

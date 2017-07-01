@@ -56,3 +56,9 @@ https://github.com/square/java-code-styles
 
 *** 参考资料
     http://www.cnblogs.com/yingsong/p/5097862.html
+
+** idea构建maven多项目
+   1. 新建空白标准的maven Project作为parent project，不要用Create from archetype。
+   2. 创建Module，选择父依赖是parent project。
+
+http://www.cnblogs.com/Brake/p/create_maven_multi_module_project_via_intellij_idea.html

@@ -755,3 +755,60 @@
 *** Regular Expressions 正则表达式
 
 **** Searching
+**** Regular Expression Notation
+     . 任何单个字符
+     \ 下一个字符有特殊意义
+     [ Begin character class
+     ] End
+     * 零个或者多个（后缀操作，也就是放在后面）
+     + 1个或者多个（后缀操作）
+     ? Optional 可选的
+     | Alternative 或者
+     ^ 行开始，逻辑非
+     $ 行结束
+     { Begin count
+     } End count
+     ( Begin grouping
+     ) End
+
+     例子：
+     ^A *B+C?$
+     以零个或者多个A开始，接着1个或多个B，可能的一个C，行结束。
+     ababab
+     (ab) *匹配到ababab，但是(an) *?只匹配第一个ab，？是惰性加载，并且只匹配最少的字符串。
+
+** I/O Streams
+*** String Stream
+    template<typename Target =string, typename Source =string>
+    Target to(Source arg)       // convert Source to Target
+    {
+        stringstream interpreter;
+        Target result;
+        if (!(interpreter << arg)              // write arg into stream
+          | | !(interpreter >> result)         // read result from stream     |
+          | |!(interpreter >> std::ws).eof()) // stuff left in stream?        |
+          throw runtime_error{"to<>() failed"};
+       return result;
+     }
+     RTM，根本看不懂
+
+** Containers 容器
+** Intro
+   Principle：
+   Most computing involves creating collections of values and then manipulating such collections.
+   A class with the main purpose of holding objects is commonly called a container.
+   Providing suitable containers for a given task and supporting them with useful fundamental operations are important steps in the construction of any program.
+
+
+** Vector
+   拷贝空间
+   template<typename T>
+   void Vector<T>::push_back(const T&
+   {
+     if (capacity()<size()+1)             // make sure we have space for t
+           reserve(size()==0?8:2*size()); // double the capacity
+     new(space){t};                       // initialize *space to t
+     ++space;
+    }
+
+    Copying and moving of vectors are implemented by constructors and assignment operators
