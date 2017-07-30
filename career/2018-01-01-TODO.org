@@ -1,0 +1,24 @@
+* 2018年1月
+** 2018年1月第一周
+*** 2018年1月1号
+**** TODO 看art of unix 09:30~11:00
+      helloworld
+**** DONE 完成标签系统 11:00~12:00
+      CLOSED: [2017-07-25 周二 20:00]
+      :LOGBOOK:
+      - State "DONE"       from "PROJECT"    [2017-07-25 周二 20:00]
+      - State "PROJECT"    from "DONE"       [2017-07-25 周二 20:00]
+      - State "DONE"       from "PROJECT"    [2017-07-25 周二 20:00]
+      - State "PROJECT"    from "DONE"       [2017-07-25 周二 20:00]
+      - State "DONE"       from "PROJECT"    [2017-07-25 周二 20:00]
+      - State "PROJECT"    from "DONE"       [2017-07-25 周二 20:00]
+      :END:
+**** DONE 学习org mode 13:10~14:10
+*** 2018年1月2号
+** 2018年1月第一周 回顾
+   这一周做了什么事情，有哪些不错，哪些做的不好，有什么可以改进。
+* 2018年1月 回顾
+  这个月做了什么，
+* 2018年7月
+
+**** TODO

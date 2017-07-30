@@ -1,0 +1,8 @@
+* Kafka Replica Manager
+** ISR清理机制
+   定期取清理哪些最后一次updateTime距离现在超过max.lag.ms的replica和哪些最后一次update时
+耗时超过max.lag.ms的replica。
+   更新之后会更新leader replica的水位，就是取所有isr中最小的offset。
+
+** 添加消息到leader
+   399L

@@ -1,6 +1,0 @@
-* Agile Softeware Dev
-** Advocates提倡 Principles原则
-   adaptive planning适应性计划,evolutionary dev进化的开发,early delivery提早交付,continues improvement持续提高
-   rapid and flexible response to change 对需求变跟进行快速而灵活的响应改变 continues evolution 持续演化
-** Methods
-   -

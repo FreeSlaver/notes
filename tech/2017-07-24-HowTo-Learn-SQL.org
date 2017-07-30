@@ -1,0 +1,4 @@
+* 如何学习SQL
+
+** QA
+   https://www.quora.com/How-do-I-learn-SQL

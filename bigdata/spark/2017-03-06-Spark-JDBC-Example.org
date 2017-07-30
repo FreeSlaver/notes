@@ -1,0 +1,48 @@
+* Spark JDBC 例子
+                        Connection conn = null;
+                        Statement stmt = null;
+                        try {
+                            Class.forName(JDBC_DRIVER);
+                            conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PWD);
+                            stmt = conn.createStatement();
+                            String sql = "SELECT * FROM db_ez.t_box where box_id = '000000B101105'";
+                            ResultSet rs = stmt.executeQuery(sql);
+                            BoxVo boxVo = null;
+                            while (rs.next()) {
+                                boxVo = new BoxVo();
+                                //Retrieve by column name
+                                String boxId = rs.getString("box_id");
+                                String sn = rs.getString("sn");
+                                //String cabinetId = rs.getString("cabinet_id");
+                                String boxType = rs.getString("box_type");
+                                String boxStatus = rs.getString("box_status");
+                                String boxUseStatus = rs.getString("box_use_status");
+//                    String lay = rs.getString("box_status");
+//                    String boxStatus = rs.getString("box_status");
+                                boxVo.setBoxId(boxId);
+                                boxVo.setSn(sn);
+                                boxVo.setBoxType(boxType);
+                                boxVo.setBoxStatus(boxStatus);
+                                boxVo.setBoxUseStatus(boxUseStatus);
+                            }
+                            logger.info("=====boxVo=>" + boxVo.toString());
+
+                            rs.close();
+                        } catch (SQLException se) {
+                            logger.error(se.getMessage(),se);
+                        } catch (Exception e) {
+                            logger.error(e.getMessage(),e);
+                        } finally {
+                            try {
+                                if (stmt != null)
+                                    stmt.close();
+                            } catch (SQLException se2) {
+                            }
+                            try {
+                                if (conn != null) {
+                                    conn.close();
+                                }
+                            } catch (SQLException se) {
+                                logger.error(se.getMessage(),se);
+                            }
+                        }

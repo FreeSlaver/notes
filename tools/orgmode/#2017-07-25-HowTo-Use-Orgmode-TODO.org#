@@ -1,0 +1,30 @@
+* 如何使用Orgmode的TODO
+
+  When you're starting out, you can get rid of finished tasks by using C-k (org-kill-line) to delete the line. Later, you'll see how you can keep them around for reference.
+  
+  You can use M-down (org-metadown) to move DONE tasks downwards, or you can move them to an archive file with C-c $ (org-archive-subtree).
+
+怎么开启emacs自动打开某个文件。
+  Make your life a little bit easier by automatically opening ~/todo.org every time you open Emacs. Add this to the end of your Emacs configuration. To do that,
+
+C-x C-f ~/.emacs.d/init.el - use find-file to open your configuration file. If it does not yet exist, it is created.
+Go to the end of this file. (Handy shortcut: C-end)
+Add (find-file "~/todo.org")
+Save with C-x C-s (save-buffer).
+You can test it with M-x eval-buffer while looking at your ~/.emacs.d/init.el. If it works, it should show you your ~/todo.org file.
+
+
+自定义变量属性
+M-x customize-variable org-todo-keywords
+
+用项目来管理任务
+Organize your tasks into projects
+
+schedule some tasks. Go to a task that you want to do today. Press C-c C-s (org-schedule) 
+调用出窗口后，可以
++1 for the date. You can specify +2 for the day after tomorrow, etc. The 28th? 28. 
+If you want to schedule something for next Saturday, you can type sat. Two Tuesdays from now? 2thu. A month from now? 1m
+
+
+** 参考
+

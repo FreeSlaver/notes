@@ -1,0 +1,9 @@
+* Emacs FAQ
+
+
+** Plugin
+
+** 崩溃了如何恢复
+   File-Recover Crashed Session，然后选中一个最近时间的session（鼠标悬浮在此就可以）
+   然后执行C-c C-c，然后Emacs会要求你输入y n yes no等。
+**

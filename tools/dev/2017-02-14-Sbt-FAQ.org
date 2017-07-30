@@ -1,0 +1,21 @@
+* Sbt FAQ
+** 安装配置
+1.主要就是sbt下载非常慢。解决办法：
+在`~/.sbt/`下添加一个`repositories`文件，添加一下内容
+[repositories]
+  local
+  aliyun: http://maven.aliyun.com/nexus/content/groups/public/
+  sbt-releases-repo: http://repo.typesafe.com/typesafe/ivy-releases/, [organization]/[module]/(scala_[scalaVersion]/)(sbt_[sbtVersion]/)[revision]/[type]s/[artifact](-[classifier]).[ext]
+  sbt-plugins-repo: http://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/, [organization]/[module]/(scala_[scalaVersion]/)(sbt_[sbtVersion]/)[revision]/[type]s/[artifact](-[classifier]).[ext]
+  central: http://repo1.maven.org/maven2/
+  ivy:  http://repo.typesafe.com/typesafe/ivy-releases
+  mvnrepository: https://mvnrepository.com/artifact/
+
+2.windows下，也是用户目录的.sbt文件夹下面加repositories文件夹，还要设置环境变量SBT_HOME，值为sbt的安装目录，比如我的C:\Program Files (x86)\sbt，要注意有时候可能因为空格，导致有问题。然后在path末尾添加“;%SBT_HOME%\bin”。
+
+3.windows下，有cde等分区，lib什么的默认放在%USERPROFILE%，最好不要这样，C盘会被大量占用空间，修改sbt目录下的conf\sbtconfig.txt的最后增加下面两行，可以指定sbt下载的jar包存放的位置
+-Dsbt.boot.directory=D:/sbt/boot/
+-Dsbt.ivy.home=D:/sbt/ivy/
+
+4.cmd中执行sbt下载依赖，或者在git down下来的项目中，带有sbt.bat的文件夹中执行。
+5.创建eclipse项目，使用命令sbt eclipse。

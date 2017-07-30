@@ -62,7 +62,12 @@
 
     We can hide the difference between different kinds of hardware by making the machine-specific part of drawing graphics entirely a problem of implementing the server on the particular hardware
 
-read to How to set up X windows
+
+
+    基础不扎实，也就是说很多想法，的确好，但是很可能在实现这个想法的过程中，发现自己什么都不知道。
+    就是那种好高骛远，写个代码，一堆bug，然后还觉得自己如何牛逼。
+
+    将这两个shell搞清楚，然后自己写个通用的shell。
 
 
 什么鸟RSS感觉都不好用啊。我现在的需求就是怎么获取到现在互联网上

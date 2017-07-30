@@ -1,0 +1,82 @@
+* Vim教程总结
+Vim有两种模式，一种是insert，一种是normal。使用Esc退出当前模式。
+
+使用h,j,k,l来移动。
+h是左，l是右，i是上，k是下。
+
+w，b，e是用做导航的。
+w移动到下一个单词，e移动到当前单词的结尾，b移动到当前单词的开头。
+
+可以将wbe和数字键组合起来使用。3w就是敲击3次w，在normal模式下，输入3 i go，敲Esc。
+数字0移动到行头，$移动到行尾。
+gg移动到文件开头，G移动到末尾。跳到指定一行使用：数字+G
+
+查找：
+f：在normal模式下，使用f查找下一个，F查找上一个字符出现的地方，可以使用3fq，找到当前位置第三次出现q的地方。
+
+%：好像是找到{ }这种符号的结尾处？
+
+*：查找当前单词的下一个出现的地方；
+#：查找当前单词的上一个出现的地方；
+
+ / : 查找单词，然后回车，使用n和N进行下一个，上一个。还可以使用正则表达式。
+.  :  重复上一个命令
+u  ：undo，Ctrl+R redo
+
+
+insert模式：
+o ： 生成新的一行。
+x ： 删除当前光标所在的字符。
+r  :   不切换到insert模式下并替换字符。
+d ： 删除作用，dw删除光标的下一个单词。dp类似剪切的功能？d2e删除2个单词。
+a ：append
+c : change
+y : copy
+
+visual模式
+使用v切换到visu模式，然后可以选定单词，用d删除。
+使用help获得帮助，比如:help inoremap获得配置inoremap的解释。
+
+
+Vim插件
+使用的是VundleVim，配置文件装在~/.vimrc里面，需要自己新建。
+
+添加插件：
+在.vimrc文件最后加上插件依赖就可以。
+在vim中使用命令:PluginInstall
+
+添加markdown插件
+
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
+
+保存文件
+:saveas ~/some/path/
+:bn 和 :bp 切换上下文件
+
+显示行号：
+set nu
+vim ssh连接远程
+
+vim scp://user@myserver[:port]//path/to/file.txt
+
+刷新文件
+:e
+
+vim回退到上一个地方
+Ctrl+i,Ctrl+o
+
+JUMP BACK
+Ctrl+T或者Ctrl+O
+
+使用help
+单独的命令帮助
+:help command
+普通模式 :help x
+视图模式 :help v_u
+插入模式 :help i_
+命令行 :help :quit
+命令行编辑 :help c_<Del>
+
+大写X向前删除。
+大写的D删除当前光标到行尾。

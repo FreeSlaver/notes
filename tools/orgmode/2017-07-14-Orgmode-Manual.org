@@ -1,0 +1,494 @@
+* 官方手册摘录
+** 5 TODO Items
+*** 5.1 Basic
+    :LOGBOOK:
+    - State "NEXT"       from "DONE"       [2017-07-24 周一 13:17]
+    - State "DONE"       from "PROJECT"    [2017-07-24 周一 13:17]
+    - State "PROJECT"    from "DONE"       [2017-07-24 周一 13:17]
+    - State "DONE"       from "PROJECT"    [2017-07-24 周一 13:17]
+    - State "PROJECT"    from "DONE"       [2017-07-24 周一 13:17]
+    - State "DONE"       from "PROJECT"    [2017-07-24 周一 13:17]
+    - State "PROJECT"    from "DONE"       [2017-07-24 周一 13:17]
+    - State "DONE"       from "PROJECT"    [2017-07-24 周一 13:17]
+    - State "PROJECT"    from "DONE"       [2017-07-24 周一 13:17]
+    - State "DONE"       from "PROJECT"    [2017-07-24 周一 13:17]
+    - State "PROJECT"    from "DONE"       [2017-07-24 周一 13:17]
+    - State "DONE"       from "PROJECT"    [2017-07-24 周一 13:17]
+    - State "PROJECT"    from "DONE"       [2017-07-24 周一 13:17]
+    - State "DONE"       from "PROJECT"    [2017-07-24 周一 13:17]
+    - State "PROJECT"    from "DONE"       [2017-07-24 周一 13:17]
+    - State "DONE"       from "NEXT"       [2017-07-24 周一 13:17]
+    :END:
+    任何以TODO关键字开头的标题都称为一个TODO元素。
+    *** TODO Write letter to Sam Fortune
+    使用TODO最重要的命令：
+    C-c C-t     (org-todo)
+    打开TODO视图，轮转当前TODO元素的状态。
+    当设置了org-use-fast-todo-selection，就可以使用快捷方式。
+    C-u C-c C-t
+    默认是选择的todo？
+    S-<right> / S-<left>
+    shift加键盘左右键，切换到下个TODO的状态。
+    C-c / t     (org-show-todo-tree)
+    以稀疏树视图，查看TODO项，折叠其他项。
+    按下C-c /w的时候就会提示你，有几个选项，比如可以用正则，关键字，日期条件等匹配TODO项。
+    C-c a t     (org-todo-list)
+    展示全局的TODO列表，从所有的行程文件(agenda files)中。
+    S-M-<RET>     (org-insert-todo-heading)
+    当前TODO项下面插入一个同等级的TODO项。
+*** 5.2 Extended use of TODO keywords TODO关键字的扩展应用
+    默认上，被标记的TODO条目只有2个状态：TODO和DONE。但是Org允许通过设置org-todo-keywords来有多个分类。
+**** 5.2.1 TODO keywords as workflow states
+     你可以使用不同的TODO关键字来定义一个工作流中不同的，连续的状态。比如：
+     (setq org-todo-keywords
+       '((sequence "TODO" "FEEDBACK" "VERIFY" "|" "DONE" "DELEGATED")))
+     这个参数配置在init-org.el中。
+     竖划线区分了TODO关键字（需要采取动作的状态）和DONE状态（无需后续动作的状态）。
+     如果没有竖划线，最后一个将被视为DONE状态。
+     C-3 C-c C-t
+     可以快速选择到VERIFY第三个状态。
+**** 5.2.2 TODO keywords as types
+     区分不同类型的TODO项，比如工作和在家，比如分配给Alice的或者分配给Jack的工作。
+     (setq org-todo-keywords '((type "Fred" "Sara" "Lucy" "|" "DONE")))
+     这里定义的关键字是不同类型而不是不同顺序。
+     C-3 C-c / t
+     快速选择出所有Lucy的TODO项。？？？不会
+**** 5.2.3 Multiple keyword sets in one file
+     同时使用多个不同的TODO状态集合，比如修复BUG：
+     (setq org-todo-keywords
+      '((sequence "TODO(t)" "|" "DONE(d)")
+        (sequence "REPORT(r)" "BUG(b)" "KNOWNCAUSE(k)" "|" "FIXED(f)")
+        (sequence "|" "CANCELED(c)")))
+     那么这样的话，REPORT表示以上告bug，BUG表示确认bug，KNOWNCAUSE表示找到bug原因，
+     而FIXED表示已解决，整个修复BUG的工作流程就确定了。
+     C-u C-u C-c C-t
+     C-S-<right>
+     C-S-<left>
+     在上下sequence中切换。
+**** 5.2.4 Fast access to TODO states
+     也就是上文中的TODO(t)中的快捷键t，使用括号括起来。
+
+**** 5.2.5 Setting up keywords for individual files
+     定义只在一个文件中生效的TODO关键字（任意位置添加）：
+     #+TODO: TODO(t) | DONE(d)
+     #+TODO: REPORT(r) BUG(b) KNOWNCAUSE(k) | FIXED(f)
+     #+TODO: | CANCELED(c)
+     光标停留在每行上面，用C-c C-C使它们生效。
+
+**** 5.2.6 Faces for TODO keywords 设置TODO关键字样式
+     (setq org-todo-keyword-faces
+           '(("TODO" . org-warning) ("STARTED" . "yellow")
+             ("CANCELED" . (:foreground "blue" :weight bold))))
+**** 5.2.7 TODO dependencies
+     TODO项是有层级和依赖关系的，如果定义了org-enforce-todo-dependencies，
+     子项没完成时无法将父项标记为DONE；有顺序的毗邻项没完成，无法将下面的标记为DONE.
+     * TODO Blocked until (two) is done
+     ** DONE one
+     ** TODO two
+
+     * Parent
+     :PROPERTIES:
+     :NOBLOCKING: t
+     :ORDERED:  t
+     :END:
+     ** TODO a
+     ** TODO b, needs to wait for (a)
+     ** TODO c, needs to wait for (a) and (b)
+     属性NOBLOCKING将使得配置org-enforce-todo-dependencies无效。
+
+     C-c C-x o     (org-toggle-ordered-property)
+     ORDERED属性开关，只对当前TODO项生效，无法继承。
+     C-u C-u C-u C-c C-t
+     使得任何被BLOCK的TODO项失灵。
+
+     如果设置了变量org-agenda-dim-blocked-tasks，那么因为这种依赖关系，TODO项无法被关闭，
+     而且会被显示为灰色，甚至不会在日程视图中显示。
+     如果需要BLOCK，也可以通过checkbox来实现，设置org-enforce-todo-checkbox-dependencies。
+
+*** 5.3 Progress logging 进展记录
+    Org可以自动记录下时间戳和记录，当TODO项变为DONE。
+    (setq org-log-done 'time)
+    当TODO项完成，变为DONE时，记录时间戳。
+    C-c C-t SPC
+    转成non-TODO项，会移除掉上面的TODO关键字，除非设置了org-closed-keep-when-no-todo为非空。
+    (setq org-log-done 'note)
+    当TODO项完成，变成DONE时，可以写条记录。
+    在Timeline和Agenda视图中可以，使用字母l可以看到所有的CLOSED的TODO项。
+
+**** 5.3.2 Tracking TODO state changes
+
+**** 5.3.3 Tracking your habits
+     Org能够追踪一系列的TODO的特殊类别，这被称作habits，有以下属性：
+     在org-modules中将habits模块生效。
+     必须是一个TODO项，并一直保持。
+     STYLE属性设置为habit。
+     TODO项必须有计划日期，跟一个.+表示间隔时间；++表示时间约束，比如必须周末做；+表示可被积压的不寻常的habit，比如周报。
+     必须启用DONE状态的状态日志记录，为了在图表中展示历史记录数据。
+
+     ** TODO Shave
+        SCHEDULED: <2009-10-17 Sat .+2d/4d>
+        :PROPERTIES:
+        :STYLE:    habit
+        :LAST_REPEAT: [2009-10-19 Mon 00:36]
+        :END:
+        - State "DONE"       from "TODO"       [2009-10-15 Thu]
+        - State "DONE"       from "TODO"       [2009-10-12 Mon]
+        - State "DONE"       from "TODO"       [2009-10-10 Sat]
+        - State "DONE"       from "TODO"       [2009-10-04 Sun]
+        - State "DONE"       from "TODO"       [2009-10-02 Fri]
+        - State "DONE"       from "TODO"       [2009-09-29 Tue]
+        - State "DONE"       from "TODO"       [2009-09-25 Fri]
+        - State "DONE"       from "TODO"       [2009-09-19 Sat]
+        - State "DONE"       from "TODO"       [2009-09-16 Wed]
+        - State "DONE"       from "TODO"       [2009-09-12 Sat]
+      这个habit的意思是：
+      每隔2到4天刮胡子。最下面展示的是历史记录。
+      历史记录的颜色含义：
+      蓝色：
+      到那天，事情还没干。
+      绿色：
+      到那天，事情已经干了。
+      黄色：
+      事情明天就要过期了。
+      红色：
+      到那天，事情已经过期了。
+
+      设置一下几个变量，改变展示方式：
+      org-habit-graph-column
+      org-habit-preceding-days
+      org-habit-following-days
+      org-habit-show-habits-only-for-today
+
+      在视图缓冲中按K使得habit失效，再次按K生效。
+*** 5.4 Priorities 优先级
+    通过在标题上设置一个priority cookie来设置优先级，例如：
+     *** TODO [#A] Write letter to Sam Fortune
+     默认优先级是A,B,C，依次降低。未设置的默认为B。优先级只用于在Agenda视图中排序。
+     优先级无继承关系，通过自定义org-priority-faces来设置样式。
+     优先级可以被用于TODO以外的项目。
+
+     C-c ,
+     提示要求输入A,B,C，输入空格，会移除掉优先级。
+     S-<up>     (org-priority-up)
+     S-<down>     (org-priority-down)
+     升高，降低优先级。
+
+     通过设置org-highest-priority, org-lowest-priority和 org-default-priority来改变优先级范围。
+     或者在一个文件中如下设置：
+     #+PRIORITIES: A C B
+     要保证的是：最高优先级在字母表中排序高于最低优先级。
+
+*** 5.5 Breaking tasks down into subtasks 分解任务
+    在标题中任何位置插入[/]或者[%]，每次子TODO项改变状态，都会计算更新统计值。或调用C-c C-c。
+    * Organize Party [33%]
+    ** TODO Call people [1/2]
+    *** TODO Peter
+    *** DONE Sarah
+    ** TODO Buy food
+    ** DONE Talk to neighbor
+    注意点是：子项目前面必须要有TODO关键字。
+
+    checkbox和子TODO项不要同时使用避免歧义。
+    如果想要将所有子项计算进来而不仅仅是直接子项，配置org-hierarchical-todo-statistics。
+    单个子树当中使用的话，设置COOKIE_DATA属性，例子如下：
+    * Parent capturing statistics [2/20]
+       :PROPERTIES:
+       :COOKIE_DATA: todo recursive
+       :END:
+
+    如果想当所有子项完成时，父项也自动改变状态，用如下配置：
+    (defun org-summary-todo (n-done n-not-done)
+       "Switch entry to DONE when all subentries are done, to TODO otherwise."
+       (let (org-log-done org-log-states)   ; turn off logging
+         (org-todo (if (= n-not-done 0) "DONE" "TODO"))))
+
+     (add-hook 'org-after-todo-statistics-hook 'org-summary-todo)
+     另一种方式是使用checkbox，针对大量的层级任务。
+*** 5.6 Checkboxes
+    普通列表元素可以使用checkbox，通过开头添加[ ]，不会被包含在全局的TODO列表中。
+    使用C-c C-c，或鼠标点击来开关。
+    * TODO Organize party [4/4]
+      - [X] call people [3/3]
+        - [X] Peter
+        - [X] Sarah
+        - [X] Sam
+      - [X] order food
+      - [X] think about what music to play
+      - [X] talk to the neighbors
+
+    C-c C-x C-b     (org-toggle-checkbox)
+    和活动区域有关，不太懂？？？
+    C-c #     (org-update-statistics-cookies)
+    更新整个的统计cookie。
+** 10 Agenda views 日程视图
+   TODO items,time-stamped itesm,tagged headlines
+   目的：因为TODO项目，打了时间戳的项目，标记的头条散落在各处，需要一个总的概览。
+
+   提供7种视图模式：
+   an agenda that is like a calendar and shows information for specific dates,
+   a TODO list that covers all unfinished action items,
+   a match view, showings headlines based on the tags, properties, and TODO state associated with them,
+   a timeline view that shows all events in a single Org file, in time-sorted view,
+   a text search view that shows all entries from multiple files that contain specified keywords,
+   a stuck projects view showing projects that currently don't move along, and
+   custom views that are special searches and combinations of different views.
+
+   2个变量控制agenda buffer的展示：
+   org-agenda-window-setup
+   org-agenda-restore-windows-after-quit
+*** 强大的命令
+    C-c a 调用出agenda的命令视图，输入命令。
+    我草，简直屌炸天了。
+
+*** 10.1 Agenda files 日程文件集
+    在org-agenda-files这个变量中配置，推荐的是使用以下命令：
+    //前面是快捷键，后面是命令，2个都可以，后面的使用M-x org-agenda-file-to-front调用
+    C-c [     (org-agenda-file-to-front)
+    将当前文件添加到agenda文件列表中，已存在的会移到最前面。
+    C-c ]     (org-remove-file)
+    将当前文件移除出agenda文件列表中
+    C-'     (org-cycle-agenda-files)
+    C-,
+    滚动访问agenda文件列表
+    M-x org-iswitchb RET
+    使用命令iswitchb的接口在org buffers间切换。
+    C-c C-x <     (org-agenda-set-restriction-lock)
+    永久的限制agenda到当前子树。
+    C-c C-x >     (org-agenda-remove-restriction-lock)
+    同上相反，移除子树
+    符号< > 只对当前文件生效。
+    C-c C-x 好像是唤起dispatcher（分配）
+    当合speedbar.el一起使用时：???
+    <  in the speedbar frame     (org-speedbar-set-agenda-restriction)
+     Permanently restrict the agenda to the item—either an Org file or a subtree in such a file—at the cursor in the Speedbar frame. If there is a window displaying an agenda view, the new restriction takes effect immediately.
+** 11 Markup for rich export 丰富输出标记
+*** 11.1 Paragraphs 段落
+    段落之间必须使用一个空行来分隔，也可以使用'\\'来强制分隔。
+**** 格式化诗歌，禁用其间的段落分隔
+     #+BEGIN_VERSE
+       Great clouds overhead
+       Tiny black birds rise and fall
+       Snow covers Emacs
+
+            -- AlexSchroeder
+      #+END_VERSE
+
+**** 引用：
+     #+BEGIN_QUOTE
+     Everything should be made as simple as possible,
+     but not any simpler -- Albert Einstein
+     #+END_QUOTE
+
+**** 居中
+     #+BEGIN_CENTER
+     Everything should be made as simple as possible, \\
+     but not any simpler
+     #+END_CENTER
+
+*** 11.2 Emphasis and monospace 粗体和间距
+    粗体：2个星号；斜体：2个斜杠；下划线：2个下划线；verbatim：2个等号；代码：2个漂号；strike-through：2个加号。
+    修改变量org-fontify-emphasized-text为nil关闭以上功能。
+    修改变量org-emphasis-alist可以指定哪些强调符起效。
+    修改变量org-emphasis-regexp-components指定强调符前后哪些字符是允许的。
+*** 11.3 Horizontal rules
+    一行只有破折号-，至少5个以上，会被输出为水平线。
+*** 11.4 Images and tables 图片和表格
+
+*** 11.5 Literal examples 文学例子
+
+** 12 Exporting 导出
+*** 12.1 The export dispatcher 导出分配器
+    C-c C-e     (org-export-dispatch)
+    打开导出分配器界面。C-u C-c C-e的话会执行前面一个执行过的导出命令。
+    打开后，有以下选项：
+    C-a
+    切换异步导出的开关。使用2个C-u前缀，可以打印导出堆栈。
+    可以修改变量org-export-in-background，自定义后台异步导出功能。
+    C-b
+    切换是否只导出body的开关。
+    C-s
+    切换子树导出开关。
+    C-v
+    切换只导出可见内容开关。
+*** 12.2 Export settings 导出设置
+    针对单独文件，可以设置in-buffer settings；
+    针对单独关键字，使用#+OPTIONS；
+    针对树，设置属性。
+**** OPTIONS关键字
+**** 特殊字符
+     ':
+     双引号是主引用，单引号是次引用。
+     *:
+     Toggle emphasized text
+
+**** 导出到指定文件夹
+     1. 在要导出的文件上方填：
+     #+bind: org-export-publishing-directory "./exports"
+     2.
+*** 12.3 Table of contents 目录
+    默认在文件头部直接插入目录。目录的深度和文件的标题深度一致。
+    使用更低的数字来降低目录的深度。完全关闭目录的话，使用nil。
+    #+OPTIONS: toc:2          目录中只包含级别2以下的标题
+    #+OPTIONS: toc:nil        关闭目录
+
+    移动目录
+    #+OPTIONS: toc:nil        no default TOC
+    ...
+    #+TOC: headlines 2        insert TOC here, with two headline levels
+    对啊，这个地方好像可以结合那个例子来用，然后将目录移动到那个yaml formatter下面？
+
+    针对特定部分调整目录深度，并添加local参数，
+     * Section #+TOC: headlines 1 local insert local TOC, with direct children
+     only
+
+    #+TOC: listings           build a list of listings
+    #+TOC: tables             build a list of tables
+*** 12.5 Macro replacement 宏替换
+    首先在org文件中定义：（必须每行顶格开始）
+    #+MACRO: name   replacement text $1, $2 are arguments
+    然后使用，这样就能导出了
+    {{{name(arg1, arg2)}}}
+    Org对以下标记区域能进行宏引用识别：段落，标题，小节，表格元素和列表。
+    同时也能识别宏引用的关键字，比如 #+CAPTION, #+TITLE, #+AUTHOR, #+DATE等。
+
+    {{{date(FORMAT)}}}
+    指向#+DATE关键字，format是可选的字符串。
+    {{{modification-time(FORMAT, VC)}}}
+    指向文件的导出，修改时间。Org会使用vc.el遍历所有的版本管理中的修改时间。
+    {{{property(PROPERTY-NAME,SEARCH-OPTION)}}}
+    取PROPERTY_NAME的值，如果SEARCH-OPTION指向远程的条目，会覆盖掉前面的。
+
+    可以设置变量org-hide-macro-markers的值让花括号隐藏。
+#+BEGIN
+#+END
+*** 12.6 Comment lines
+    以零个或多个空格开头的一行，并接以#，接一个空格，被认为是注释，不会被导出。
+    ‘#+BEGIN_COMMENT’ ... ‘#+END_COMMENT’之间的内容不会被导出。
+    使用COMMENT关键字（类似TODO）。
+    使用C-c ; 命令切换COMMENT开关。
+*** 12.11 Markdown export 导出markdown
+    因为md是构建在HTML后端智商的，所以任何Org constructs不被Markdown支持，比如tables。
+**** Markdown export commands
+    C-c C-e m m     (org-md-export-to-markdown)
+    将org文件导出为md文件。
+    C-c C-e m M     (org-md-export-as-markdown)
+    导出到临时缓冲，不写文件
+    C-c C-e m o
+    导出到文件并打开
+**** Header and sectioning structure
+     依据org-md-headline-style，md导出会生成atx和setext类型的标题。
+     atx限制标题等级到2，setext限制等级到6。
+** 13 Publishing 出版
+   可以将org文件转换成HTML，并将相关的图片，源码文件等上传到指定的webserver。
+*** Configuration 配置
+**** 13.1.1 org-publish-project-alist
+     一个org-publish-project-alist对应一个项目，格式如下：
+    ("project-name" :property value :property value ...)
+    或者嵌套使用，
+    ("project-name" :components ("project-name" "project-name" ...))
+**** 13.1.2 Sources and destinations for files
+     大多属性是可选的，以下是必须的：
+     :base-directory
+     要发布的源文件所在目录
+     :publishing-directory
+     发布到哪个目录，可以使用tramp软件包和file前缀，上传到webserver。
+     :preparation-function
+     发布前执行的函数，所有函数只执行一个参数，就是project-name。
+     :completion-function
+     发布完成后执行的函数，同上接收一个参数。
+**** 13.1.3 Selecting files
+     :base-extension
+     后缀， *不要带点号* 。其实可以用正则表达式。
+     :exclude
+     匹配正则表达式的文件都会被去除，无视:base-extension配置。
+     :include
+     文件列表，无视:base-extension和:exclude配置。
+     :recursive
+     non-nil，递归。
+**** 13.1.4 Publishing action
+     发布就是将一个文件进行转换并拷贝到其他地方。
+     可以调用响应的函数将org文件转换成html，pdf，markdown等。
+
+     如果你想发布org文件，同时归档，备注，移除标记的子树，使用org-org-publish-to-org。
+     使用org-publish-attachement，将附件拷贝到指定目录。
+     :publishing-function
+     发布函数，一般是进行org文件转换为其他文件的
+     :htmlized-source
+     非空，产生一个xx.org.html文件
+
+**** 13.1.5 Options for the exporters
+     在org-publish-project-alist中的会覆盖掉用户配置的变量，但是文件中设置的OPTIONS会覆盖掉一起。
+
+     http://orgmode.org/manual/Publishing-options.html#Publishing-options
+
+**** 13.1.6 Links between published files
+     可以使用file来指定内部链接，转换成html后，会将file前缀转成html。
+     也可以连接到相应的其他文件，比如图片，压缩包等。
+     并且也可以使用file来锚定到文件的某个部分。
+**** 13.1.7 Generating a sitemap
+     :makeindex
+     非空，生成theindex.org，发表为theindex.html。
+     要被索引的文件要添加#+INCLUDE: "theindex.inc"，然后添加标题，风格等信息。
+     使用方式：
+     * Curriculum Vitae
+     #+INDEX: CV
+     #+INDEX: Application!CV
+
+     所以之前的2个function错了，尼玛的。
+*** 13.2 Uploading files
+    不太推荐使用此功能，严重依赖Tramp，但是大量使用，会出问题。
+    发布时也不需要加上附近，比如css，jpg等。
+*** 13.3 Sample configuration
+**** 13.3.1 simple publishing configuration
+     这里，我看还是用我自己的吧。
+**** 13.3.2 complex publishing configuration
+     (setq org-publish-project-alist
+      '(
+
+  ("blog"
+          ;; Path to your org files.
+          :base-directory "E:/Dropbox/notes/"
+          :base-extension "org"
+
+          ;; Path to your Jekyll project.
+          :publishing-directory "E:/Dropbox/songxin1990.github.io/_drafts"
+          :recursive t
+          :publishing-function org-md-export-to-markdown
+          :body-only t
+    )
+
+    ))
+
+*** 13.4 Triggering publication 触发发布
+
+    C-c C-e P x     (org-publish)
+    提示，输入指定项目，并发布项目中所有文件
+    C-c C-e P p     (org-publish-current-project)
+    发布包含当前文件的项目
+    C-c C-e P f     (org-publish-current-file)
+    只发布当前文件
+    C-c C-e P a     (org-publish-all)
+    发布所有项目
+
+    Org使用时间戳来追踪文件的改变。以上函数只会发布改变了的文件。可以给一个前缀命令（C-u？）
+    ，或修改变量org-publish-use-timestamps-flag的值。这或许对设置了#+SETUPFILE:，#+INCLUDE:
+    的文件有用。
+** Others
+*** org-ruby
+    Textile和Markdown是主流的标记文本，因为很方便的转换到html。
+    虽然org有功能将org文件转换为html，但是Org-ruby尝试让org-mode文件更简单，
+    无论是动态还是静态网页生成。
+
+    安装
+    gem install org-ruby
+
+    org转HTML，需要写Ruby代码
+    require 'rubygems'
+    require 'org-ruby'
+
+    data = IO.read(filename)
+    puts Orgmode::Parser.new(data).to_html
+    非常麻烦，弃用。
+*** org-drill
+    教学抽认卡，使用间隔重复算法，来训练，使用org文件作为原材料来记忆。
+    这样的话，就可以将不认识的单词什么的放进去，然后技艺。

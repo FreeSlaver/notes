@@ -1,0 +1,6 @@
+* e栈架构
+** 问题
+   1. 为什么这里dataserver要写心跳到redis，而不直接和nameserver通信？
+      如果直接和nameserver通信，那么就要和很多台通信了。
+      但是和redis通信有个问题是，如果redis集群挂了？那没撒问题，都挂了。
+      dataserver之间广播通信？

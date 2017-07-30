@@ -1,0 +1,15 @@
+* 大数据技术栈
+  技术平台建设：
+
+  1、大数据基础架构：推荐Hadoop、HDFS、YARN；大数据计算框架：推荐Spark；大数据日志收集推荐Flume+Logstash+Kibana。我们需要部署依赖中间件Zookeeper。
+
+  2、大数据仓库平台建设：分布式关系型TiDB、KV式Redis、文档型MongoDB、列式Hbase
+
+  3、大数据搜索，推荐选择Lucene、ElasticSearch；大数据查询，推荐选择Presto；大数据多维分析，推荐Kylin；大数据挖掘，推荐挖掘开源算法包MashOut。
+
+
+  大数据整理服务：
+
+  1、主数据管理：主数据标准制定、主数据清洗与校验、主数据转换（拆分合并）、主数据复制分发、主数据访问OpenAPI。
+
+  2、ETL：数据抽取、数据清洗、数据校验、数据安全脱敏

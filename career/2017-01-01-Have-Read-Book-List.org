@@ -1,0 +1,30 @@
+* 2017已读的书单
+** 技术
+   Tour of C++
+   BASH Programming - Introduction HOW-TO
+   The Linux Command Line
+   The Unix Programming Environment
+
+   CSS Mastery
+   Effective Java 看了后半部分
+
+
+** 商业
+   史蒂夫 乔布什传
+   招股说明书原来可以这么玩
+
+
+** 成长
+   奇特的一生
+   学习之道，尼玛居然读的中文版，可耻啊
+
+** 重读
+   老子
+
+** 设计
+   设计中的设计，看了很少一部分
+
+** 急迫要读的
+   SCIP
+   CS,APP
+   敏捷软件开发，原则，模式与实践
