@@ -1,0 +1,88 @@
+* Kafka Connect Center
+
+** 介绍
+   是一个web的监控工具。
+   - Data Streams 数据流的流转
+   - System Health 系统健康度
+   - Kafka Connect Configuration Connect的配置管理
+
+** 安装
+*** 基本安装
+    下载Confluent平台包
+    wget http://packages.confluent.io/archive/3.3/confluent-oss-3.3.0-2.11.tar.gz
+
+
+    目录结构：
+    confluent-3.3.0/bin/        # Driver scripts for starting/stopping services
+    confluent-3.3.0/etc/        # Configuration files
+    confluent-3.3.0/share/java/ # Jars
+
+    使用包管理安装的，会在一下目录
+    /usr/bin/                  # Confluent CLI and individual driver scripts for starting/stopping services, prefixed with <package> names
+    /etc/<package>/            # Configuration files
+    /usr/share/java/<package>/ # Jars
+
+    启动zk
+    screen -dmS zookeeper bash -c './bin/zookeeper-server-start ./etc/kafka/zookeeper.properties; exec bash'
+
+
+    详细的安装细节：http://docs.confluent.io/current/installation.html#installation
+
+*** 用户密码
+    将 etc/control-center.properties文件的以下配置注释去掉
+    confluent.controlcenter.rest.authentication.method=BASIC
+    confluent.controlcenter.rest.authentication.realm=c3
+    confluent.controlcenter.rest.authentication.roles=Administrators
+
+    `cd /tmp/confluent/`
+    touch login.properties
+    vi login.properties
+    输入以下内容：
+    admin: admin_pw,Administrators
+    disallowed: no_access
+
+    touch propertyfile.jaas
+    vi propertyfile.jaas
+    输入以下内容：
+    c3 {
+    org.eclipse.jetty.jaas.spi.PropertyFileLoginModule required
+    file="/tmp/confluent/login.properties";
+    };
+
+    以下方式启动：
+    CONTROL_CENTER_OPTS="-Djava.security.auth.login.config=/tmp/confluent/propertyfile.jaas" ./bin/control-center-start etc/confluent-control-center/control-center.properties &
+
+    打开localhost:9021，当心不是9091，很容易和9092搞混。
+    输入用户，密码：admin，admin_pw
+
+    参考：http://docs.confluent.io/current/control-center/docs/security/authentication.html
+
+** 启动
+   手动分别启动：
+   ./bin/zookeeper-server-start ./etc/kafka/zookeeper.properties
+   ./bin/kafka-server-start ./etc/kafka/server.properties
+   ./bin/schema-registry-start ./etc/schema-registry/schema-registry.properties
+
+   ./bin/control-center-start etc/confluent-control-center/control-center.properties &
+
+
+   整体来说就是：启动ZK，启动Kafka Broker，启动那个Kafka Connect Distribute
+** 管理
+   Connectors and their tasks publish status updates to a shared topic (configured with status.storage.topic)
+   which all workers in the cluster monitor. Because the workers consume this topic asynchronously,
+
+   四种状态：
+   UNASSIGNED: The connector/task has not yet been assigned to a worker.
+   RUNNING: The connector/task is running.
+   PAUSED: The connector/task has been administratively paused.
+   FAILED: The connector/task has failed (usually by raising an exception, which is reported in the status output).
+
+** 其他
+   log4j.appender.kafkaConnectRestAppender=org.apache.log4j.DailyRollingFileAppender
+   log4j.appender.kafkaConnectRestAppender.DatePattern='.'yyyy-MM-dd-HH
+   log4j.appender.kafkaConnectRestAppender.File=${kafka.logs.dir}/connect-rest.log
+   log4j.appender.kafkaConnectRestAppender.layout=org.apache.log4j.PatternLayout
+   log4j.appender.kafkaConnectRestAppender.layout.ConversionPattern=[%d] %p %m (%c)%n
+
+   log4j.logger.org.apache.kafka.connect.runtime.rest=INFO, kafkaConnectRestAppender
+   log4j.additivity.org.apache.kafka.connect.runtime.rest=false

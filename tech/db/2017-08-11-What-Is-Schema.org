@@ -1,0 +1,2 @@
+* Schema是什么
+  A database schema is a way to logically group objects such as tables, views, stored procedures etc. Think of a schema as a container of objects.

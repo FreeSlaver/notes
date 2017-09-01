@@ -1,0 +1,46 @@
+* Maven FAQ
+** 打包去掉资源文件
+   <build>
+     <resources>
+            <resource>
+                <directory>src/resources</directory>
+                <excludes>
+                    <exclude>*.properties</exclude>
+                    <exclude>*.sh</exclude>
+                    <exclude>*.docx</exclude>
+                    <exclude>*.json</exclude>
+                </excludes>
+            </resource>
+        </resources>
+
+        ....
+        </build>
+** 指定jar不打包进去
+   dependency的属性scope改为provided，例如：
+   <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.21</version>
+            <scope>provided</scope>
+    </dependency>
+** maven assembly main class
+   <project>
+  [...]
+  <build>
+    [...]
+    <plugins>
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>3.1.0</version>
+        <configuration>
+          [...]
+          <archive>
+            <manifest>
+              <mainClass>org.sample.App</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
+        [...]
+      </plugin>
+      [...]
+</project>

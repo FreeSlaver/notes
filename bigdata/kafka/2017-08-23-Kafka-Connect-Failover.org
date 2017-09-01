@@ -1,0 +1,42 @@
+* Kafka Failover 场景及其处理
+  还有几个问题要想明白啊。。。。
+** 整个的数据同步流程
+
+** 3个手动创建的topic的分片数量
+   特别是offset的，感觉5个并发度太低
+
+   我们maxwell-sink部署几个了？反正有5台kakfa broker。那么就建立5个。
+   每个多少个SinkTask，也就是线程？
+   对啊，这个是estation.db_ez.t_term,estation.db_ez.t_parcel这些对应起来。
+
+   所以全部都是5个partition，所以我们的就是每个maxwell-sink一个SinkTask？
+
+   然后再来看速率问题，就是maxwell吐数据给kafka的速率。
+   看manager显示，非常的少啊。
+
+   消费的问题，一个partition只能分配到一个线程上；但是一个线程可能被分配到多个partition，
+   这个时候能保证顺序吗？应该可以。
+   *这里的部署是：针对不同的mysqlUrl使用不同的name的connector。*
+
+   box和parcel，box的明显速度很大，5个partition，那么也就是？？
+
+** 全部down机，如何恢复
+*** maxwell
+    maxwell，我擦，只能单实例部署。。。也就是有单点故障，如果一台挂了，就停止向kafka写数据了。
+    如果挂了，有什么影响？？？
+
+    如果挂了，又发生上次那种DDL的无法读取，怎么搞？？？或者类似的其他的问题，也导致起来不了。
+
+    反正就是：不断的更新，insertOrUpdate，delete，update，直到更新为目前的最新状态？？？
+
+*** maxwell-sink
+    这个基于connect的，所以高可用什么的都可以保障。
+
+*** kafka
+    kafka全部down了的话，maxwell不会向里面写，offset不会更新，没撒问题；
+    maxwell-sink这个也不会消费，也没撒问题。
+
+    而且服务不可用的几率太小。
+
+*** 总结
+    其实有个问题，就是maxwell挂了，有可能需要maxwell-sink指定offset开始消费？？？

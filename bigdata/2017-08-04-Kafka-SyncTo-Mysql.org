@@ -1,0 +1,36 @@
+* Kafka数据同步到MySQL
+  http://debezium.io/
+
+  A list of mysql cdc to kafka
+  https://github.com/wushujames/mysql-cdc-projects/wiki
+
+
+** Kafka to MySQL
+   尼玛，两个商业公司都请求要demo，我R。
+   https://www.alooma.com/integrations/kafka/mysql
+   https://www.treasuredata.com/integrations/kafka/mysql/
+
+   用flume同步，
+   http://www.toadworld.com/platforms/oracle/w/wiki/11647.streaming-kafka-messages-to-mysql-database
+   mypipe-snapshotter
+
+   官方推荐的：
+   https://www.confluent.io/product/connectors/
+   MySQL的Sink只有一个
+   http://docs.confluent.io/current/connect/connect-jdbc/docs/sink_connector.html
+
+   在BufferedRecords中的add方法中将结果写入数据库。
+   101行的    for (int updateCount : preparedStatement.executeBatch()) {
+
+   DbDialect这个类获取SQL语句也要重点看下。
+
+   debezium到mysql  ***
+   https://stackoverflow.com/questions/43968385/how-to-capture-data-in-mysql-with-debezium-change-data-capture-and-consume-with
+
+** Kafka Connector
+   the Connector is responsible for breaking that job into a set of Tasks that can be distributed to workers.
+
+** 工作任务，数据同步
+   首先肯定是从里面拉取到了数据，然后转，因为jdbc sink的数据格式不一样，
+   所以出来的结果不一样。这些还好，关键是有些东西，比如删表，那么对应到maxwell
+   就很复杂了。。。这样的话，还不如参照着，然后重新写。

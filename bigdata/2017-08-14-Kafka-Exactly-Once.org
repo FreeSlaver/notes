@@ -1,0 +1,45 @@
+* Kafka保证Exactly Once机制
+  enable.idempotence=true
+
+each batch of messages sent to Kafka will contain a sequence number which the broker will use to dedupe any duplicate send
+
+Unlike TCP, though—which provides guarantees only within a transient in-memory connection—this sequence number is persisted to the replicated log,
+
+so even if the leader fails, any broker that takes over will also know if a resend is a duplicate
+
+** Transcations
+    either all messages in the batch are eventually visible to any consumer or none are ever visible to consumers.
+
+    This feature also allows you to commit your consumer offsets in the same transaction along with the data you have processed, thereby allowing end-to-end exactly-once semantics.
+
+    producer.initTransactions();
+    try {
+    producer.beginTransaction();
+    producer.send(record1);
+    producer.send(record2);
+    producer.commitTransaction();
+    } catch(ProducerFencedException e) {
+    producer.close();
+    } catch(KafkaException e) {
+    producer.abortTransaction();
+    }
+
+    在consumer端，属性
+    isolation.level有两个配置
+    read_committed: In addition to reading messages that are not part of a transaction, also be able to read ones that are, after the transaction is committed.
+    read_uncommitted: Read all messages in offset order without waiting for transactions to be committed. This option is similar to the current semantics of a Kafka consumer.
+
+    a producer config “transactional.id” to some unique ID. This unique ID is needed to provide continuity of transactional state across application restarts.
+
+
+    可以这么搞，首先备个案，或者不备。然后博客园，知乎，XX等的专栏都开通，然后写文章，群发到所有的博客站点上。
+    这样肯定就能被收录，然后网站的pv什么的就高了。
+
+    这个群发的功能，可以开发，然后找个设计，卖钱。把微薄，微信，facebook，twitter等等全部给搞进来，你麻痹的。
+    为什么要这么搞？因为做出的东西，需要给别人看，需要产生影响，需要减少其他人的投入。
+    你必须要让世界看见你，听见你。
+    https://juejin.im/post/590b451a0ce46300588c43a0
+    加个评论，挂个广告。先搞技术方面的。
+    现在的主要矛盾---对，解决问题和矛盾，而不是为了虚荣。
+
+    kafka streaming的exactly once：processing.guarantee=exactly_once

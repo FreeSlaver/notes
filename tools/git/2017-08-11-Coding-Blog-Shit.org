@@ -1,0 +1,6 @@
+* 让百度收录，折腾
+  git remote add origin git@git.coding.net:songxin1990/songxin1990
+  git push origin coding-pages # 提交到coding.net
+  设置一个远程仓库mirror，然后将此master提交到mirror
+
+  不搞了，不折腾了，妈个比的。

@@ -1,0 +1,53 @@
+* 终端故障自探测项目总结
+** 数据处理流程
+   终端日志搜集，
+
+   终端心跳，路由等发到dataserver，然后写日志，明天程序搜集，写kafka，
+   消费kafka，判断，触发告警，推送工单，
+
+
+   终端故障恢复，自动关闭工单，
+   //尽量减少技术方面的
+
+
+** 技术处理方面的
+   1.能一次性查询出来的，一次性查询出来
+   2.避免使用复杂的数据结构，我们这里用到了二叉树，其实完全没必要。
+   3.能少用一个泛型少用一个泛型，越少的数据类型，和相互关系，程序越简单，越健壮
+   4.开发的时候，将功能需求切分开来，一个个解决。
+
+** 添加功能
+   1.终端故障，没有柜子；
+   SELECT sn FROM t_term where status = 'breakdown'
+   SELECT * FROM t_cabinet where sn  = term.sn and
+
+   SELECT sn,COUNT(*) FROM t_cabinet WHERE sn IN (SELECT sn FROM t_term WHERE STATUS = 'breakdown') GROUP BY sn
+   没有很多。
+   没有柜子，这个。。左右联合？我草，这个
+
+   2.终端故障很长时间，没有废弃；
+   还是很多的
+
+   SELECT sn,STATUS,update_time,last_edit_time FROM t_term WHERE STATUS = 'breakdown'
+
+
+   3.终端运行，柜子长期故障；
+   SELECT tt.sn,tc.`cabinet_id`,tc.update_time FROM t_term tt, t_cabinet tc WHERE tt.sn = tc.sn AND tt.status = 'run' AND tc.status = 'breakdown'
+
+   整个逻辑没想清楚啊，首先是查出所有故障的sn，然后根据sn查询柜子，
+   如果柜子的结果集是空的，就输出出来。
+
+   用一条SQL好像不太好搞定。
+** 心愿的功能
+   1.设备初始化，柜子为试运行，运营
+   SELECT COUNT(*) FROM t_term tt,t_cabinet tc WHERE tt.sn = tc.sn AND tt.`status` = 'init' AND tc.`status` IN ('testrun','run','breakdown')
+   36
+   2.
+      SELECT COUNT(*) FROM t_term tt,t_cabinet tc WHERE tt.sn = tc.sn AND tt.`status` = 'testrun' AND tt.`update_time` < '2017-08-28'
+   125
+
+   3.
+     5
+     14
+   4.
+     没有

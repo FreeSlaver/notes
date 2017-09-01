@@ -1,0 +1,10 @@
+* Maven FAQ
+
+** assembly自定义最终文件名
+   configuration>
+                    <finalName> maxwell-sink</finalName>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <appendAssemblyId>false</appendAssemblyId>
+                </configuration>

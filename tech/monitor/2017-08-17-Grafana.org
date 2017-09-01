@@ -1,0 +1,20 @@
+* Grafana介绍
+Grafana is an open source metric analytics & visualization suite. It is most commonly used for visualizing time series data for infrastructure and application analytics but many use it in other domains including industrial sensors, home automation, weather, and process control.
+** 下载，安装，启动
+   Centos：
+   wget https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-4.4.3-1.x86_64.rpm
+   sudo yum localinstall grafana-4.4.3-1.x86_64.rpm
+   具体见：https://grafana.com/grafana/download
+   配置文件在：/etc/grafana/grafana.ini
+
+*** 启动：
+   sudo service grafana-server start
+   start at boot time？？
+   sudo /sbin/chkconfig --add grafana-server
+*** 默认目录
+   服务，启动脚本都使用的：/etc/sysconfig/grafana-server
+   日志目录：/var/log/grafana
+   Grafana自己使用的db在：/var/lib/grafana/grafana.db
+   配置文件在：/etc/grafana/grafana.ini
+
+** 添加数据源

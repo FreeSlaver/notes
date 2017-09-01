@@ -1,0 +1,4 @@
+* 广告推荐系统
+  Our ad serving infrastructure determines which ad to serve at what time, and it tracks events like impressions, clicks and engagements.
+  There are billions of tracking events per day and since these events are the source of truth for advertising and billing,
+  it is critical that they are reliably stored in HDFS for posterity.

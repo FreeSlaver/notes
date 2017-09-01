@@ -1,0 +1,60 @@
+* 使用Grafana和InfluxDB通过JMX监控Kafka
+  本文参考，翻译自[[https://softwaremill.com/monitoring-apache-kafka-with-influxdb-grafana/][Monitoring Apache Kafka with Grafana / InfluxDB via JMX]] 。
+  在这边文章中，你将会学习到Grafana，InfluxDB，以及如何使用它们通过JMX来监控Kafka集群。
+  整个的流程是：使用Kafka的JMX端口提供Metrics，让Jmxtrans来收集并发送到InfluxDB中保存，
+  然后让Grafana来读取InfluxDB，进行图形化的展示。
+
+** InfluxDB
+   InfluxDB是一个时间序列的数据库，首先我们需要将它下载，安装，启动
+   具体介绍，参看我的另一片博文：
+** Grafana
+   Grafana是一个图形化的展示Metrics的软件，我们也需要先下载，安装，启动它，
+   具体参看：
+
+** Kafka
+   Kafka的监控是通过对外暴露JMX接口，然后可以查询到相关的Metrics。
+   启动的时候，需要制定JMX端口：
+   JMX_PORT=19999 ./bin/kafka-server-start.sh config/server.properties
+
+** JMXTRANS
+   有个问题就是我们要将Kafka通过JMX提供出来的Metrics发送到InfluxDB中。
+   jmxtrans是一个非常高效的连接器，将JVM这段的JMX中的Metrics发送到另外一段，不管是记录，
+   监控，还是图形工具等。具体介绍参看：https://github.com/jmxtrans/jmxtrans/wiki。
+
+*** 下载：
+   wget http://central.maven.org/maven2/org/jmxtrans/jmxtrans/266/jmxtrans-266-all.jar
+
+*** 配置
+    新建一个jvm.json文件，里面有如下内容：
+   {
+  "servers" : [ {
+    "port" : "19999",
+    "host" : "localhost",
+    "alias": "kafka-1",
+    "queries" : [ {
+      "outputWriters" : [
+      {
+        "@class" : "com.googlecode.jmxtrans.model.output.InfluxDbWriterFactory",
+        "url" : "http://localhost:8086/",
+        "database" : "kafka",
+        "username" : "admin",
+        "password" :
+      } ],
+      "obj" : "java.lang:type=Memory",
+      "attr" : [ "HeapMemoryUsage", "NonHeapMemoryUsage" ],
+      "resultAlias" : "jvmMemory"
+    }
+    ],
+    "numQueryThreads" : 1
+   } ]
+  }
+*** 启动脚本
+    新建一个jmxtrans的启动脚本，
+    wget -q https://raw.githubusercontent.com/jmxtrans/jmxtrans/master/jmxtrans/jmxtrans.sh
+    chmod +x jmxtrans.sh
+
+    执行脚本：
+    JAR_FILE=jmxtrans-266-all.jar ./jmxtrans.sh start
+
+** 监控Kakfa Connect
+   Kafka Connect本质就是包了一层的producer和consumer，只需要在启动的时候，添加一下参数就行：

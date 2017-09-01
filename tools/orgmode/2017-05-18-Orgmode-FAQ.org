@@ -7,7 +7,7 @@
    #+CAPTION: this is caption for image
    #+NAME: [[test.jpg]]
   
-  [[file:test.png
+ [file:test.png
 ]]
     [[file:E:\Dropbox\notes\tech\devtools\psb.jpg]]
 

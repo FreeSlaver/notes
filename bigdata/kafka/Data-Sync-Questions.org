@@ -1,0 +1,47 @@
+* 数据同步的一些问题
+
+  在使用maxweill将mysql的binlog变更同步到kafka中，然后使用maxwell-sink将kafka中的数据，
+  经过过滤，路由到另外的mysql集群指定的database中。
+
+  需要考虑几个非常重要的问题：
+** 1.如何保证消息不漏
+
+** 2.maxwell-sink的task挂掉之后，重新消费该怎么办？有些数据是错误的，导致task尝试多次后挂掉，
+  如何跳过这些数据？（在处理前要对数据进行清洗），还有最好是表之间的同步相互不影响。
+  集群挂掉之后，如何从上次的点开始消费，而不是重复消费。（因为有些insert会包异常的）
+  对啊，只有insert会包异常，update，delete之类的不会啊（update保证顺序就行，delete删除不存在
+  的不会有任何问题）
+  但是走batch的方式，，，还是不好搞啊。
+
+** 3.insert重复插入的问题
+   现在有个问题就是，一旦找不到offset，就会reset到earliest，然后从头消费，
+   这时就会有重复insert的问题，会报异常，然后task就挂了。
+
+   不对啊，这个地方不是有那个文件保存吗？
+   offset.storage.file.filename=/tmp/connect.offsets
+
+   For configuration of Kafka source and Kafka sink tasks, the same parameters can be used but need to be prefixed with consumer. and producer.
+   consumer.offset.storage.file.filename=/tmp/consumer.offsets
+   producer.offset.storage.file.filename=/tmp/producer.offsets
+   offset什么的，我要自己保存一份。好恢复。
+   马哥比，没写到文件里面去啊。
+
+   The remaining parameters are connector configuration files. You may include as many as you want, but all will execute within the same process
+
+   Note that flush.size is per topic partition not per topic. This can be important if you had 16k messages in your topic, but more than 16 partitions since you may never commit files in that case. If you were hitting the point of committing files, we would expect to see messages like
+   *Starting commit and rotation for topic partition ...*
+   或者设置rotate.interval.ms
+
+
+   It is recommended to manually create the topics for offset, configs and statuses in order to achieve the desired the number of partitions and replication factors.
+
+   config.storage.topic (default connect-configs) - topic to use for storing connector and task configurations; note that this should be a single partition, highly replicated, compacted topic. You may need to manually create the topic to ensure the correct configuration as auto created topics may have multiple partitions or be automatically configured for deletion rather than compaction
+   这个必须设置为压缩方式，不能被删除。
+
+   Note that in distributed mode the connector configurations are not passed on the command line. Instead, use the REST API described below to create, modify, and destroy connectors.
+   注意，在分布式模式下，连接器的配置，不是在命令行传入进去的，要使用REST API。
+
+   POST /connectors - create a new connector; the request body should be a JSON object containing a string name field and an object config field with the connector configuration parameters
+
+   这个用的测试的那个sink，可以消费，但是好像offset还是没提交啊。
+   因为maxwell-sink-offsets这个里面没东西啊。

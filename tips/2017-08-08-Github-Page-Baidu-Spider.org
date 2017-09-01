@@ -1,0 +1,3 @@
+* 百度爬虫不抓取Github page
+  配置好CDN后测试：
+  curl -A "Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)" https://github.com

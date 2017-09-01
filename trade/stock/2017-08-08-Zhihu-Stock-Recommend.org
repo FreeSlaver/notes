@@ -1,0 +1,4 @@
+* 在知乎答题推荐的股票相关
+  http://3gods.com/2013/11/13/Trade-Idea.html
+
+  http://localhost:4000/2015/03/20/Some-Trade-Strategy.html

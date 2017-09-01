@@ -1,0 +1,18 @@
+* Kafka Connect Concepts
+  These tasks have no state stored within them. Task state is stored in Kafka in special topics config.storage.topic and status.storage.topic and managed by the associated connector
+  As such, tasks may be started, stopped, or restarted at any time in order to provide a resilient, scalable data pipeline.
+
+  KafkaConnect internal offsets are stored either in Kafka or on disk rather than within the task itself.
+
+  the workers rebalance the full set of connectors in the cluster and their tasks
+  多个worker之间要负载均衡。
+
+  When a task fails, no rebalance is triggered as a task failure is considered an exceptional case. As such, failed tasks are not automatically restarted by the framework and should be restarted via the REST API.
+  当task中发生异常，不会触发负载均衡，也不会被自动重启，但是可以通过REST API重启。
+
+  Connectors and tasks are logical units of work and must be scheduled to execute in a process.，that is worker。
+
+  Connectors (monitoring the source or sink system for changes that require reconfiguring tasks)
+
+  However, Kafka Connect does require persistent storage for configuration, offset, and status updates to ensure it can recover from faults,
+  and although Kafka Connect will attempt to create the necessary topics when they don’t yet exist, users may choose to manually create the topics used for this storage.

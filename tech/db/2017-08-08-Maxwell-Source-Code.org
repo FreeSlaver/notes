@@ -1,0 +1,18 @@
+* Maxwell源码走读
+  bootstrap，errors，metrics下面都不用看。
+
+  然后要知道整个代码的结构，主要是找到在哪来：可以将sql直接输出。
+
+  那个可以输出sql的方法在IntColumnDef中的toSQL()方法
+
+  在RowMap及其子类中可以看到如何转换为JSON。
+
+  重点：AbstractReplicator主要是处理各种RowMap的，比如DDLRowMap。
+
+  BinlogConnectorReplicator连接binlog并获得变更时间。
+
+  在BinlogConnectorEvent中的writeData方法中加个sql字段。
+** Schema
+   有个问题就是：表如果改变了，对应的schemaid是否会改变。
+
+   SchemaCapturer是从infomation_schema中查询出PK的。

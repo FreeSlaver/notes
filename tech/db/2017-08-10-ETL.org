@@ -1,0 +1,21 @@
+* ETL
+** ETL介绍
+   ETL，Extract，Transform，Load，提取，转换，装载。是用于数据库处理，特别是数据仓库。
+
+   Data extraction is where data is extracted from homogeneous or heterogeneous data sources;
+   同种的或者非同种的数据源
+   data transformation where the data is transformed for storing in the proper format or structure for the purposes of querying and analysis;
+   data loading where the data is loaded into the final target database, more specifically, an operational data store, data mart, or data warehouse.
+*** ETL的生命周期
+    Cycle initiation
+    Build reference data
+    Extract (from sources)
+    Validate
+    Transform (clean, apply business rules, check for data integrity, create aggregates or disaggregates)
+    Stage (load into staging tables, if used)
+    Audit reports (for example, on compliance with business rules. Also, in case of failure, helps to diagnose/repair)
+    Publish (to target tables)
+    Archive
+
+** 资源汇总
+   饿了么MySQL异地多活的数据双向复制经验谈

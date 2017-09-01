@@ -1,0 +1,323 @@
+* Kafka Connect
+
+** 如何部署
+   首先我们要弄清楚：原始的console之类的是如何传入参数，如何加载到类进行执行的。
+   从下面这个就看出来，先要弄明白，整个的过程是怎么样的，也就是相互之间的依赖关系。
+   1.上传jar包和dependency到/data/kafka/libs目录下
+
+   2.添加路执行路径到CLASSPATH
+   export CLASSPATH=/data/kafka/libs/maxwell-sink.jar
+
+   3.生成配置文件
+   name=maxwell-sink
+   connector.class=com.cimc.maxwell.sink.JdbcSinkConnector
+   tasks.max=1
+   topics=estation.db_ez.t_parcel
+
+   4.然后使用以下语句执行：
+   ./bin/connect-standalone.sh config/connect-standalone.properties config/maxwell-sink.properties
+
+   还有个问题，怎么本地启动？然后调试？我擦。
+
+
+
+
+    *其实最本质的是：问题我没想清楚，想透彻！！！*
+*** 几个问题
+
+**** 批量的方式怎么搞
+    妈的，今天把这个批量的搞了，明天搞schema。
+    //妈的，你为毛，非要看别人代码？？？之前抄代码，抄习惯了，撒都不会，撒都不想，搞过来，然后能跑通就完了。
+    那天，他说的是可以一直加，然后加到一定数量，就flush。
+
+    我草，好多问题要考虑啊啊啊啊。
+
+**** 过滤
+*** 配置如何传递的？
+    首先是通过start()传递一个Map<String,String> props,应该就是配置文件中对应的额。
+** 怎么debug
+   妈的，一堆问题。
+   提高日志级别，修改config/connect-log4j.properties.
+   还要配置下输出日志文件，尼玛的。
+
+
+   我现在要做的是数据同步，怎么模拟？如果你执行一个update，但是另外一个db里面没数据
+
+
+** Kafka Connect介绍
+   partition的概念，比如Stream是一个db，那么partition就是一个table。
+   这是最小化的并行单位。
+
+   The offset varies per source: for a generic database source, an offset might refer to a timestamp column value
+   while for the MySQL source, an offset would refer to the position of the row in the transaction log.
+   For a sink connector, it is the Kafka offset.
+
+   The Kafka HDFS connector, that ships with Confluent Platform 2.0, provides
+   exactly once guarantees by storing both the data and offset in one atomic operation.
+
+
+   Each task
+ * instance is assigned a set of partitions by the Connect framework and will handle all records received
+ * from those partitions.
+   这个是源码中的注释，到底哪个正确，妈的。
+
+   SinkTask会定期调用flush方法提交offset。（这里就有问题了）
+
+   * Put the records in the sink. Usually this should send the records to the sink asynchronously
+     * and immediately return.
+     就是写入到sink的操作应该是异步，而且立刻返回。
+
+** 需求，添加几个功能
+
+*** 各种替换
+     可以指定多个topic消费，这个是可以的，直接在后面逗号分开就行了
+     可以指定primarykye，这个怎么指定了？
+     tables.pk=db_ez.t_parcel:id,db_ez.t_box:id
+
+     还是db_ez.t_parcel=id;?明显上面的要好，关键是不知道怎么接受参数的，
+     是不是只有
+     可以指定过滤条件
+     可以指定目标database
+*** 输出数据变化到文件
+    格式：db,table,type，pk,time,oldV（全部字段）,newV
+
+
+        <appender name="eslog" class="org.apache.log4j.DailyRollingFileAppender">
+                <param name="File" value="/data/logs/profile/es.log" />
+                <param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+                <param name="Append" value="true" />
+                <layout class="org.apache.log4j.PatternLayout">
+                        <param name="ConversionPattern" value="%m%n" />
+                </layout>
+        </appender>
+*** 添加过滤条件
+    filterKey : sn,
+                filter : [sn4,sn5,sn6],
+
+   就是字段sn是sn4，sn5，sn6
+
+   现在剩下的问题就是：搞清楚那个connect的配置，尼玛的。
+   1.传入自定义的properties文件；2.
+
+
+   Each task is assigned a subset of the partitions to process. Sometimes this mapping is clear: each file in a set of log files can be considered a partition, each line within a file is a record, and offsets are simply the position in the file.
+
+   A JDBC connector can map each table to a partition, but the offset is less clear
+
+    One possible mapping uses a timestamp column to generate queries to incrementally return new data, and the last queried timestamp can be used as the offset
+
+   关键点：搞清楚jdbc用的什么做offset。
+   When a new table is created, it must discover this so it can assign the new table to one of the Tasks by updating its configuration
+   动态创建task是怎么做的。
+
+   At the moment Kafka Connect doesn’t expose an embedded API, though all the necessary building blocks are already in place (under the connect-runtime module).
+   所以说不能像之前那样引入一个jar包就可以了。
+
+   This is because upon startup the worker will read all files on the CLASSPATH to search for available connector plugins. Avoid having large portions of the file system on the worker’s CLASSPATH to avoid this problem.
+
+   *Standalone connectors store their offsets in a local file specified by offset.storage.file.filename*
+
+*** 添加一个需求
+    针对特定的表的特定字段进行过滤。
+    表肯定定位不够，需要加db，
+
+    db_ez.t_term.sn:xxx
+
+    搞成Map<String,Map<String,Set<String>>这种类型
+
+    1.还有个问题，如果多个connector，那个日志都输出在一起了。。。
+
+    2.要注意的问题是，大量的更新topic会出错。
+    尽量将其他的先停掉，然后只更新一个。
+    db_ez_log
+
+    topic:estation.db_ez_log.t_ez_changebox,partition:2,offset:0,
+===>>>key:{"database":"db_ez_log","table":"t_ez_changebox","pk.id":46098},value:{"database":"db_ez_log","table":"t_ez_changebox","type":"insert","ts":1503891834,"xid":6650562279,"commit":true,"data":{"id":46098,"parcel_id":"518104A75220170828104027017356","before_box_id":"WH018000353018","creator":"18926069730","updater":"18926069730","create_time":"2017-08-28 11:43:54","update_time":"2017-08-28 11:43:54","status":"n","after_box_id":"WH018000350009","method":"updateParcel","key":"2611f812d2604cc5849d1d2996517af986819","release_box":null}}
+
+
+
+*** KafkaConncet Deploy部署
+    all state is stored in Kafka, making the local processes themselves stateless.
+
+    The resource limit depends heavily on the types of connectors being run by the workers, but in most cases users should be aware of CPU and memory bounds when running workers concurrently on a single machine.
+*** KafkaConnect作为插件安装
+    A Kafka Connect plugin is:
+
+    an uber JAR containing all of the classfiles for the plugin and its third-party dependencies in a single JAR file; or
+    a directory on the file system that contains the JAR files for the plugin and its third-party dependencies.
+
+    However, a plugin should never contain any libraries that are provided by Kafka Connect’s runtime.
+    原来配置路径是这么玩的：
+    首先我们选择一个路径，比如/usr/local/share/kafka/plugins放JAR，
+    然后在worker的配置中stadalone.properties或distribute.properties添加：
+    plugin.path=/usr/local/share/kafka/plugins
+
+     Kafka Connect worker loads the classes from the respective plugin first, followed by the Kafka Connect runtime and Java libraries.
+     之前的早期版本要在CLASSPATH中添加。
+*** failover
+    现在有几个问题，就是数据遗漏或者重复消费。
+    认为maxwell到kafka没问题？
+
+** 还有几个问题
+    1.本地调试，所以那个windows的sh要写。
+    2.分布式环境的配置，部署等。
+    3.输出那个前后文件，可以直接改sh启动的东西，指定为log4j.xml。
+    4.如何测试
+    5.健壮性，一方面是本身有的重试，一方面是无法保证exactly once的东西，要保证多次insert？
+    我看没必要，大不了，重新启动？重启一样会多次消费，报错。
+    先自己写，然后参考jdbc connect模仿。
+    重试机制，这么搞？还是自己逻辑不清，这么简单的东西，我去。
+    OK，重试加上了。现在要搞的多次消费的，
+
+    首先我们来想想这个东西，它自己也办法完全保证once
+
+    6.加上写必要的日志 done
+
+*** 投递语义的问题
+    现在目前的代码是什么投递语义了？我草，我也搞不太清楚啊，好像是手动的，这样会保证最少一次，
+    但是有可能会重复，但是我这里的代码有个问题是，buffer没满，然后返回了，然后commit了，会提交offset。
+
+    第二：解决掉之后，会有重复执行的问题，DDL的不考虑，DML的：
+    insert：有pk的，会抛异常，比如id重复，违反联合主键唯一性约束；没pk的，会插入多条记录。
+    能不能通过xid来规避掉了？将insert和xid绑定一起，每次执行insert之前，看看这个xid是否已经在数据库？
+    xid放内存？
+    update：这个保证顺序性也没撒问题，
+    delete：这个没撒问题，
+
+*** consume默认配置问题
+    现在好像都是默认从earliest开始消费啊，每次都重复的。。。
+
+   仔细看了这个东西，还是不行，比如插入，一个
+   insert into t_parcel (id,book_type) values('245245','weixin')
+   这种，你不可能将那个改成字符串。所以还是的搞这个schema，
+
+** 关于schema
+   这个schema，真TM的复杂，我看直接将类Vo放到项目中，比如ParcelVo等。
+   将表t_parcel和ParcelVo建立一对一关系，RowMap做成泛型。
+   对用mybatis和spring-jdbc，这样直接操作对象了。
+*** insert
+    只有data有数据，直接搞，毫无问题。
+
+*** update
+    data，old都有数据，但是一样可以用，只是说有些是没有pk值的。
+*** delete
+    data是有原始值的。
+
+** 使用mybatis
+   能批量执行sql吗？这个不考虑，mybatis自己会优化。
+*** 指定database
+    应该可以传递一个参数，然后判断，拼接进去。
+*** insert
+    insert毫无问题
+*** update
+    有pk的用updateByPk？或者全部搞一样的？
+    没pk的用old的值
+*** delete
+    和上面一样的，然后传递的时候，直接将map传递进去。
+    还要搞一个本地调试的东西。
+
+** 还有几个问题
+   1.那个鸟old中的$ref:$data是个什么东西。
+   2.查询出来的那个insert，update，delete是否正确
+   将rowMap和sql一起输出到指定的日志文件。
+   3.批量更新的那个batch
+   如果没到500条，好久才更新，如果这时丢了，怎么搞？
+
+   下班之后再看吧，今天早点回去了。
+   坚持写博客，
+
+   {"data":{"box_id":"ZN012000080222","box_status":"r","box_type":"medium","box_type_id":"69","box_use_status":"empty","cabinet_id":"ZN012000080","create_time":"2017-07-26 14:04:55","layout_col":"2","layout_elect":"20","layout_row":"10","rema
+rk":null,"sn":"101100A094","source":null,"status":"y","update_time":null},"database":"db_ez","old":{"$ref":"$.data"},"pk":"ZN012000080222","table":"t_box","time":1502796232478,"type":"delete"}
+
+
+
+** 常用命令
+*** Linux
+   ./bin/connect-standalone.sh config/connect-standalone.properties  config/connect-console-sink.properties  | more
+
+   ./bin/connect-standalone.sh config/connect-standalone.properties  config/maxwell-sink.properties  | more
+
+   ./bin/connect-distributed.sh  config/connect-distributed.properties  config/maxwell-sink.properties
+
+*** Windows
+    d:\kafka\bin\windows
+    connect-standalone.bat  d:\kafka\config\connect-standalone.properties d:\kafka\config\connect-console-sink.properties
+
+** 数据问题
+   1.使用了batch，停了，会丢失数据吗？
+   2.失败了，重启如何恢复，指定，从哪里开始消费了？
+   3.刚还想到一个问题，多个Task，能够保证顺序吗？
+   根据pk进行了hash，那么针对指定的parcel_id，都会被hash到一个partition上。
+   一个partition只会被一个consumer线程消费，因此不存在任何问题。
+   4.connection的问题
+   就是事务的保证，必须将事务和offset的提交绑定在一起。
+
+   5.insert去重
+
+** 数据校订
+   如何区分你同步过去的数据是正确的，没漏，没错误（顺序）
+
+** 数据同步监控
+   整个的监控程序怎么搞。可以放到后面考虑
+
+** Schemas注册中心作用
+   We’ve also found it painful not having a central authority on data structures that can share their respective schemas across all services and applications. Without a central registry for message schemas, data serialization and deserialization for a variety of applications are troublesome and the pipeline is fragile when schema evolution happens. We found Schema Registry is a great solution for this problem.
+
+   The ad server uses the event classes and Schema Registry to validate data before it’s written to the pipeline – ensuring data integrity – and then generates Avro-serialized Kafka messages with the validated schema.
+   也就是说用event类和schema注册中心的东西来校验数据，在写入到kafka之前，为了保证数据的完整性。
+   然后使用已经定义好的序列化类来产生消息。
+
+** 配置注意点
+   For connector configs, tasks.max, flush.size, and rotate.interval.ms are very important.
+
+   so having the tasks.max comparable with the available CPU cores is helpful for performance, and having the tasks.max comparable with the total number of topic partitions can help achieve maximum parallelism
+
+   We choose flush.size and rotate.interval.ms based on the size of the generated Parquet files.
+
+   One 32-core Kafka Connect API worker node can achieve the HDFS writing rate of 136,000 messages per second with 75% CPU usage and roughly 225 MBps network inbound.
+
+** 过滤重复数据
+   又出问题了，那个batch之前可能就已经有了
+   在这个前面，就先对所有的records进行去重，先将record转换为对象，然后对对象进行去重。
+
+   是将这个转换成List<RowMapRecord>然后去重，返回一个List好，还是直接过滤？
+   搞成list返回，这样代码更清晰，但是代价更大，更多循环，直接过滤较好。
+
+   要过滤的有：
+   1.xid重复的
+   2.type相同，pk相同的
+   3.type是insert，但是数据库中已经存在的。
+
+   代码怎么写？
+
+   distinctXid()返回boolean？
+
+   但是这个地方好像还是不行，因为有这种情况：
+   我先delete，加到batch中，然后insert，这个时候delete还没执行，查询到记录是存在的，
+   所以insert没有没加到batch中。
+
+   怎么进行复杂的测试。
+** 加个功能，对特定类型的DML操作过滤。
+   先写一起。
+
+   写一起好，还是分开好？
+   还是要分开，一个做dml判断的，一个是做字段判断的。
+   那个表 db_ez.t_term的哪些操作放行。
+   但是这里有个问题就是大小写的问题。直接用String。
+   分，肯定是要分开。
+
+   分开之后怎么合在一起作用了？
+   filterChain？？感觉搞的麻烦了，但是必须这么搞啊。
+
+   必须的分开，然后组装这个filterChain怎么搞？？？
+   直接init？可以得到所有xx的实现类？？？
+   可以用反射，也可以直接new？然后传递进去的是什么？config？的字段？
+
+
+   还有好多东西要做啊，一个个来。。。
+   算法和数据结构，搞搞搞。。。。还是掌握的不好啊。。。
+   其实这里不需要针对特殊情况处理，preNode设置为tail就行。。。我草，这么美妙。。。
+   认知事物，必须要透彻啊，利用上所有的线索，知识，资料，以及知识间的联系。
+
+   为什么我这篇文章发布出去了。。。我擦，怕什么？
+   别人了解？？？还是？

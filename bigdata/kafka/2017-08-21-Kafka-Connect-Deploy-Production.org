@@ -1,0 +1,35 @@
+* 线上Kafka Connect部署详细文档
+  打包得到maxwell.jar。
+
+  新建文件夹
+  `mkdir /data/kafka-connect`
+
+  将maxwell.jar上传到`/data/kafka-connect`
+
+  //修改`/data/kafka/bin/connect-distribute.properties`
+  替换掉/data/kafka/bin/connect-distribute.properties
+
+  这TM的配置是个问题，蛋疼。。。
+  替换掉/data/kafka/config/connect-log4j.properties
+
+
+** 提交connector配置
+   向URL：http://119.29.144.103:8083/connectors
+   发送POST请求，内容如下：
+   {
+    "name": "maxwell-sink",
+    "config": {
+      "connector.class" : "com.cimc.maxwell.sink.MySqlSinkConnector",
+        "tasks.max": 10,
+        "topics": "estation.db_ez.t_parcel_ext,estation.db_ez.t_box_ext",
+        "max.retries": 3,
+        "retry.backoff.ms": 1000,
+        "mysql.driver": "com.mysql.jdbc.Driver",
+        "mysql.username": "estation",
+        "mysql.password": "sdnnysqt@lb",
+        "mysql.url": "jdbc:mysql://10.33.1.13:3306?autoReconnect=true&characterEncoding=utf8&allowMultiQueries=true",
+        "mysql.batch.size": 500,
+        "topic.target.db": "estation.db_ez.t_parcel_ext:test,estation.db_ez.t_box_ext:test",
+         "filter.conditions" : ""
+    }
+    }

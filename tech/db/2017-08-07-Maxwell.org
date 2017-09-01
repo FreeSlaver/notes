@@ -1,0 +1,60 @@
+* Maxwell
+  Maxwell只有在基于列单元的复制开启才有效。
+
+  冒烟测试，以以下方式启动：
+  bin/maxwell --user='maxwell' --password='XXXXXX' --host='127.0.0.1' --producer=stdout
+  这样在做CRUD的时候，maxwell就有响应。
+  insert into test.maxwell set id = 5, daemon = 'firebus!  firebus!';
+  (maxwell)
+  {"table":"maxwell","type":"insert","data":{"id":5,"daemon":"firebus!  firebus!"},"ts": 123456789}
+
+  启动：
+  bin/maxwell --user='maxwell' --password='XXXXXX' --host='127.0.0.1' \
+   --producer=kafka --kafka.bootstrap.servers=localhost:9092
+   将会写到maxwell这个topic中。
+
+
+   create table test.e (
+   id int(10) not null primary key auto_increment,
+   m double,
+   c timestamp(6),
+   comment varchar(255) charset 'latin1'
+   );
+
+   {
+   "type":"table-create",
+   "database":"test",
+   "table":"e",
+   "def":{
+      "database":"test",
+      "charset":"utf8mb4",
+      "table":"e",
+      "columns":[
+         {
+            "type":"int",
+            "name":"id",
+            "signed":true
+         },
+         {
+            "type":"double",
+            "name":"m"
+         },
+         {
+            "type":"timestamp",
+            "name":"c",
+            "column-length":6
+         },
+         {
+            "type":"varchar",
+            "name":"comment",
+            "charset":"latin1"
+         }
+      ],
+      "primary-key":[
+         "id"
+      ]
+   },
+   "ts":1477053126000,
+   "sql":"create table test.e ( id int(10) not null primary key auto_increment, m double, c timestamp(6), comment varchar(255) charset 'latin1' )",
+   "position":"master.000006:800050"
+   }

@@ -1,0 +1,10 @@
+* Mybatis FAQ
+** 获取生成的sql
+   SqlSessionFactory s = (SqlSessionFactory) ctx.getBean("sqlSessionFactory");
+
+   Configuration configuration = s.getConfiguration();
+   MappedStatement ms = configuration.getMappedStatement("MyStatementId");
+
+
+   BoundSql boundSql = ms.getBoundSql(parameters); // pass parameters for the SQL statement
+   System.out.println("SQL" + boundSql.getSql());

@@ -1,0 +1,7 @@
+* Kafka Connect Authentication
+
+  stackover flow一个神奇的网站啊。
+
+  https://stackoverflow.com/questions/45250575/securing-access-to-rest-api-of-kafka-connect
+
+  This is a known area in need of improvement in the future but for now you should use a firewall on the Kafka Connect machines and either an API Management tool (Apigee, etc) or a Reverse proxy (haproxy, nginx, etc.) to ensure that HTTPS is terminated at an endpoint that you can configure access control rules on and then have the firewall only accept connections from the secure proxy. With some products the firewall, access control, and SSL/TLS termination functions can be all done in a fewer number of products.

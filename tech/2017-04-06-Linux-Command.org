@@ -113,3 +113,14 @@ rm unlink 删除文件或者link
 ** du | sort -nr 显示目录，按照空间有小到大排序。 du是显示目录及占用空间。
 ** wc file 显示文件行数，字符数，字节数等。但是好像也可以用来计数？
    我COA，这里其他的输入可以看做就是文件中的内容。
+** screen
+*** 显示screen列表：
+    screen -ls
+*** 杀死screen
+    screen -X -S pid quit
+*** 对于已死screen的这样搞
+    screen -wipte pid
+** Tips
+   使用 ; 一次性输入多条命令语句分别执行，例子：
+   cd kafka-connect-hdfs; git checkout v3.0.1; mvn package
+

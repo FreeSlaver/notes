@@ -1,0 +1,12 @@
+* Log4j配置总结
+  妈的，看别人写的文章从来没看懂过，看源码，一遍就懂了。
+  以前真是TM浪费时间，看了N遍了，不是我笨，是别人写的都太垃圾。
+
+
+** 使用特定名称的log将日志输出到指定的文件夹
+   log4j.logger.operation = info,operation
+   log4j.appender.operation =org.apache.log4j.DailyRollingFileAppender
+   log4j.appender.operation.File =/data/logs/nameserver/operation.log
+   log4j.appender.operation.DatePattern = yyyy-MM-dd
+   log4j.appender.operation.layout = org.apache.log4j.PatternLayout
+   log4j.appender.operation.layout.ConversionPattern=%m%n
