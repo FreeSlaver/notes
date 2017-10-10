@@ -1,0 +1,170 @@
+* 谷歌论文之Bigtable详解
+
+** Bigtable是什么
+   Bigtable是一个分布式的数据文件存储系统，用来管理那些被设计为可以扩展到海量级别的结构化数据，并且横跨成千上万台机器。
+
+   一个Bigtable是一个稀疏的，分布式的，持久化的，多维度的有序Map。
+   这个Map通过行键（row key），列键（column key）和时间戳来进行索引：
+   (row:string, column:string, time:int64) → string
+
+   [[file:C:\Users\00013708\Desktop\bigtable.png][bigtable]]
+
+   下面是一个用于存储网页的大表，一次举例：
+   row行名是翻转的URL，contents是column列名，存储的网页内容，anchor锚列存储的
+   所以指向到当前网址URL，也是翻转的URL。然后contents列有3个版本，t3,t5,t6是通过
+   timestamp字段区分
+
+   它不支持完整的关系数据模型，相反，它提供给客户端一种非常简单的数据模型，
+   支持动态的控制数据布局和数据格式（data layout and format），
+   并且允许客户端推导出存储在底层数据的所在位置属性。
+
+   数据是通过行名（row name）和列名（column name）来进行索引的，行名和列名可以是任意的字符串。
+
+   客户端可以通过仔细选择的schemas来控制数据的所在位置，以达到是从内存还是磁盘获取数据。
+   针对每行（row）的读写都是原子性的。
+
+   为了减轻管理多个不同版本数据的重负，客户端可以设置保存最后n个版本或者n天内的数据。
+** Bigtable核心概念
+*** column key 列键
+    列键使用以下语法：簇名:修饰符。
+*** column family 列簇
+    列键组成在一起的集合称作列簇，是最基本的访问控制单位。
+    其实就是将一类的信息放在一起，但是却分成多个列来存储，这样找起数据来就更加简单，高效。
+
+    必须先创建列簇，才能在列簇下面的列存放数据。
+    在找列簇之前也可以通过制定row keys寻址，这样可以更好的定位到数据，更好的性能。
+
+    这就是我们的意图，让一张表中的唯一列簇的数量少（最多数百），
+    并且列簇在操作期间很少改变。与此相反，一个表可以有无上限的列数量。
+
+    访问控制和磁盘或内存的核算都在列簇级别进行。
+
+    客户端可以将多个列簇组合在一起，成为一个存储位置分组（locality group）。
+    针对每个tablet中的存储位置分组会生成一个单独的SSTable。
+
+    之所以分开列簇，是为了防止被一起访问，从而更有效的读取。
+
+*** tablet 表块
+    和传统关系数据库一样，一个表有很多行（row）。
+    由很多行组成的行范围（row range）就是一个tablet（这里翻译为表块），比如第1000~1500行，就是一个tablet。
+    表块是被动态划分的，是分发和负载均衡得基本单位。
+
+** Bigtable Api
+
+    编程范式：
+// Open the table
+Table *T = OpenOrDie("/bigtable/web/webtable");
+// Write a new anchor and delete an old anchor
+RowMutation r1(T, "com.cnn.www");
+r1.Set("anchor:www.c-span.org", "CNN");
+r1.Delete("anchor:www.abc.com");
+Operation op;
+Apply(&op, &r1);
+
+Scanner scanner(T);
+ScanStream *stream;
+stream = scanner.FetchColumnFamily("anchor");
+stream->SetReturnAllVersions();
+scanner.Lookup("com.cnn.www");
+for (; !stream->Done(); stream->Next()) {
+printf("%s %s %lld %s\n",
+scanner.RowName(),
+stream->ColumnName(),
+stream->MicroTimestamp(),
+stream->Value());
+}
+
+可以在遍历的时候传递一个正则表达式的过滤器，只返回符合条件的数据集。
+也支持一种叫Sawzall的脚本语言，可以对数据过滤，转换等操作，求和等之后再返回。
+
+** Bigtable具体实现
+    3个主要部分：一个lib每个客户端使用，一个master服务器，许多tablet服务器。
+master负责分配tablets给tablet服务器，探测tablet服务器的增加和失效，
+并负责他的复杂均衡，对GFS上的文件进行垃圾回收。
+
+而且还处理schema的改变，比如表或者列簇的创建。
+
+tablet服务器管理一系列的tablets，并负责他们的读写请求，
+并切割tablets当他们太大。
+
+客户端直接和tablet服务器通行，单机的master，
+
+一个大表集群存储许多的表，每个表包含一系列的tablets，每个tables包含
+一个row范围的表数据。
+
+*** tablet的定位
+     bigtable使用三级层次结构来存储tablet的信息，形成一个类似B+树的东西。
+
+     第一层将root tablet的位置信息以文件的形式存储在Chubby中，root tablet包含所有其他tablet的位置信息，
+     并将这些信息保存在一个特定的元信息表中（METADATA table），元信息表包含了用户的tablets位置信息。
+     root tablet也保存在元信息表中，只是它是第一个，被特殊对待并且它永远不会被切分，这为了保证tablet的位置继承关系不会超过3层。
+
+     客户端的lib缓存tablet的位置信息，这样它就不需要和master通信了。
+*** tablet的分配
+     tablet由master来负责分配，并且master会追踪保持存活的tablet服务器，
+     及当前服务器上已分配和未分配的tablets。
+
+
+     使用Chubby来记录tablet服务器，当tablet 服务器启动的时候，
+     Chubby产生并持有一个独占锁，其实就是在特定目录下的有唯一名的文件。
+
+
+     master通过监控Chubby上的这个目录，来发现tablet服务器。
+     当tablet服务器停止服务时，会失去这个独占锁，比如因为网络波动导致与Chubby会话超时。
+
+     tablet服务器会一直重试获取独占锁，如果数据文件还是存在。当数据文件被移除后，就会自杀。
+     如果master得知tablet服务器失去了锁，就会将它上面的文件移动到其他存活，可用的服务器上。
+
+     怎么实现的了？master会定时询问tablet服务器关于它锁的状态。如果被告知失去了锁，或者没有响应，
+     master会去找Chubby要一个锁。如果master能拿到，说明Chubby是存活的，而tablet服务器要么挂了，
+     要么无法和Chubby通信，master就会删掉server file（应该是在Chubby上注册的那个锁文件），
+     这样就能保证这个tablet服务器不在提供服务。master会将所有的tablets状态改成为分配的。
+
+     要保证master和chubby之间的网络不易被攻击，如果master失去与Chubby的会话，就会干掉自己。
+
+*** master的启动和分配过程：
+
+    1.maset从Chubby抓取一个唯一的master锁，防止并发的maser实例化。
+    2.master扫描tablet服务器在Chubby上的注册目录
+    3.master和每个tablet服务器通信，获取tablets的分配情况
+    4.master扫描元信息表，获取所有的tablets
+
+*** tablet如何服务
+    tablet服务器修复时，会从元信息表中读取元信息。
+    元信息，是有SSTables集合组成。SSTable由一个tablet和一系列的重做点组成。
+    服务器读取SSTables到内存重建memtable，通过执行重做点后的所有更新操作来恢复数据。
+
+
+** Bigtable和HBASE，GFS的关系
+   TODO
+** Bigtable的本质和应用
+   Bigtable从一种全新的角度来看待数据，它不是一个已经指定的，有固定属性的东西，而是可以不断扩展，具有多维度的东西。
+
+   从横向行row来看，将数据集根据一定的范围进行切分（tablet），并水平分布到多个集群机器上（tablet server）。
+   然后通过3级层次结构来定位到最终数据集的位置所在，这样大大降低了检索数据的范围和难度，就是数据以类似树的结构向外不断扩展，而数据的索引像树的根不断收缩。
+   拿一颗树来举例：查找数据的过程，类似从树根找树叶，而管理数据的过程，是从树叶到树根。
+
+   从纵向列column来看，column可以无限扩展，也就是看待一个数据的维度变多了，并且这个维度可以无限扩展。
+   我们拿一个包裹表为例子，一个包裹表，里面一般有：包裹id，快递员手机号码，用户手机号码，取件时间，终端号，箱格id，
+   运单号，预约类型，取件码，预约码等，快递公司，包裹状态，箱格类型，投递时间等。
+
+   我们一般来用传统关系型数据库是：查询终端的包裹，查询快递员的包裹，用户的包裹，用户取件码等等。
+   但是其实看待数据可以有另外的方式：我们需要哪些快递员经常使用这个终端，用户取件的时间，频率，用这个终端的快递公司等，
+   这样的话，传统关系型数据库就hold不住了。
+
+   这时，就需要bigtable，进行多维度分析，而且特别是包裹数据量后期变得非常大的情况下。而且后续可以很好的进行业务扩展（因为column纵列可以无限扩展。）
+** Bigtable的开源实现
+   目前知道的有hbase，leveldb，rocksdb等，值的一提的还有ssdb这个类似redis的项目。
+** Bigtable的底层依赖
+   Bigtable依赖许多的google的底层组件，有SSTable，Chubby等。
+*** SSTable
+    SSTable是一个不可变的，持久化的，有序的Map，Key和Value都是任意的二进制字符串。
+
+    索引块存储在SSTable的尾部，用来定位数据块，并且在SSTable被打开时，会被载入到内存中。
+    首先我们会使用二分查找遍历内存中的索引，然后从磁盘读取。
+*** Chubby
+    请参看我的另外一篇文章：
+** 参考资料和扩展阅读
+   [[https://static.googleusercontent.com/media/research.google.com/en//archive/bigtable-osdi06.pdf][Bigtable: A Distributed Storage System for Structured Data]]
+   [[https://dzone.com/articles/understanding-hbase-and-bigtab][Understanding HBase and BigTable]]
+   [[https://www.zhihu.com/question/19551534][BigTable 有什么值得称道（牛）的地方？]]

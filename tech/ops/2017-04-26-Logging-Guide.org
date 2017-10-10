@@ -1,0 +1,32 @@
+* Logging Guide
+** Exception
+*** Exception Process
+         1. caught and handled
+         2. bypassed and hence higher level callers needs to handle them
+*** Exception Logging
+         1. which logging level should we use
+         2. whether to print exception name, exception message or exception trace
+
+** Principle
+       1. got to know where the exception is thrown
+       2. logging the current state of system maybe cause the exception
+
+** When to Log
+       1. At the beginning / end of module startup(), and shutdown().
+       2. At the beginning / end of some important phases of background / special case logic
+        such as LogManager.cleanupLogs(), Controller.onBrokerFailure(), etc
+
+** What to Log
+*** Include following
+        1. Related local / global variable's values within the function / code block
+        2. For exception logging (WARN / ERROR), include the possible cause of the exception,
+        and the handling logic that is going to execute (closing the module, killing the thread, etc).
+*** General Rules for Logging Format
+        1. Each logging entry is usually one-line for the ease of text parsing tools upon trouble shooting, unless it will cause a very long line that may span over multiple screens.
+        2. The logging indent need to be concise and self-distinctive (this is usually also related to client id naming).
+        3. Use canonical toString functions of the struct whenever possible.
+           For example, instead of using "topic [%s, %d]".format(topic, partitionId), use "topic %s".format(TopicAndPartition(topic, partitionId)).
+
+** Some Experience
+       1.change some frequent request log to default DEBUG level(summary) with TRACE level(detail) printed as binary format and compressed at the same time.
+          If need to trouble shooting just de-compress it.

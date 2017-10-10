@@ -1,0 +1,33 @@
+* Kafka FAQ常见问题
+  本文是我使用Kafka过程中遇到的一些坑，以及总结的常见问题。
+  后续还会在使用过程中不断添加，如果大家有什么问题可以自己咨询我本人。
+** Config配置问题
+   - min.insync.replicas
+     如果producer端的配置acks为all或-1，那么producer发送的一条消息，必须要满足
+     min.insync,replicas个broker写成功，才会认为真正成功，返回响应给producer。
+     一般副本数为3，此值设置为2。
+
+** Kafka Client客户端问题
+*** Producer
+*** Consumer
+**** cpu占用很高的问题
+    https://issues.apache.org/jira/browse/KAFKA-3159
+    This is seen when the consumer count exceeds the partition count.
+
+It looks like the busy looping is coming from KafkaClient._poll() in client_async.py. When the client has assigned partitions self._conns has a connection with in flight requests populated, however with no partitions in_flight_requests is empty. This causes _poll to return [] as the sockets list is empty which allows the consumer loop to spin as it isn't delayed by the socket select.
+
+有人说是consumer的心跳问题，一个consumer3秒一个心跳，很多个consumer很多个CG就会CPU很高。
+
+心跳的机制是为了faster failure探测，如果在一段时间没收到心跳，coordinators就会认为有consumer member死掉，就会要求consumer group重新加入，并进行partition的重新分配。
+所以衡量就是高cpu和失败探测的速度。
+
+** Kafka Broker
+** Kafka Connect
+** 3rd Integration 第三方程序集成
+*** Spring
+建议好好看看以下两篇文章：
+
+http://howtoprogram.xyz/2016/05/29/create-multi-threaded-apache-kafka-consumer/
+** Kafka分区数，副本数设置
+   副本数：一般需要满足高可用的特性，因此，至少是3个副本。
+   但是有些是配置文件之类的，这种的话，最好是每个broker上都有副本。

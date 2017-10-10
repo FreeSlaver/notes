@@ -1,0 +1,34 @@
+* LevelDB笔记
+** 草稿
+   log-structured-merge (LSM) trees
+
+   An embedded database is a database distributed as a library and linked directly into your application. The application is responsible for providing a service level API, sharding, backups, initiating consistency checking, initiation rollback,  startup, shutdown, queries, etc.
+
+   LevelDB has the same general design as the BigTable tablet stack,
+
+   LSM) trees: They are mostly useful to optimize random I/Os at insertion/delete time at the price of a slightly degradation of read access time.
+
+   What leveldb does differently from B+trees is that it trades off write latency for write throughput: write latency is reduced by doing bulk writes,
+
+   Search performance is still O(lg N) with a very large branching factor (so the constant factor is small and number of seeks should be <= 10 even for gigantic databases).
+
+使用场景
+LevelDB showed a higher throughput than InnoDB and a similar or lower latency than InnoDB.
+LevelDB may become a preferred choice for Riak users whose data set has massive numbers of keys and therefore is a poor match with Bitcask’s model.
+Before LevelDB can be a first-class storage engine under Riak it must be portable to all of the same platforms that Riak is supported on.
+
+** 解决什么问题
+
+** 使用什么场景
+
+** 优缺点
+
+** RocksDB
+
+** Java怎么使用
+
+
+
+** 参考资料和拓展阅读
+   [[http://highscalability.com/blog/2011/8/10/leveldb-fast-and-lightweight-keyvalue-database-from-the-auth.html][LevelDB - Fast And Lightweight Key/Value Database From The Authors Of MapReduce And BigTable]]
+   [[https://www.igvita.com/2012/02/06/sstable-and-log-structured-storage-leveldb][SSTable and Log Structured Storage: LevelDB]]

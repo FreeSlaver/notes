@@ -3,3 +3,4 @@
 
   Unless you somehow think SQL is the most mesmerizing thing in the universe, it's hard to sit down and grok through W3School and its ilk.
   Instead, you should find a problem that interests you that requires some knowledge of SQL.
+** 必须找到和其他知识最多连接点的知识。

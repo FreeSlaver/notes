@@ -1,6 +1,4 @@
 * A Tour of C++笔记
-** 还是从头学起吧。
-   日啊，厚积薄发，改还的债还是要还。
 ** The Basics
 *** 语法
    std::cout << "Hello,World!\n"
@@ -735,7 +733,6 @@
 ** Liberary Overview
 
 ** Strings and Regular Expressions
-
 *** Strings
     Note that the replacement string need not be the same size as the substring that it is replacing.
 
@@ -798,8 +795,6 @@
    Most computing involves creating collections of values and then manipulating such collections.
    A class with the main purpose of holding objects is commonly called a container.
    Providing suitable containers for a given task and supporting them with useful fundamental operations are important steps in the construction of any program.
-
-
 ** Vector
    拷贝空间
    template<typename T>

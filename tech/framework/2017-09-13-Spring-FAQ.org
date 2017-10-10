@@ -1,0 +1,20 @@
+* Spring常见问题FAQ
+** 获取所有实现指定接口的类，并注册到容器
+   //获取所有实现了Rule接口的类，然后注册到DefaultRuleEngine中，
+        ClassPathScanningCandidateComponentProvider provider = new ClassPathScanningCandidateComponentProvider(true);
+        provider.addIncludeFilter(new AssignableTypeFilter(Rule.class));
+
+        // scan in org.example.package
+        Set<BeanDefinition> components = provider.findCandidateComponents("com/cimc/rule");
+        for (BeanDefinition component : components)
+        {
+            Class cls = Class.forName(component.getBeanClassName());
+            // use class cls found
+
+            Object obj = cls.newInstance();
+            if(obj instanceof  Rule){
+                System.out.println(cls.getName());
+            }
+        }
+
+**

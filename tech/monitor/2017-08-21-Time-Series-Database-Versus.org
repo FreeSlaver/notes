@@ -1,2 +1,0 @@
-* 时间序列数据库大比拼
-  我所知道的有：InfluxDB，OpenTSDB，Graphite，kairosDB,

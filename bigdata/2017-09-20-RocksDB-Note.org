@@ -1,0 +1,19 @@
+* RocksDB笔记
+  不要用笔记，多用关键字
+** Column Families
+When opening a DB in a read-write mode, you need to specify all Column Families that currently exist in a DB.
+
+
+解决方法：
+1.key val，那么终端sn 51800做key，所有的tag做val，val其实是一个Map，
+然后对记录进行操作，需要将val全部取出来，然后更新，然后放进去。
+
+redis提供的那个功能：我想应该是这样的：
+首先是根据key得到val，然后根据里面的hkey执行的hval，得到最终值，
+不需要
+
+
+首先我们用columnfamily来标示不同的标签，比如终端的，快递员的，用户的，
+然后拿终端来说，终端sn作为key，那么撒作为value？
+
+首先看看数据量多不多？

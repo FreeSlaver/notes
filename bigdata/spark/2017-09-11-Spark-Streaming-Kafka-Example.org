@@ -1,0 +1,94 @@
+* Spark Streaming Kafka例子
+  关键词：spark，streaming，kafka，例子
+  描述：这篇文章将讲述如何使用spark streaming来消费kafka中的topic。
+
+** 添加依赖
+   添加一下spark和kafka的依赖，注意spark的版本，特别是编译用的scala和jdk版本，
+   保存和线上kafka集群一致。
+   <!--Spark相关配置-->
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-core_2.11</artifactId>
+            <version>2.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-sql_2.11</artifactId>
+            <version>2.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-streaming_2.11</artifactId>
+            <version>2.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-streaming-kafka-0-10_2.11</artifactId>
+            <version>2.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-sql-kafka-0-10_2.11</artifactId>
+            <version>2.1.0</version>
+        </dependency>
+** 添加配置
+   kafka.properties
+   #kafka集群地址
+   bootstrap.servers=182.254.229.224:9092,182.254.229.224:19092,182.254.229.224:29092
+   #无法获取offset时，重设机制
+   auto.offset.reset=earliest
+   #订阅的主题
+   subscribe.topic=estation-box
+   #sparkstreaming丢失消息是否直接失败
+   failOnDataLoss=false
+
+** 代码实现
+
+*** 结合JDBC
+    Connection conn = null;
+                        Statement stmt = null;
+                        try {
+                            Class.forName(JDBC_DRIVER);
+                            conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PWD);
+                            stmt = conn.createStatement();
+                            String sql = "SELECT * FROM db_ez.t_box where box_id = '000000B101105'";
+                            ResultSet rs = stmt.executeQuery(sql);
+                            BoxVo boxVo = null;
+                            while (rs.next()) {
+                                boxVo = new BoxVo();
+                                //Retrieve by column name
+                                String boxId = rs.getString("box_id");
+                                String sn = rs.getString("sn");
+                                //String cabinetId = rs.getString("cabinet_id");
+                                String boxType = rs.getString("box_type");
+                                String boxStatus = rs.getString("box_status");
+                                String boxUseStatus = rs.getString("box_use_status");
+//                    String lay = rs.getString("box_status");
+//                    String boxStatus = rs.getString("box_status");
+                                boxVo.setBoxId(boxId);
+                                boxVo.setSn(sn);
+                                boxVo.setBoxType(boxType);
+                                boxVo.setBoxStatus(boxStatus);
+                                boxVo.setBoxUseStatus(boxUseStatus);
+                            }
+                            logger.info("=====boxVo=>" + boxVo.toString());
+
+                            rs.close();
+                        } catch (SQLException se) {
+                            logger.error(se.getMessage(),se);
+                        } catch (Exception e) {
+                            logger.error(e.getMessage(),e);
+                        } finally {
+                            try {
+                                if (stmt != null)
+                                    stmt.close();
+                            } catch (SQLException se2) {
+                            }
+                            try {
+                                if (conn != null) {
+                                    conn.close();
+                                }
+                            } catch (SQLException se) {
+                                logger.error(se.getMessage(),se);
+                        }
+                     }

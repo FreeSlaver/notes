@@ -1,0 +1,165 @@
+* 如何高效的获取信息并进行处理，归纳总结，沉淀为价值
+** 草稿
+如何高效的利用feedly，其实是RSS源，今天的主要任务就是搞这个。
+其本质就是获取咨询，信息，如何利用RSS Feedly高效的获取信息
+
+首先我自己来想想，高效的获取信息。
+
+首先信息的质量要保证。
+
+其次是如何获取
+
+最后是怎么高效。
+
+信息的质量问题，肯定是各大权威的门户网站之类的，但是信息数量太大，
+所以，不可能全部看，我们只需要自己所要的。
+
+获取，上网，搜索引擎，公众号等等。
+
+高效，这样的话就要借助于工具了。
+
+
+第一个源头RSS
+微信 去weixindigg挑选
+Flipboard，
+
+当今信息爆炸的年代 【信息获取能力也是竞争力】，而如何筛选出对你有用的信息显得尤为重要。
+如何获取行业信息与知识
+获取知识最有效的方法是用金钱购买，创业型的企业需要资金加速成长，其实个人也一样
+
+TechCrunch
+Simply Recipes
+BoingBoing
+Mashable
+Read/Write Web
+John Battelle’s Searchblog
+43Folders
+37signals
+DumbLittleMan
+Interesting Thing of the Day
+CrunchGear
+
+Current Events
+BBC
+National Public Radio (NPR)
+New York Times
+Reuters
+The Economist
+Engineering
+Eureka Alert: Technology & Engineering
+ScienceDaily - Engineering
+The Engineer
+Technology
+TechCrunch
+IEEE Spectrum Online
+Technology Review
+CNET News
+Slashdot
+Business
+BusinessWire
+Financial Times
+Working Knowledge (Harvard Business School)
+Government
+U.S. Government RSS Library
+International Government RSS Feeds
+Open Congress
+Track bills, votes & issues
+Fun
+BoingBoing
+Inventor Spot
+Make: Technology on Your Time
+Cooking for Engineers
+Jobs
+Dice
+eFinancialcareers.com
+conduct search then subscribe to RSS feed
+Engineer.net
+Indeed
+conduct search then subscribe to RSS feed
+Academic Keys for Engineering
+100 Best RSS Feeds for Recent College Grads
+Science
+Eureka Alert
+ScienceDaily
+Scientific American
+Top 25 Hottest Articles from Science Direct
+Wired: Science
+
+http://guides.nyu.edu/c.php?g=276615&p=1845079
+
+http://www.makeuseof.com/tag/some-great-rss-feeds-to-add-to-your-reader/
+
+Business  & Professional Development
+1. Entrepreneur
+2. Forbes
+3. Inc
+4. Business Insider
+5. Wall Street Journal – Business
+
+News & Current Events
+1. National Public Radio (NPR)
+2. New York Times
+3. Reuters
+4. The Economist
+5. Mashable
+
+Productivity & Personal Development
+1. LifeHacker
+2. Dumb Little Man
+3. Productivity 501
+4. Time Management Ninja
+5. Psychology Today
+
+Sales & Marketing
+1. Marketing Profs
+2. Marketing Land
+3. InsightSquared
+4. The Center for Sales Strategy
+
+Technology and Media News
+1. The Next Web
+2. Wired
+3. CNet
+4. The Verge
+5. PC Mag
+
+Fun
+1. ESPN
+2. The Onion
+3. Buzzfeed
+4. Funny or Die
+5. The Daily Beast
+
+你必读的RSS源
+https://www.zhihu.com/question/19580096/answer/20490041
+如何利用知乎获取高效的信息
+https://www.zhihu.com/question/23738023
+** 信息
+   这篇文章会讲述下如何高效的获取信息并对信息进行处理，归纳总结，沉淀为最终的价值。
+
+   首先，受体是信息，保证信息的权威，质量就非常重要了。
+   很显然的，最有质量的信息来源于各大门户网站，但是因为这些信息太多，
+   所以需要使用到过滤。
+
+   你对信息的态度是什么？
+   不得不说，很长一段时间内，我都外界的信息不太感冒，比如战狼2我都没去看，
+   比如，别人在讨论的比特币，我知道但是没去研究，错过了几个亿。
+
+   我想要的信息是：能够让我知道有这么一回事就够了，如果有兴趣，就继续读下去。
+   所以，最好是对于这些信息只看标题和摘要，扫一眼就够了。
+
+   如果有很多个门户网站，RSS源同时报道了这一件事，那么就要引起我的高度重视。
+
+
+   这时候我使用的方式是：使用搜索引擎，搜索关键字。
+   因为搜索引擎天然的高价值的信息过滤功能，让我节省很多时间。
+
+   搜索引擎提供出所有的帖子理论上来说能够满足我理解这一件事物的需要，
+   因为这个时候书籍还没有出来，其他的东西更不用说了。
+
+   但是可见的是：对RSS的过滤会耗费相当长的一段时间。
+** 获取信息
+
+** 信息流处理
+   想象一样把这个过程比作一个图灵机的模型：
+   RSS搜集信息->视觉过滤->Google搜索->大脑处理->归纳总结得到结论->浓缩为知识，价值。

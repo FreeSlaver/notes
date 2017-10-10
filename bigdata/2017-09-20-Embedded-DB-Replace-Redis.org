@@ -1,0 +1,17 @@
+* Redis替代方案
+** 问题
+   公司最近在搞一个什么标签系统，主要是为了营销推广用的。
+   主要要实现的效果，类似的有下面几条
+   1.
+XXX
+
+   问题是：
+   1.数据库中的t_parcel表不能查
+
+   2.大数据提供的服务能查，但是10分钟内只能查一次
+
+   这篇文章我是来喷人的。
+
+** 参考资料和拓展阅读
+   [[https://stackoverflow.com/questions/9772058/which-embedded-db-written-in-java-for-a-simple-key-value-store][Which embedded DB written in Java for a simple key/value store?]]
+

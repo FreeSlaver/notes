@@ -1,6 +1,0 @@
-* 使用Jekyll写博客
-
-
-
-** 参考
-   [[http://orgmode.org/worg/org-tutorials/org-jekyll.html][org-jekyll]]

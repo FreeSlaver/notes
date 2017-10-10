@@ -1,5 +1,0 @@
-* OpenTSDN 介绍
-
-
-** 工作原理
-   Time Series Daemon (TSD)

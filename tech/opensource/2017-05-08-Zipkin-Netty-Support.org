@@ -151,23 +151,11 @@ reportClientAddress
   我这边其实是相当于构造了一个server服务器，然后接受测试用例发过来的Http请求，
   然后处理（这个地方应该用Embedded写回就可以了），所以最好不要这个handler。只是对各种请求响应。
 
-  但是构建Embedded，需要将这些东西都传递进去啊。
 
-  curl -H "Content-Type: application/json" -X POST -d @maxwell-sink.json http://localhost:8083/connectors
-
-  curl -GET http://localhost:8083/connectors/test/status
-
-  curl -X "DELETE" http://localhost:8083/connectors/test
-
-  我来测试下，到底是因为-符号，还是因为只能放在lib里面，
-  还是必须要export class path
-  *为毛，返回的都是127.0.0.1？？？*
-
-  刚开始想要的是：一点点的上量，然后topic消费完了，就过去了，怎么让它们能够不断的上。
-  然后从头开始消费？？？其实这里是可以的，加个忽略列表，然后将offset设置到开头。
-
-  这个地方和我使用线程有关系，就是那个server继承Thread有关系。
-  但是如果不继承的话，又会被卡主。
 
   但是为什么会测试用例还没跑完，另外来一个就启动了了？然后抛端口被占用异常？
   那么肯定是我这里shutdown的有关系。
+** circle测试问题
+
+   我们公司搞的，有kafka，maxwell，redis，mysql，zipkin等。
+   kafka的名气这么大，肯定搞这个啊。

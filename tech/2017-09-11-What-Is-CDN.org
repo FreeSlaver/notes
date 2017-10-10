@@ -1,0 +1,19 @@
+* CDN是什么
+content delivery network.
+
+
+ based on the geographic locations of the user,
+the origin of the webpage and the content delivery server.
+
+离cdn越近，速度越快
+
+CDN究其本质，就是将源站的内容缓存到自己的服务器上，然后当中国用户访问
+在美国github的网站的时候，就会直接重定向到七牛在中国的服务器，并且是距离用户最近的，
+
+
+搞个问题？
+如果我那个wechat的jpg，搞成七牛的url地址，这时并没有进行cdn加速，
+只是访问了七牛的一个服务器地址上的东西而已。
+必须得开启融合cdn才行，
+
+提升实力先，妈的。
