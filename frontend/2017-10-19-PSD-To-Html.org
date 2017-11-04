@@ -1,0 +1,27 @@
+* 将psd文件转换为html
+1.国外有平台，搜 psd to html、
+http://psdhtml.me/
+http://www.psdtoweb.de/
+2.ps插件，psdTohtml插件
+http://www.webbsy.com/
+3.使用开源项目
+
+** 切图
+   使用ps
+   前端开发人员经常需要将很多图层切出成独立的图片。有了自动切图功能，无需花更多时间来切图了。只需在图层名后添加相应格式后缀（如.png)，即可自动输出所需格式的图片
+
+*** 自动切图
+   Cutterman
+   产品设计的阶段需要严谨严肃的产品态度和逻辑，UI设计则更多偏向情感和用户体验方面的设计
+
+*** 标注
+    1、标你妹
+    官方网站：http://www.biaonimeia.com/
+    2.蓝湖Mac端App 重点
+    官方网站：https://www.lanhuapp.com/
+    3.Sketch导出zeplin
+    可以在 Sketch 中一键导入 Artboard，在设计师做好图层管理（命名、分组）的前提下，它可以自动生成标注信息（并且可以标注为 pt 或 dp），允许添加注释形成类 prd 文档，并且自动提取 Style Guide
+    4、Sketch Measure
+
+** 参考资料
+   https://github.com/jawil/blog/issues/11

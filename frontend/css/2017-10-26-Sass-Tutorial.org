@@ -1,0 +1,107 @@
+* Sass教程
+** Sass是什么
+   css extension language
+   一个css预处理器，
+** Sass安装
+   先安装Ruby，之后
+   sudo gem install sass
+
+   用ruby写的，但是有C/C++的端口。
+** Sass基础
+*** 预处理
+   解决css变的更大，更复杂后的维护问题。Sass能进行预处理。
+   可以使用变量，继承，嵌套，混合等特性。
+   使用--watch参数，
+
+   怎么有个sass还有个scss？建议使用scss，技术用新不用旧，
+   sass没有花括号，没有分号结束符。
+*** 变量
+    复用css代码，比如颜色，字体等。使用$符号定义。例子：
+    $font-stack:    Helvetica, sans-serif
+    $primary-color: #333
+
+    body
+    font: 100% $font-stack
+    color: $primary-color
+*** 嵌套
+    也就是说类似html那样有层次感？但是感觉不太对啊，这个ul，li，a层级不同。
+    nav
+      ul
+        margin: 0
+        padding: 0
+        list-style: none
+
+      li
+        display: inline-block
+
+      a
+        display: block
+        padding: 6px 12px
+        text-decoration: none
+*** 局部模板和导入模板
+    为了模块化。使用下划线命名，比如_partial.scss，这样sass知道是个局部模板，不会生成到css文件中。
+
+    使用@import导入模板，
+
+    // _reset.sass
+
+    html,
+    body,
+    ul,
+    ol
+      margin:  0
+      padding: 0
+
+    // base.sass
+
+    @import reset
+
+    body
+      font: 100% Helvetica, sans-serif
+      background-color: #efefef
+
+      不需要后缀文件，
+*** 混合
+    就是应对多浏览器前缀的问题，搞在一起，还可以传参
+    @mixin border-radius($radius) {
+      -webkit-border-radius: $radius;
+        -moz-border-radius: $radius;
+          -ms-border-radius: $radius;
+            border-radius: $radius;
+     }
+
+     .box { @include border-radius(10px); }
+*** 继承和扩展
+    .message {
+      border: 1px solid #ccc;
+      padding: 10px;
+      color: #333;
+    }
+
+    .success {
+      @extend .message;
+      border-color: green;
+    }
+
+    .error {
+      @extend .message;
+      border-color: red;
+    }
+
+    .warning {
+      @extend .message;
+      border-color: yellow;
+    }
+*** 操作符
+    .container { width: 100%; }
+
+
+    article[role="main"] {
+      float: left;
+      width: 600px / 960px * 100%;
+    }
+
+    aside[role="complementary"] {
+      float: right;
+      width: 300px / 960px * 100%;
+    }

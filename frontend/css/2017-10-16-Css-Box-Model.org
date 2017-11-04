@@ -1,0 +1,31 @@
+* Css盒子模型总结
+** 概念
+  所有的html元素都能被认为是盒子。
+
+  我们看到的东西就是content，虽然也能看到空白的padding，但是如果没border的话，
+  padding的边界和其他的box的padding边界融合在一起了，就区分不出来了。准确来说padding是透明的。
+
+  我们看一个html页面的时候，要看到整个布局后面，一层层的盒子套盒子，也就是页面的层次关系。
+
+  content本身也是有它固有的高度和宽度的。我们在css中设置的height和width属性就是设置的这个高度和宽度。
+
+  border的理解可以简单的认为就是相框。
+
+  margin是边距，由此能确定这个html元素占据的盒子的高度和宽度。
+
+  每个html元素默认会从浏览器那里继承到1em的margin和padding，chrome中的是
+
+
+  https://www.w3.org/TR/CSS2/images/boxdim.png
+
+** 工作原理
+   所有html元素的位置都是以左上为标准进行移动的。
+
+   collapsed margin是2个毗邻元素之间的margin之和？错的，可能不是毗邻元素。
+   根元素不会collapse。水平的不会。
+
+   由上之下的，所以，这个鸟margin-bottom会将下面的扩宽。
+
+   使用box-sizing: border-box;
+   当你设置一个元素为 box-sizing: border-box; 时，此元素的内边距和边框不再会增加它的宽度。
+** 举个例子

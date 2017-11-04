@@ -4,3 +4,5 @@
   Unless you somehow think SQL is the most mesmerizing thing in the universe, it's hard to sit down and grok through W3School and its ilk.
   Instead, you should find a problem that interests you that requires some knowledge of SQL.
 ** 必须找到和其他知识最多连接点的知识。
+怎么快速的学习了？我不可能css3的新特性一个个看到，但是我要了解到有些什么东西，能干撒，具体如何干，
+   后续遇到我再来查资料。

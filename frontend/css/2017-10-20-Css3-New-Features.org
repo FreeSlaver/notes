@@ -1,0 +1,44 @@
+* CSS3新特性
+** 重要模块
+  最重要的模块有：
+  - Selectors
+  - Box Model
+  - Backgrounds and Borders
+  - Images Values and Replace Content
+  - Text Effects
+  - 2D/3D Transformations
+  - Animations
+  - Multiple Column Layout
+  - User Interface
+** Border
+   border-mages，将图片作为边框。
+   其实没得这个，套层div，然后给div加border一样可以实现。
+   妈的，什么JB，都没写清楚。
+
+** backgrounds
+   backgroud-images，可以添加多个图片作为背景，使用逗号分开，第一个图片在最上面，其他依次向下叠加。
+   然后其他的属性也是按顺序用逗号区分，比如background-position,background-repeat等。
+
+   其实也可以用div来完成，使用z-index来完成图层的叠加。
+   例子：
+   #backgroud{
+     background-imag: url(x1.jpg),url(x2.jpg);
+     background-position: right bottom,left top;
+     background-repeat: no-repeat,repeat;
+     padding: 15px;
+   }
+
+   backgroud这个鸟东西了，不太适合做段落背景，应该是适合做整个页面背景。
+   图片和p等不好一起控制。
+
+   还可以直接使用background这个缩写，但是尼玛，这样的，后面的css顺序什么的，还需要人去记住啊。
+   感觉css3这点做的相当坑爹啊。
+
+** outline offset
+   就是定义outline的大小，颜色等。
+** animations
+   必须先设定关键帧，语法：先要定义animation-name，再定义animation-duration，例子
+
+
+** 为什么要引入这些新特性
+**

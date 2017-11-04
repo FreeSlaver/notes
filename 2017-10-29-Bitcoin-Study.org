@@ -1,0 +1,40 @@
+* 比特币研究
+** What is
+** How it works
+
+  peer-to-peer技术
+  no central
+
+  比特币改变了金融就像web改变了发布，
+  当所有人都能接触全球市场，伟大的主意繁荣昌盛
+
+  是一个叫中本聪的人或者组织发布的，2009
+
+  distributed ledger 总账 称作区块链。
+
+  通过采矿得到，
+
+  Bitcoin指代技术和网络，小写的指代账户？
+** 比特币历史
+   2008年8月18日，bitcoin.org注册
+   9月，中本聪论文：Bitcoin: A Peer-to-Peer Electronic Cash System
+   发布在密码学mail list
+
+   2009年一月作为开源软件发布，
+   2009年二月，中本聪挖出了第一个50。
+
+
+   研究比特币让我知道了：
+   *什么都是一个来的早的人，赚，来的晚的人的钱的过程。*
+
+** 相关资料和精华帖子
+   [[https://www.zhihu.com/question/20941124][比特币 (Bitcoin) 系统是如何运行的？]]
+   [[https://www.zhihu.com/question/22036280][经济学界如何看待比特币？]]
+   [[https://www.zhihu.com/question/22137549][你从比特币赚到多少钱？]]
+   [[https://www.zhihu.com/question/20876219][比特币（Bitcoin）是什么，如何简单易懂地介绍比特币？]]
+   [[https://www.zhihu.com/question/22076666][比特币是什么？]]
+
+
+
+** 我的钱包
+knee lobster salute soldier degree spend wrong submit offer web betray grow ice tornado dentist ostrich mirror tiny ocean grant pulp measure put potato

@@ -1,0 +1,41 @@
+* robots.txt总结
+  关键字：写法，禁止收录，放在那里，渗透
+  描述：
+
+** 什么是web robots
+   网络机器人，也被称作网络漫游者，网页爬虫，网页蜘蛛等，是一些自动访问网站的程序，
+   比如Google使用它们索引网站内容，垃圾邮件群发者使用它们扫描邮件地址。
+
+   如果您不想让自己的网页显示在 Google 搜索结果中，请不要将 robots.txt 用作隐藏网页的方法。
+   这是因为其他网页可能会指向您的网页，导致我们将您的网页编入索引，进而让 robots.txt 文件无用武之地
+** 格式
+   User-agent: [user-agent name]
+   Disallow: [URL string not to be crawled]
+
+** 不要使用robots.txt隐藏网页信息
+   1.爬虫可能会忽略掉，特别是扫描网站安全漏洞的恶意软件，还有邮件地址收割机。
+   2.任何人都能访问到robots.txt，因此可以知道你想隐藏扫描内容
+** 二级域名也要单独的robots.txt
+
+** 放在那里
+   根目录下，同index.html。
+** 如何使用robots.txt
+*** 阻止目录
+    User-agent: *
+    Disallow: /cgi-bin/
+    必须每行一个目录，路径不能有空格。不支持通配符和正则表达式。
+*** 怎么阻止所有爬虫扫描
+   在robots.txt中添加
+   User-agent: *
+   Disallow: /
+*** 阻止单个爬虫
+    User-agent: BaiduSpaider
+    Disallow: /
+
+*** 阻止单个页面
+    User-agent: *
+    Disallow: /joe/junk.html
+
+** 参考资料和扩展阅读
+   [[http://www.robotstxt.org/][The Web Robots Pages]]
+   [[https://moz.com/learn/seo/robotstxt][Robots.txt]]

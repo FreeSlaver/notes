@@ -1,0 +1,16 @@
+* 学习bootstrap
+  项目在F:\bootstrap\node_modules\bootstrap
+
+  要掌握node
+  npm
+  ruby等
+  package managers like npm, Bower, RubyGems, and more.
+  包管理，类似maven？
+
+  sass compiler
+** 下载安装
+  使用npm安装
+  npm install bootstrap@4.0.0-beta
+  需要一个package.json
+
+** 图片

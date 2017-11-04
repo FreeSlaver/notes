@@ -1,0 +1,22 @@
+* Html table总结
+  使用table标签。
+  tr代表表的一行，
+  th代表表的头部，默认居中，黑体，使用align="left"居左（错误）
+  应该使用th的text-align="left"，因为这个是style属性，所以无法直接写出来？
+
+  td表示表单元，td是表中数据的容器，因此可以包含所有类型的html元素，比如text，images，list，表格等。
+
+  边框
+  最好是将表，表头，表单元都加上边框。
+  table,th,td {
+    border:1px solid black;
+  }
+
+  合并单元格
+  使用colspan属性，比如colspan=2，会合并当前单元格和后面一个单元格。
+
+  合并行
+  使用rowspan
+
+  表格标题
+  使用caption，直接最上面用caption包裹就行了，必须作为table中第一个子元素。

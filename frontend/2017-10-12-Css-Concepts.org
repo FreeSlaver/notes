@@ -1,0 +1,7 @@
+* Css的一些核心概念
+** margin
+   边距
+** align
+   居中，居左，居右
+** padding
+   填充

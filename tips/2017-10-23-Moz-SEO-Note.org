@@ -1,0 +1,75 @@
+* Moz SEO笔记
+  这个是我看moz的The Beginners Guide To Seo做的笔记。
+** Intro
+** Chapter1 How Serach Engines Operate
+   crawling
+   building index
+
+   关键字：ranked list，most relevant
+   满足客户，answer machines
+
+    It is both relevance and popularity that the process of SEO is meant to influence.
+    relevance and popularity
+
+    Search engines typically assume that the more popular a site, page, or document, the more valuable the information it contains must be.
+
+    the engines employ mathematical equations (algorithms) to sort the wheat from the chaff (relevance), and then to rank the wheat in order of quality (popularity).
+
+** Chapter2 How People Interact With Search Engines
+   empathy 同理心，为了你的顾客考虑。
+   target market
+   reach and keep
+
+   When visitors type a query into a search box and land on your site, will they be satisfied with what they find
+
+   The search engines' primary responsibility is to serve relevant results to their users.
+
+   So ask yourself what your target customers are looking for and make sure your site delivers it to them
+
+** Chapter3 Why SEO is Important
+   adding proper structure to your content is essential to SEO.
+
+   Understanding both the abilities and limitations of search engines allows you to properly build, format, and annotate your web content in a way that search engines can digest
+
+** Chapter4 The Basics of Search Engine Friendly Design & Development
+   A crawlable link structure—one that lets the crawlers browse the pathways of a website—is vital to them finding all of the pages on a website.
+
+
+   The order of the words ("pandas juggling" vs. "juggling pandas"), spelling, punctuation, and capitalization
+   provide additional information that the engines use to help retrieve the right pages and rank them.
+   也就是说关键字的顺序，大小写等都会影响到搜索引擎的检索结果。
+
+    One of the best ways to optimize a page's rankings is to ensure that the keywords you want to rank for are prominently used in titles, text, and metadata.
+    优化页面排名最好的方式之一就是：确认关键字出现在title，text和metadata中。
+
+    The best practice is to use your keywords naturally and strategically
+
+    The point of using keywords is not to rank highly for all keywords,
+    but to rank highly for the keywords that people are searching for when they want what your site provides.
+
+    It is critical to both user experience and search engine optimization.
+** Chapter5 How to do Keyword Reseach
+   It's not always about getting visitors to your site, but about getting the right kind of visitors. The usefulness of this intelligence cannot be overstated;
+   关键还是网站定位啊，技术？投机，kafka？没得内容我草。
+
+   Every search performed at the engines comes with an intent—to find, learn, solve, buy, fix, treat, or understand.
+
+   我刚才想到了很神奇的一点：
+   在程序员当中，我是做SEO最好的一个，这样的话，我写的技术文章就有很多人看了。
+
+** 另外一个文章
+   分类应该与行业相关关键词吻合，最好分类限制在十几二十个，而不要有上百个分类或标签，
+   每个分类，标签里面却只有几个帖子。
+
+   网站流量分析可以告诉你
+
+谁链接向你的网站？
+他们链接向哪些帖子？
+人们通过搜索什么词来到你的网站？
+如果你能知道引用你的人的情况，以及他们为什么引用你的网站，那么创建更多他们可能喜欢的内容就比较简单了。如果你知道你的网站搜索哪些关键词时排名好，你就知道你的网站在哪些话题里是被信任的，也就知道哪些相关话题，你可以轻易的得到排名。有一些博客修改他们的高流量网页，增加一些关键词变化形式，这使得他们的网页在更多关键词中排名提高，并得到流量。
+
+Google Analytics是免费的，我也喜欢Mint,，价格是每个网站30块注册费。Performancing 和 MyBlogLog 提供专门给博客使用的流量分析程序。
+
+社区论坛通常都有大量流量，参与这些热门的论坛，能帮助你建立名声。社区论坛也是寻找内容点子的好地方。如果论坛里经常有人问某个问题，同样的问题在搜索引擎中也会被经常搜索。
+给其他热门网站写客座文章，使你能借用他们的品牌价值，用户信任以及流量。
+在其他相关博客，留下有用的相关的评论，可能使得对方也订阅你的博客，也会有人点击来到你的网站。

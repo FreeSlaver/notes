@@ -1,0 +1,12 @@
+* Html input标签总结
+** 下拉框
+   使用select，每个元素用option
+   <select name="cars">
+    <option value="volvo">Volvo</option>
+    <option value="saab">Saab</option>
+    <option value="fiat">Fiat</option>
+    <option value="audi">Audi</option>
+  </select>
+
+** 大文本框
+   用textarea

@@ -1,0 +1,21 @@
+* 使用htaccess进行虚拟主机301重定向
+  关键字：虚拟机，301重定向，jekyll，htaccess
+  描述：最近通过备案，将github上的jekyll博客搬到了阿里云万网虚拟主机，使用htacess进行301重定向。
+
+  最近我的网站通过备案了，所以将github上的jekyll博客搬到了万网的虚拟主机上。
+  因为url和网站结构的SEO需要，所以将所有链接的url全部改成了：域名/目录/标题.html的形式。
+
+  因为虚拟主机不是jekyll服务器，用户访问网站本质就是读取问题，还好jekyll生成的都是静态网页。
+
+  google到，虚拟机可以使用.htaccess文件进行重定向，试了一下，是可以的。
+  但是全部的url也有近300个，不可能一个个写吧。所以我就写了一个java小程序。
+
+  就是通过修改_config.yml文件，然后得到之前的sitemap.xml和修改后的sitemap.xml，
+  然后用程序读取里面的url地址，通过标题映射到旧，新的url，然后组装成以下格式：
+
+  Redirect /2016/04/29/Java-Tech-Blog.html /trash/Java-Tech-Blog.html
+
+  具体代码：
+
+
+  最终效果:

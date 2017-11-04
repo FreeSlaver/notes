@@ -202,3 +202,40 @@
      –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 
 **** Note to Self
+     在css文件开头，指定好color并注释掉，然后在css文件中直接引用。写完css之后删除。
+     使用关键字来区分重要的注释：
+     @todo，提醒某些事要被完成，改变。
+     @bugfix，说明解决的浏览器问题
+     @workaround 解释复杂代码
+
+     最好是部署到线上生产之前，用脚本去掉注释，并压缩。
+** Visual Formatting Model Overview （看完这章，后面的没看）
+*** margin collapsing
+    有两种情况：1.上下同级元素之间；2.父子元素之间；
+    因为margin没边界，就会融合在一起？margin touch other margin。
+
+    There are three basic positioning schemes in CSS: normal flow, floats, and absolute positioning
+    css中有三种基本的定位方案：基本流，漂浮和绝对定位。
+
+    block元素是竖直的一个接一个的展示，它们之间的距离是vertical margins。
+    inline box元素的水平空间通过调整水平的padding，borders和margins实现扩充。
+    但是竖直方向的padding，borders和margin没效果，因为行高固定了？同样的，显性指定inline box的高度和宽度没效果。
+
+    在div里面的文字被称作匿名block box。
+
+    absolute positioning takes the element out of the flow of the document,
+    Other elements in the normal flow of the document will act as though the absolutely positioned elementwas never there
+
+    使用了positioned的元素，添加padding等不会扩大外围的box。
+
+    都float了，但是高度不同的，
+
+    In fact, floats were created to allow text to flow around images
+** Layout
+   The first step in creating a scalable and easy to maintain CSS system is to review your designs,
+   looking for repeating patterns.
+   第一步应该是看看设计中重复的模式。
+
+   You shouldn’t be too concerned with the visual
+   representation at this stage. Instead, look at the structure and meaning.
+   你不应该太关注与视觉展现，而应该多看结构和意义。

@@ -1,0 +1,10 @@
+* CSS nth
+** nth-child
+   tr:nth-child(odd) or tr:nth-child(2n+1)
+   tr:nth-child(even) or tr:nth-child(2n)
+   :nth-child(5n)
+   :nth-child(3n+4)
+   :nth-child(-n+3) 前三个
+
+** nth-of-type
+   针对某种类型的。

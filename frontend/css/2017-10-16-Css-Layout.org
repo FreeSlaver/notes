@@ -1,0 +1,61 @@
+* Css布局
+** position
+   默认static，就是没有被positioned的元素。
+
+   relative是相对于原始位置？还是相对于父元素？不会影响到其他元素。
+
+   fixed就是视图固定的。
+
+   absolute，相对于最近的positioned的父元素。
+
+   必须前一个元素position:absolute，其后的元素才会顶到头部
+** float
+   可以完全使用float来布局。
+** inline-block
+   使用inline-block比float更加简单。inline-block就是同时具有block和inline-element的属性。
+*** 使用inline-block的注意事项
+    1.vertical-align的属性会影响到inline-block元素，最好设置为top？
+    2.需要设置每一列的宽度
+    3.元素之间有空格，列与列会有间隙。
+*** clear
+   使用clear来清除浮动，一般是要将clear作用到不想受到浮动影响的元素。
+   clear的值一般有left，right，both。
+
+   其实浮动的本质是，相当于给这个元素降级了。就是先排列其他元素，后排列float元素。
+
+   使用overflow:auto，将容器内的浮动元素，禁止溢出。错了，不是禁止溢出，而是将容器扩大。
+
+   这样一起搞不行，那分开来，一个个搞。
+
+   *Css是有顺序的，从左到有，从上到下。*
+   如果左边只占用了一定的宽度，比如width:25%，那么接下来的元素E，width:60%，
+   那么就会占用同一行，但必须是 *display:inline* 。
+** @media
+   语法：
+   @media not|only mediatype and (media feature) {
+    CSS-Code;
+    }
+    例子：
+    body {
+      background-color: red;
+    }
+   @media screen and (min-width: 480px){
+       body {
+         background-color: yellow;
+       }
+   }
+   含义：当视图宽度大于等于480px的时候，背景显示为黄色；默认为红色，也就是宽度小于480px的时候。
+
+   在css2中被称作media type，css3中称作media queries。
+
+   可以被用来检查很多设备的能力：
+   - 视图宽，高
+   - 设备宽，高
+   - 方向，横竖
+   - 分辨率
+
+** 文字布局
+   .three-column{
+     column-count: 3;
+     column-gap: 1em;
+   }

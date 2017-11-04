@@ -1,0 +1,180 @@
+* 百度前端学院任务
+** task1
+   1.一个页面只有一个h1，所以，文章一级标题要用h2;
+   2.文章使用<article>标签包围起来。
+   3.作者，创作时间，使用<p>标签。
+   html中的原则，我想是数据内容尽可能的使用html标签包围起来。
+   4.不管是很多个图片，还是什么，最好都用ul包围起来。
+   就是将一起重复的东西搞到<li>标签里面去。
+   <ul>
+        <li>陈意涵美美哒+1<br /><img src="http://sz.people.com.cn/NMediaFile/2016/0309/LOCAL201603091601000247194387246.jpeg" alt="陈意涵美美哒" title="陈意涵美美哒" style="width:300px;height:200px;"></li>
+        <li>陈意涵美美哒+2<br /><img src="http://sz.people.com.cn/NMediaFile/2016/0309/LOCAL201603091601000247194387246.jpeg" alt="陈意涵美美哒" style="width:300px;height:200px;"></li>
+        <li>陈意涵美美哒+3<br /><img src="http://sz.people.com.cn/NMediaFile/2016/0309/LOCAL201603091601000247194387246.jpeg" alt="陈意涵美美哒" style="width:300px;height:200px;"></li>
+        <li>陈意涵美美哒+4<br /><img src="http://sz.people.com.cn/NMediaFile/2016/0309/LOCAL201603091601000247194387246.jpeg" alt="陈意涵美美哒" style="width:300px;height:200px;"></li>
+        <li>陈意涵美美哒+5<br /><img src="http://sz.people.com.cn/NMediaFile/2016/0309/LOCAL201603091601000247194387246.jpeg" alt="陈意涵美美哒" style="width:300px;height:200px;"></li>
+        <li>陈意涵美美哒+6<br /><img src="http://sz.people.com.cn/NMediaFile/2016/0309/LOCAL201603091601000247194387246.jpeg" alt="陈意涵美美哒" style="width:300px;height:200px;"></li>
+        <li>陈意涵美美哒+10000<br /><img src="http://sz.people.com.cn/NMediaFile/2016/0309/LOCAL201603091601000247194387246.jpeg" alt="陈意涵美美哒" style="width:300px;height:200px;"></li>
+    </ul>
+   5.img的title属性就是放上去，会有提示。
+   6.这里最后一篇文章为嘛不用article?
+   7.input标签最好都加上label
+   <label for="email">请输入这个邮箱地址：</label>
+    <input type="text" name="emailss" id="email"><br />
+    <p>邮箱地址请按要求格式输入</p>
+
+    label并不会渲染出什么东西，但是提高鼠标用户的可用性。
+    哦，知道了，刚测试了下，就是你点击用label包围的文字，也能选中radio。
+    但是for属性必须对应到具体的元素，但是也可以将元素放到label标签里面。
+   8.radio使用checked="checked"
+   9.结束p之后，再用img标签，因为img不是属于p的？
+** task2
+   真TM的，蛋疼。
+
+   1.首先看这个图片，看黑色的第一行，logo可以暂时不看。明显对应的h1网站标题
+
+   2.然后有导航栏，问题在，导航栏ul在h1下面，导致XX，分成2个div？
+
+   3.然后看下面的，下面全部一起是一个div，div里面包了很多article，这个没什么特别的。
+   只是北京颜色换下CCCC，然后article的颜色是白色的。
+
+   4.看图片
+   图片这里有border，问题li加border？
+   然后文字和图片居中，
+
+   5.看表头，
+   这个表头背景是黑色的，最后一个是灰色的，
+*** 总结
+    1.使用margin: 0和padding: 0去掉默认继承浏览器的1rem的margin和padding。
+    2.ul的top继承哪里的？设置为0
+    哦，它上面有元素，所以float，就不能和上面的重叠了。
+    3.属性选择器
+    [role="button"]
+    4.html中的role属性
+    5.article标签
+    6.aside标签
+    就是旁白，和某个段落内容有关的。不影响其他什么。
+    7.box-shadow
+    盒子模型，block的就有阴影。
+    8.旋转
+    使用transform: rotate(-45deg);
+
+    容器内用padding，容器与容器之间的边界用margin。
+    9.dl
+    是description list的缩写，有词条和描述，例子
+    <dl>
+      <dt>Coffee</dt>
+      <dd>Black hot drink</dd>
+      <dt>Milk</dt>
+      <dd>White cold drink</dd>
+    </dl>
+
+    dt就是要描述的词条。
+    dd就是描述语句。
+    10.那个form居中的问题
+    这里使用到了技巧，但是明显不好。
+    它是先让所有的靠左浮动，float:left，然后使用width:35%让这整个div占用一定的宽度，
+    之后再将字体居右，text-align:right来达到字体居中的。
+
+    很明显，这里问题很多：1.将整体切割了；2。步骤太复杂了；3,自适应等成为问题。
+
+    form居中问题
+    11.改变字体，可能引入瀑布流的改变，需要通知去修改margin，padding，或毗邻节点的大小。
+
+    *padding是作用于当前元素的内容的，非常重要的一点*
+
+    <form>应该是block，独占一整行？然后text-align:center，这个东西的话，所有子元素都会继承，
+    所以就都居中了。
+
+    12.尽量不要使用absollute和像素
+    当把浏览器调大的时候，就全乱了。
+
+*** task2 form总结
+    task2总算勉勉强强搞完了，现在要来好好总结下，主要是这个form里面的元素居中，统一左对齐，右对齐的问题。
+
+    使用position:absolute，然后搞像素有很多问题。
+    首先我搞的时候，将label截断成一定的长度，比如50%，然后使用position:absolute，和right:500px
+    这样让所有的label统一右对齐，但是问题就是这个absolute和px上，但是其实可以通过修改成为relative改变。
+
+    *不要一次性的操作太多元素，这会让你手忙脚乱。尽量让控制范围在最小的粒度。*
+
+    *将表现相同的元素group起来，一起操作，就是调节整个group的样式*
+    所以，我这个地方，很简单，哎，应该是将这些狗币select之类的东西全部用div圈起来。
+
+    然后使用class作为一个group，然后进行操作，牛逼啊。
+    这个form表单，到现在，认识它的方式，就是lable占用40%的空间，右边60%的空间，
+    然后lable的text-align:right，而group的text-align是left，草，太对了。
+
+    牛逼啊，我草，果然可以，只是那个margin-top设置为负数，然后也没浏览器百分比问题了，哈哈哈。
+** task3
+   我RNIMB的，终于搞出来了，我草。
+   边看，边做，搞死老子了。
+** task5
+   这个布局怎么搞？
+   float:left;
+   float:right;???
+
+   margin-right?
+
+** task6
+   1.首先，大的分成两部分，上下两块，各占50%
+   2.上下那块，又分别有左右两部分，
+   3.左右的TM又分，我R。
+*** 有几个问题
+    1.这么多div是如何标记的？
+    2.
+*** 首先搞布局
+** task10
+*** flexbox和网格布局的异同
+    妈的，@media必须放在后面
+** task13
+   css3新特性
+   明天搞这个。
+   被使用transition的元素，必须定义初始化宽度。
+*** 轮播
+    首先，要看是用到了css3的什么特性，比较像是animation？
+    1.先将3个div，宽度400，横排排成一列
+    2.将它们层叠起来，缩为一个
+    3.使用animation，让它们从一个状态到另外一个状态，其实可以认为：
+    运动就是：从最左边移动到最右边，总长度为120px？同一方向滚动。
+    滚动到最末尾了，怎么搞了？
+
+    先不搞那么复杂，将一个div滚动起来。
+
+    可以看做是运动的，也可以看做是，宽度不断缩小的。
+    但是这个顺序怎么搞了？
+
+    先要搞清楚这个状态变化。
+    刚开始的时候，这个div宽度是0，慢慢到400，填充满，
+    填充满之后，就开始慢慢收缩，宽度慢慢变到0。
+
+    如果2个过程拆分一下：用1秒钟填充，用1秒钟消失。
+
+    刚开始扩展时是局左，后面收缩是局右。
+    时间还是不对，然后那个delay错了，应该是最前面的div，也就是被压倒最下面的div delay。
+
+    草，3个图轮播，还要计算下，
+
+    妈的，可以用第四个白色图层给挡住。
+
+** other
+***  css form
+     [[https://www.w3schools.com/css/css_form.asp][css form]]
+     1.加border-radius的时候，一定要先加border
+     2.事件选择器，使用冒号:，而且必须要紧跟前面的css选择。
+     3.input默认会显示蓝色的border，使用outline:none去掉。
+     :focus就是鼠标点击选择（clicked on）
+     例子
+     input[type=text]:focus {
+       border: 4px solid red;
+       <!--outline:none;-->
+     }
+
+     4.搜索框
+     使用background-image，然后css中请求资源都是url(path)
+     background-image: url(search.png);
+*** body中元素竖直方向居中
+    方法一:
+    html,body{
+      height:100%;
+    }
+    *记住，这两个元素必须都100%才能平铺浏览器*

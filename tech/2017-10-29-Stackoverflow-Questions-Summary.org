@@ -1,0 +1,27 @@
+* Stackoverflow上问题总结
+** null判断问题
+  1.使用Assert语句替代判断null，因为Assert能自己将异常信息返回，只需要一行代码，而不需要3行代码。
+  2.返回空对象，而不是null。
+  3.返回null之前，思考下是不是应该直接抛异常。
+** InputStream转String
+   1.String theString = IOUtils.toString(inputStream, encoding);
+   2. java.util.Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
+      return s.hasNext() ? s.next() : "";
+** 跳出多重循环
+   使用break+label语法，先在要跳出的for循环前加标签，然后break 指定标签。
+   例子中的标签就是outloop，
+   outerloop:
+    for (int i=0; i < 5; i++) {
+      for (int j=0; j < 5; j++) {
+        if (i * j > 6) {
+          System.out.println("Breaking");
+          break outerloop;
+        }
+      }
+** equals重写时hashcode也必须重写
+   因为2个对象是equal的，那么hashCode的计算结果也必须相同。
+
+** 通过反射可以测试私有方法
+** 泛型数组
+   Class<E> c, int s;
+    final E[] a = (E[]) Array.newInstance(c, s);

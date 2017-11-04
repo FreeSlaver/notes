@@ -1,0 +1,19 @@
+* px em rem 百分比的区别
+
+  px很容易理解，是多少就是多少。
+
+  rem是针对于root em，也就是html这个元素设置的font-size。
+  比如
+  html{
+  font-size: 16px;
+  }
+  那么10rem就是160px，
+
+  而em是相对于当前div上定义的font-size。
+  又搞错了，不是相对于父元素的font size而是当前元素正在使用的font size
+
+  <p style="font-size:15px">
+     hello world,<span style="background-color:yellow;width:10em;height:10em"><span>
+  </p>
+
+默认继承父元素的font-size

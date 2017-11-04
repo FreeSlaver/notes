@@ -1,0 +1,41 @@
+* Shell之文件批量重命名
+  将问题分解：
+  1.首先思考，如何重命名文件，并遍历文件，批量重命名。
+  最简单方便的是，使用mv；
+  强大一点的有rename，和mmv，但是好像都不行。
+
+  最后使用最通用的古老shell，例子如下：
+  针对linux_file1.mp4,linuxe_file2.mp4等，批量重命名为file1.mp4,file2.mp4
+  for file in linux_*.mp4 ; do mv "${file}" "${file#linux_}" ; done
+
+  2.添加一个外链url前缀，将所有的输出为外链url
+  使用echo命令
+  echo "hello" >> test.txt
+
+  添加图片alt，组装成md文件
+  for file in *.jpg; do mv "${file}" "${file/DSC/TaiWan}" ; echo "![TaiWan](http://img.3gods.com/)$file" >>test.txt ; done
+
+
+  3.接收参数
+  alt参数，图片文件前缀参数，外链前缀url
+
+  屌炸天了，啊哈哈哈。
+
+  最终结果：
+  第一步：
+  vi batch_rename.sh
+  第二步：输入以下内容，并:wq保存。
+  for file in *.jpg ;
+  do
+    mv "${file}" "${file/DSC/$1}" ;
+    echo '!'"[$1]($2/"${file/DSC/$1}")" >> test.txt
+  done
+  第三步：执行，添加alt参数和图片外链前缀url参数
+  ./batch_rename.sh Taiwan http://img.3gods.com
+
+  得到最终结果：
+  ![Taiwan](http://img.3gods.com/Taiwan_1.jpg)
+  ![Taiwan](http://img.3gods.com/Taiwan_2.jpg)
+  ![Taiwan](http://img.3gods.com/Taiwan_3.jpg)
+
+  屌炸天了。

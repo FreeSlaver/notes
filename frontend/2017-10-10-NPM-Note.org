@@ -1,0 +1,32 @@
+* npm学习笔记
+** package.json
+   学习npm，花一天时间完整的学习npm？还是遇到问题，查，然后搞清楚。
+
+   我发现学习方式还真是难以改过来。
+   我发现得两者结合，先了解大概，最重要的东西掌握。
+
+   先看目录，直接用过去经验理解，不懂的，在看。
+
+   The most important things in your package.json are the name and version fields.
+
+   对啊，我TM干嘛要在本地windows上玩了？干嘛不直接在服务器上玩了？
+   但是远程服务器上有个问题，就是非常慢啊。
+
+   对，可以使用一个东西作为中转站，github啊。我草，碉堡了。
+
+   安装node，
+** npm-run-all
+   并行执行多个命令
+   npm install npm-run-all --save-dev
+
+** 更新node和npm
+*** 更新node
+    参看stackoverflow上的答案：https://stackoverflow.com/questions/8191459/how-do-i-update-node-js
+    sudo npm cache clean -f
+    sudo npm install -g n
+    sudo n stable
+    切换版本
+    sudo n 0.8.20
+
+*** 更新npm
+   npm update npm -g

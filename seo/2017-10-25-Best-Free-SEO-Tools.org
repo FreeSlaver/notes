@@ -1,0 +1,19 @@
+* 最好的免费的SEO工具
+** Google Search Console
+   是否有手动惩罚，确认抓取状态和死链，被索引的页面数量，结构化数据等等
+** Google Analytics
+** Google Trends
+   PageSpeed Insights
+   Google Tag Manager
+
+
+
+   [[http://keywordtool.io/][Keywordtool.io]]
+   我草，神器啊
+
+   [[https://moz.com/researchtools/ose][Open Site Explorer]]
+   这个TM也是神器啊，我R。我草，就是TM太贵了，我R。
+
+   通过我对这些工具的了解，和对淘宝 seo的了解
+
+   尼玛，我知道了，这个人的留言里面没有去掉权重之类的，导致得到一个反向连接。
