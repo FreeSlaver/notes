@@ -1,0 +1,20 @@
+* Redis Replication复制
+  主从模式
+  从会在断开连接后，重连上来后，主动复制。
+
+  3中主要机制：
+  1.当连接上时，master会发送命令流到slave，salve进行更新。
+  2.档连接断开后，又重新连接上，slave会进行重连，尝试进行部分重新同步。
+  3.当部分同步不可用，会尝试全部同步，master会进行snapshot然后发送给slave。
+
+  异步
+Every Redis master has a replication I
+Each master also takes an offset that increments for every byte of replication stream that it is produced to be sent to slaves,
+
+Replication ID, offset
+
+slave重连时，发送旧的master的replication id和offset
+RDB持久化模式是，master直接将文件发送给slave，slave再载入内存。
+然后将最新的命令通过实时流的方式传给slave
+
+** expire key在主从间的机制

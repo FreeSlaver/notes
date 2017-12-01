@@ -1,0 +1,59 @@
+* Nginx学习笔记
+
+** 新手指南
+   nginx has one master process and several worker processes.
+   The main purpose of the master process is to read and evaluate configuration, and maintain worker processes.
+
+   Worker processes do actual processing of requests. nginx employs event-based model
+   and OS-dependent mechanisms to efficiently distribute requests among worker processes.
+
+   configuration file is named nginx.conf and placed in the directory /usr/local/nginx/conf, /etc/nginx, or /usr/local/etc/nginx.
+   centos6.8装在/etc/nginx/目录下。
+
+*** 启动，关闭，重载配置
+    启动：service nginx start
+    然后在浏览器中直接输入ip就能看到了。
+
+    启动后，使用-s带不同参数执行不同命令
+    nginx -s
+
+    stop  快速关闭
+    quit   优雅关闭
+    reload 重载配置
+    reopen 重新打开log文件
+
+    重载配置文件的过程：
+    主进程会校验配置文件，并应用新的配置文件。
+    然后启动新的worker进程，同时发送消息给旧的worker进程，直到旧的worker
+    处理完当前的所有请求后，才会退出。
+    新的请求有新的worker进程进行处理，如果配置文件有问题，会进行回滚，使用旧配置。
+
+    pid文件在/var/run目录下。
+    日志文件在 /var/log/nginx/access.log
+    kill -s QUIT 1628等效于nginx -s quit
+
+    分模块的，直接用指令控制。
+    简单指令分号结尾；指令块使用花括号，花括号中包含花括号，叫做上下文。
+*** 静态内容服务
+    需要在http块中添加一个server块配置，
+
+    location / {
+        root /data/www;
+    }
+    location / 是匹配URI请求 ，
+    root是指令，表示形成一个对本地文件路径的请求，会把/添加到root指令后面的路径去。
+    如果有多个能匹配上，优先使用最长的路径的，当前的路径最短，只会最后一个匹配使用。
+
+    举例子：
+    http://ip/
+    通过nginx匹配后，得到的结果是对此ip的机器本地的/data/www/的请求。
+
+    http://ip/images/
+    通过nginx后，得到的是对此ip的/data/images/的请求。
+    /images其实也会被上面一个匹配到，但是/images更长，所以先匹配到。
+    就是说会对URI请求先做一个处理，添加一个指定路径前缀？？？
+
+*** 设置简单代理服务器
+    首先会记住匹配到的特定的路径，之后在使用正则表达式匹配，如果正则的匹配上了，
+    就使用正则，否则使用之前记住的特定路径。
+*** 设置FastCGID代理

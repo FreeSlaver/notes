@@ -1,0 +1,12 @@
+* CentOS开发环境搭建
+  yum groupinstall -y development
+
+** 安装ruby
+   使用RVM(Ruby Version Manager)来安装
+   curl -L get.rvm.io | bash -s stable
+
+** 安装java环境
+   先手动下载rpm包，然后
+    sudo yum localinstall jdk-8u102-linux-x64.rpm
+
+    vi .bash_profile

@@ -1,0 +1,19 @@
+* 随机地从集合中取元素
+** 从List中随机取元素
+*** 取一个元素
+   List<String> list = new ArrayList<String>();
+   for(int i=0;i<1000;i++){
+     String iStr = String.valueOf(i);
+     list.add(iStr);
+   }
+   Random random = new Random();
+   int nextInt = (int)(random.nextDouble()*list.size());
+   list.get(nextInt);
+*** 取多个元素，比如20个
+    Collections.shffle(list);
+    list.subList(0,20);
+** 从Set中随机取元素
+   先将set转为list，然后同上
+** 从Map中随机取元素
+   List<String> list = new ArrayList<String>(map.values());
+   之后操作同上。

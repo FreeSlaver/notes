@@ -1,0 +1,51 @@
+* Css FAQ
+** 图片下加文字
+   这个在w3c叫做Polaroid Images / Cards，宝丽来图片或图卡。
+
+** 阴影效果
+   有text-shadow和box-shadow
+*** text-shadow
+    语法
+    h1{
+        text-shadow: 水平 垂直 模糊 颜色
+    }
+    参数，水平和垂直方向的阴影像素
+    还可以添加颜色
+    还可以模糊
+    h1 {
+    text-shadow: 2px 2px 5px red;
+    }
+    可以多个叠加，逗号隔开。
+
+** 设置背景图片
+   *注意url，不要以斜杠开头，也就是绝对路径开头*
+** 图片和div之间有空隙
+   要将图片设置为
+   img{
+       display:block;
+   }
+   哈哈，看stackoverflow的问答。
+   https://stackoverflow.com/questions/31444891/mystery-white-space-underneath-image-tag/31445364#31445364
+   是因为下沉字母，比如p，y，j等（我们看这个比如和p，p多占了下面一点距离）
+   这个东西和padding和margin无关。
+
+** 刷新页面时，由小到大
+   2个问题：
+   1. 应该是用到了css的transition属性，然后
+   2. 这个背景是放在container上的，
+
+   看这个样式是：从中间开始，然后变大，到100%
+   css transition size
+
+   不行，妈的，还是没掌握好，我草。
+   那么问题就是如何将这个div居中，果然如此，我现在加上水平居中的margin:auto，
+   就自动从中间向两边扩展了
+** Div height100% 垂直居中
+   需要如下设置：
+   html,body{
+       height:100%;
+   }
+** 去掉scroll，也就是用户可以调节大小的
+   textarea{
+       resize:none;
+   }

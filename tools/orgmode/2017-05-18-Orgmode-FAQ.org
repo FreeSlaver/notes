@@ -35,5 +35,13 @@
 
    还可以使用一个插件org-download，直接拖拽图片到文章。
 
+** 获取当前时间
+** 高级搜索
+   C-c a T
+for todo keywords
+C-c a m
+for tags and properties
+C-c a s
+for full text searches
 ** Reference
    [[http://stackoverflow.com/questions/2650041/emacs-under-windows-and-png-files][Emacs under Windows and PNG files]]

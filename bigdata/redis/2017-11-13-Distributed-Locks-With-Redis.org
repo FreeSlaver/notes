@@ -1,0 +1,9 @@
+* 使用Redis实现分布式锁
+  关键字：redis,distributed lock,Redlock
+
+  DLM (Distributed Lock Manager)
+** 安全性和活性(Liveness)保证
+   1.安全性
+   互斥，任何时间，有且仅有一个客户端持有锁
+   2.活性
+   无死锁，总能最终获取到锁，即使持有锁的客户端崩溃了或者

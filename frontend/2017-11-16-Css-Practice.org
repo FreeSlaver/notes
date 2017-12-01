@@ -1,0 +1,10 @@
+* Css练习项目
+** jonchretien
+   http://jonchretien.com/
+
+   首先第一步做的是什么？先写HTML，内容的组织关系要明确。
+
+   这个页面分成3个部分，第一部分是基本信息，basic info
+
+
+   搞完了HTML，也就是组织内容之后，调节样式，细节的样式。

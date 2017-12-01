@@ -1,0 +1,23 @@
+* Javascript定义总结
+
+class Names {
+  constructor (names) {
+    this.names = names;
+  }
+  contains(names) {
+    return names.every((name) => this.names.indexOf(name) !== -1);
+  }
+}
+var countries = new Names(['UK', 'Italy', 'Germany', 'France']);
+countries.contains(['UK', 'Germany']); // => true
+countries.contains(['USA', 'Italy']);  // => false
+
+// Hoisted variable
+console.log(hello('Aliens')); // => 'Hello Aliens!'
+// Named function
+console.log(hello.name)       // => 'hello'
+// Variable holds the function object
+console.log(typeof hello);    // => 'function'
+function hello(name) {
+  return `Hello ${name}!`;}
+}

@@ -1,0 +1,9 @@
+* 使用ajax得到json数据填充和使用页面模板的比较
+
+  https://stackoverflow.com/questions/1284381/why-is-it-a-bad-practice-to-return-generated-html-instead-of-json-or-is-it
+
+  https://stackoverflow.com/questions/1775797/html-template-json-vs-server-html
+
+
+  大意是：
+  如果只是想要获取数据，然后将数据进行填充，就用ajax json。

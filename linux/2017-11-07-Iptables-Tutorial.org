@@ -1,0 +1,17 @@
+* iptables教程
+  iptables -I INPUT -s 198.51.100.0 -j DROP
+
+  -I 表示插入insertion，将此规则添加到规则链的第一个位置，最先被应用。
+  可以指定一个特定位置，在-I后面加数字。
+
+  -s 跟ip地址表示，source
+
+  -j 表示jump，指定此规则的目标动作action，这里是DROP。
+
+默认的规则表
+
+显示所有的
+sudo iptables -L -nv --line-numbers
+
+iptables -A INPUT -j DROP -p tcp --destination-port 110 -i eth0
+表示添加一条规则，丢掉所有发到端口110的tcp的包。到达eth0的。

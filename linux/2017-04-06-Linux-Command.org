@@ -123,3 +123,35 @@ rm unlink 删除文件或者link
    使用 ; 一次性输入多条命令语句分别执行，例子：
    cd kafka-connect-hdfs; git checkout v3.0.1; mvn package
 
+
+** nc
+   可以在/usr/share/doc/nc-*/ 看到很多nc的脚本程序。
+*** 使用nc替代telnet
+    nc ip port
+*** 使用nc在本机建立连接
+    nc -l 1234 //监听1234端口
+
+    再开一个终端窗口
+    nc 127.0.0.1 1234
+    就可以在两边打字，相互传输了。
+*** 使用nc传输文件
+    nc -l 1234 > file.out
+
+    再开一个终端窗口或打开另一台机器的界面
+    nc 127.0.0.1 1234 > xxfile
+    这样就将xxfile的内容写入到file.out文件中了。
+
+*** 使用nc发邮件
+*** 使用nc扫描端口和开启的服务
+    nc -z 127.0.0.1 10-9999
+    //扫描本地从10到9999，哪些端口开启了，以及相应的服务
+    返回显示结果：
+    Connection to 127.0.0.1 22 port [tcp/ssh] succeeded!
+    Connection to 127.0.0.1 80 port [tcp/http] succeeded!
+
+
+** 重要的命令
+** 使用apropos 查看命令
+   不完全准确知道的命令，可以用apropos来查看。会返回3项
+  (1) its title (2) its section number (3) the description from its NAME section
+

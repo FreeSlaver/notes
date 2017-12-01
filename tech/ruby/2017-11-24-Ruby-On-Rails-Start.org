@@ -1,0 +1,34 @@
+* Ruby on Rails 总结
+  gem install rails
+  rails new blog
+
+  cd blog
+  bin/rails server
+
+  bin/rails generate controller Welcome index
+  Welcom是controller，index是action。
+  controller会在app/controllers/welcome_controller.rb
+  也会产生一个view，会在app/views/welcome/index.html.erb
+  action应该是这个route？route  get 'welcome/index'
+  不对，action是这个welcome后的index。
+  还有一些单元测试，helper，assets等。
+  编辑
+  app/views/welcome/index.html.erb
+
+  config/routes.rb
+  是routing文件，要搞清楚route
+  root 'welcome#index'
+  tells Rails to map requests to the root of the application to the welcome controller's index action and get 'welcome/index' tells Rails to map requests to http://localhost:3000/welcome/index
+  告诉rails对应用的根目录的请求映射到welcom这个controller的index action上。
+
+  get 'welcom/index'是bin/rails generate controller Welcome index产生的，
+  告诉Rails对http://localhost:3000/welcome/index 的GET请求也映射到
+  welcome controller的index action上。
+
+  添加resource（就是对应到文章，图片等），CRUD的集合。
+
+
+  命令：bin/rails routes
+  自动生成所有的RESTful风格的action，
+
+  bin/rails generate model Article title:string text:text

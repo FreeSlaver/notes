@@ -1,3 +1,0 @@
-* 学习Linux
-
-  The Unix Programming Environment

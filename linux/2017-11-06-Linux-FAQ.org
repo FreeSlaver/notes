@@ -1,0 +1,15 @@
+* Linux FAQ
+** 权限
+*** 怎么添加用户
+    添加用户
+    adduser sx
+    更新密码
+    passwd sx198942
+*** 显示所有用户
+    cut -d: -f1 /etc/passwd
+*** 切换用户
+    su - sx
+*** 更改文件所属用户
+    语法：chown [option] owner objects
+    chown alice
+    多使用man，习惯性使用man。

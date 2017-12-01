@@ -1,0 +1,24 @@
+* Css列布局
+** 要点和注意事项
+   1.使用float:left;加width百分比
+   2.记得每列使用box-sizing: border-box;这个会将border等算到一起，整体等于百分比
+   3.在使用float之后，需要清除float对后续元素的影响
+   .row:after{
+       content: "";
+       display:table;
+       clear:both;
+   }
+   不然的话，后面的元素会无视float元素的影响，也就是float元素不占位，
+   后面的元素会重叠到float元素上。
+   4.响应式的处理
+   就是页面不断缩小，让每列元素单独占满整个页面
+   @media (max-width:480px){
+       .column{
+           width:100%
+       }
+   }
+** 2列布局
+
+** 3列布局
+
+** 4列布局

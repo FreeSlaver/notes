@@ -47,8 +47,6 @@
    - State "DONE"       from "TODO"       [2017-04-12 周三 15:54]
    :END:      
 ** DO
-   
-
 ** 标签Tags                                                                     :test:
    标签可以使用字符，数字，下划线，@符号。
    必须以冒号开头，例如:work:urgent:。
@@ -113,9 +111,13 @@
    完整例子：
    ** TODO [#2] 优先级为2的待办事项                                                :@家庭作业:
 
-
 ** Reference
 [[http://orgmode.org/worg/org-tutorials/index.html][tutorials
 
 ]]
+
+
+** 高级搜索
+   可以使用grep，awk，perl等命令工具。
+   [[http://orgmode.org/worg/org-tutorials/advanced-searching.html#boolean-searches-by-default][Advanced searching]]
 

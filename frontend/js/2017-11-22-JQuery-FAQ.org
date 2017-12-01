@@ -1,0 +1,65 @@
+* JQuery FAQ
+** jquery发送ajax请求
+
+
+   官网http://api.jquery.com/jQuery.ajax/
+
+** ajax form VS normal form
+   1. Normal Form Submission will reload the page.
+2. Ajax Form Submission will submit the form asynchronous using JavaScript without page reload.
+
+
+** ajax post json
+   data: JSON.stringify({ Markers: markers }),
+   contentType: "application/json; charset=utf-8",
+   dataType: "json",
+
+** 提交form不改变url
+   使用jquery的ajax实现。
+   $('#myForm').submit(function(e){
+    e.preventDefault();
+    $.ajax({
+        url:'/Car/Edit/17/',
+        type:'post',
+        data:$('#myForm').serialize(),
+        success:function(){
+            //whatever you wanna do after the form is successfully submitted
+        }
+        });
+    });
+
+
+   https://stackoverflow.com/questions/25983603/how-to-submit-html-form-without-redirection
+** 使用ajax发送数据，重载整个页面
+   使用场景是这样的：
+   用form提交，那个url会改变，redirect，所以我需要使用ajax来提交，
+   但是ajax提交到后台，后台返回的是模板和数据都已经完全整合到一起的html，
+   所以我需要重新载入整个页面。
+
+   $.ajax({
+    type: "POST",
+    url: "packtypeAdd.php",
+    data: infoPO,
+    success: function() {
+          location.reload();//注意这句话
+        }
+    });
+
+    //还是有url，妈的
+    $("#submit").click(function (){
+        $("#addTweet").submit();
+    });
+
+    我草，终于找到了。
+    首要一点是返回的View不能是全部的，只能是部分的。
+
+** 什么时候使用from，什么时候使用ajax
+    AJAX should be used for displays updates and form submissions should be done via a page reload.
+    I think form submission should be done via page reloads (let the user see it working), whereas display updates should use AJAX (prevent annoying page reloads).
+    https://stackoverflow.com/questions/13293375/ajax-vs-form-submission
+
+** 回到顶部实现
+   一般有4种方式，
+   1.通过
+   <a href="#top" target="_self">回到顶部</a>
+   <a href="javascript:scroll(0,0)">JavaScript回到顶部<s/a>

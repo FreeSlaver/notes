@@ -220,7 +220,65 @@
     和活动区域有关，不太懂？？？
     C-c #     (org-update-statistics-cookies)
     更新整个的统计cookie。
+** 8 Dates and times 日期和时间
+*** 8.1 Timestamps,deadlines and scheduling
+    单纯时间记录
+    ，* Meet Peter at the movies
+    ，  <2006-11-01 Wed 19:15>
+
+    定期，这是每周
+    ，* Pick up Sam at school
+    ，     <2007-05-16 Wed 12:30 +1w>
+    日记格式，正则
+    ,* 22:00-23:00 The nerd meeting on every 2nd Thursday of the month
+    ,<%%(diary-float t 4 2)>
+
+    时间段
+    ,** Meeting in Amsterdam
+            <2004-08-23 Mon>--<2004-08-26 Thu>
+
+    不活跃时间，不会在agenda中显示
+    ,* Gillian comes late for the fifth time
+    ,      [2006-11-01 Wed]
+*** 8.2 Createing timestamps
+    C-c .     (org-time-stamp)
+    插入或修改日期，当使用2次会产生一个日期段。
+    C-c !     (org-time-stamp-inactive)
+    前置C-u命令，产生带小时，分钟的日期。
+
+    C-c C-c
+    Normalize timestamp, insert/fix day name if missing or wrong.
+    C-c >     (org-goto-calendar)
+    插入日历中鼠标所在日期
+    C-c C-o     (org-open-at-point)
+    获取当前时间在agenda中相关的记录
+    S-<left>     (org-timestamp-down-day)
+    S-<right>     (org-timestamp-up-day)
+    将鼠标选中日期加减一天
+    S-<up>     (org-timestamp-up)
+    S-<down>     (org-timestamp-down-down)
+    将鼠标选中的时间周期加减1，比如放在年上面就对年加减1。
+    如果是heading上，就是调整优先级A,B,C等。
+    C-c C-y     (org-evaluate-time-range)
+    计算时间距离
+
+*** 8.3 Deadlines and scheduling
+
+*** 8.4 Clocking work time 工作计时
+    可以在开始一项工作时，启动计时，完成后，关闭计时。得到工作耗时记录
+    使用以下命令记录计时历史
+    (setq org-clock-persist 'history)
+     (org-clock-persistence-insinuate)
+**** 8.4.1 Clocking commands
+     C-c C-x C-i     (org-clock-in)
+
 ** 10 Agenda views 日程视图
+   CLOSED: [2017-11-30 周四 10:50]
+   :LOGBOOK:
+   - State "CANCELLED"  from "WAITING"    [2017-11-30 周四 10:50]
+   - State "NEXT"       from "DONE"       [2017-11-30 周四 10:50]
+   - State "DONE"       from "CANCELLED"  [2017-11-30 周四 10:50]
+   :END:
    TODO items,time-stamped itesm,tagged headlines
    目的：因为TODO项目，打了时间戳的项目，标记的头条散落在各处，需要一个总的概览。
 

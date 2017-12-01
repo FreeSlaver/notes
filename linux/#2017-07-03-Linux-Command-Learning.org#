@@ -1,0 +1,233 @@
+* Linux Command Learning
+** Learning The Shell
+   What's A "Terminal?"
+   It's a program called a terminal emulator.
+   Linux does not employ the concept of drive letters. While drive letters split the file system into a series of different trees (one for each drive)
+
+   Which one should you use? The one that requires the least typing!
+
+   cd - 切换到前一个目录。
+   In addition, some applications will place their configuration and settings files in your home directory as hidden files.
+
+   an important concept about commands. Most commands operate like this:
+   command -options arguments
+    -options is one or more adjustments to the command's behavior, and arguments is one or more "things" upon which the command operates.
+
+    The first character is the type of file. A "-" indicates a regular (ordinary) file. A "d" indicates a directory.
+    The second set of three characters represent the read, write, and execution rights of the file's owner.
+    The next three represent the rights of the file's group, and the final three represent the rights granted to everybody else.
+
+    All methods involve defining a relationship between the information and some numbers that will be used to represent it.
+    所有展示信息的方法都是定义： *关系*
+    Computers, after all, only understand numbers and all data is converted to numeric representation.
+    电脑只明白数字，所有的数据都被转化为用数字呈现。
+    ASCII text. ASCII (pronounced "As-Key")is short for American Standard Code for Information Interchange.
+
+
+    使用file可以先看看文件的概要。
+    lrwxrwxrwx     25 Jul  3 16:42 System.map -> /boot/System.map-2.0.36-3
+    the file above is called symbolic links.Whenever the system is given a file name that is a symbolic link, it transparently maps it to the file it is pointing to.
+    就是系统启动或干嘛，只使用特定的字符串，这是就需要用symbolic links指定到具体的带版本的文件。而且使用links也很容易切换。
+    有点类似环境变量中的$JAVA_HOME？
+
+    *Linux的命令不是事务的，有些成功，有些失败，只提示出失败的消息*
+
+*** 操作文件
+**** cp
+     cp file1 fil2 如果file2存在就会被重写。
+     cp -R dir1 dir2 将dir1中的拷贝到dir2中。
+**** mv
+     mv file1 file2 如果file2存在就会被重写！！！
+     mv dir1 dir2 如果dir2存在，dir1就会被移动到dir2中！！！不存在就被重命名。
+**** rm
+     rm file... 移除多个文件，比如rm file1 file2 file3 多个文件间不需要逗号，但要空格。
+     rm -r dir 移除文件夹
+     当心rm，删除之后不能恢复！！！为嘛没人做个类似回收站的东西？
+
+*** What are Commands
+    1. An executable program,being compiled binaries.
+    2. Acommand build into the shell itself.比如cd，pwd等。使用type cd，type pwd可以看到。
+    3. A shell function.被合并进环境变量中的微小shell脚本。
+    4. An alias. 将另外的命令起的别名。比如ls，type ls可以看到 ls is aliased to `ls --color=auto'
+
+**** type
+     查看命令具体是以上4种的哪一种。
+**** which
+     一台机器可能安装多少版本的jdk，使用whic查看具体执行路径。无法对alias，build in shell使用。
+     which java
+     /root/jdk1.8.0_91/bin/java
+
+**** help
+     妈的，有些help是放在后面用，比如ls --help，但是有些不行，比如cd。
+     哦，好像是这样的，内置的命令需要使用help -m cd。
+     aliased的命令使用ls --help。但是man命令都可以使用。
+     help facility available for each of the shell builtins。
+     Many executable programs support a “--help” option.很多可执行的支持
+     cd [-L|-P] [dir]
+     中括号表明参数是可选的，竖杠表明是互斥的，也就是用了-L参数不能用-P参数。
+
+**** man
+     Most executable programs intended for command line use provide a formal piece of documentation called a manual or man page.
+     用法 man program
+     intended as a reference, not a tutorial.
+     README files residing in the /usr/share/doc directory.
+
+*** I/O 重定向
+**** 输入
+     we can redirect the output of many commands to files, devices, and even to the input of other commands.
+     其实也是pipe的概念。
+     
+     > 输出重定向符，ls > dir_list.txt 将ls命令的标准输出结果（控制台）重定向到dir_list.txt文件中。
+     >> 我草，牛逼啊，直接在文件后面添加。这尼玛，程序的精髓啊：将复杂的实现，功能封装，提供简单的接口，一个指令。
+
+**** 输出
+     > 例子：sort < dir_list.txt 将dir_list.txt中的内容作为参数输入到sort函数。
+     使用 ls | sort也可以，就是ls得到的输出，作为sort的输入。
+     输入，输出；输出，输入。
+     ls < dir_list.txt >dir_list_sort.txt 将dir_list.txt作为输入进行排序，然后输出到dir_list_sort.txt文件中。
+     重定向符号的顺序无所谓，但是必须在命令的参数后面。
+**** du
+     查看文件所占的磁盘量（默认只显示文件夹）。
+     du -a -h -X *.txt  展示所有文件，从中过滤出.txt后缀的文件，人类可读的方式。
+
+
+**** wc
+     输出文件的总行数，总字符数，总字节数。奇特的一点是其他输出到控制台的内容可以作为wc的参数，
+     你可以看做输出到控制台的内容就是一个文件。因为我们本身就可以重定向输出到文件中。
+     find . -type f -print | wc -l 展示当前目录下的所有文件的总数量。等价于find -type f | wc -l。
+*** Filter过滤器
+    sort
+
+    *uniq* Given a sorted stream of data from standard input, it removes duplicate lines of data (i.e., it makes sure that every line is unique).
+    屌毛，就是使用uniq之前必须先进行排序sort。不然没法去重。OK，完美。
+
+    grep 显示出明确指定类型的字符串，没法用正则表达式。
+    
+    fmt 对输入进行格式化并输出
+
+    pr 对大量文本输入，进行分页，还添加headers，footers并准备打印。
+
+    head
+    tail
+    tr 转换或删除字符，比如大小写，或者换行符等。
+    sed 
+
+    awk An entire programming language designed for constructing filters. Extremely powerful.
+
+    sed,awk这两个命令要精通啊。
+
+** 自动补全 膨胀
+   echo /usr /* /share 会匹配中间的*
+   echo $((2+2))  //2个圆括号是进行数学计算
+   echo $((arith expression)) 
+   echo Front-{A,B}-Back 输出Front-A-Back Front-B-Back //一个花括弧啊之间是进行遍历？不能有内嵌的空格。
+
+   使用案例：
+   比如你是一个摄影师，需要按照日期来归类图片，可以一个个手动创建文件。也可以使用上面的功能。
+   mkdir {2015..2017}-{01..12}
+   我草，屌炸天了。一个命令将很多重复的事情搞完了。
+
+   file $(ls /usr/bin/* | grep bin/zip) 也可以使用``符号替代$()。
+
+   使用单引号压制掉$符号的函数功能。
+*** 引号
+    If you place text inside double quotes, all the special characters used by the shell lose their special meaning and are treated as ordinary characters. 
+    The exceptions are “$”, “\” (backslash), and “`” (back- quote). This means that word-splitting, pathname expansion, tilde expansion, and brace expansion are suppressed, 
+    but parameter expansion, arithmetic expansion, and command substitution are still carried out.
+    如果你将文本放在双引号之间，所有的特殊字符都会失去特定意义，除了“$”, “\” (backslash), and “`”，
+    这表明，字符切割（空格），路径补全（*），花括号扩展（{A,B,C}），波浪符（~）都会被抑制。
+    但是参数取值（"$USER"）,数字计算（"$((2+2))"），命令替换（）依然有效。
+    
+    可以处理带空格的文件。比如two words.txt这个文件。
+
+    By default, word-splitting looks for the presence of spaces, tabs, and newlines (linefeed characters) and treats them as delimiters between words.
+    
+    使用单引号抑制所有特殊字符。
+*** 逃逸符 Escaping Characters 使用斜杠转移符
+    echo "The user is $USER has money \$5.00"
+
+**** 长短命令
+     长命令用于写脚本程序，因为后面可能需要来看，这样的话就不会因为过短的命令感到晦涩。
+     Laziness is maintained.一样是节约了时间，保持了“懒惰”。
+     可以使用 \ 使得换行符失效，这样就可以将很长的命令分行写。
+     echo -e "add blank lines \n\n\n" 需要-e的option。
+*** 权限控制Permissions
+    The multi-user capability of Unix-like systems is a feature that is deeply ingrained into the design of the operating system. 
+    Unix多用户的能力深深扎根于操作系统的设计。
+
+    rwx = 111 in binary = 7
+    rw- = 110 in binary = 6
+    r-x = 101 in binary = 5
+    r-- = 100 in binary = 4
+    我草，原来如此。
+    
+*** 任务控制 Job Control
+    ps - list the processes running on the system
+    kill - send a signal to one or more processes (usually to "kill" a process)
+    jobs - an alternate way of listing your own processes
+    bg - put a process in the background
+    fg - put a process in the forground
+
+    如果忘记使用&的后台任务，可以使用Ctrl+z将任务挂起，然后输入bg命令转换为后台任务。
+**** kill
+     kill -l 查看所有支持的kill参数。
+     
+** Writing Shell Scripts
+   In the simplest terms, a shell script is a file containing a series of commands.
+   
+   #!/bin/bash
+   The first line of the script is important. This is a special clue, called a shebang, given to the shell indicating what program is used to interpret the script. In this case, it is /bin/bash.
+*** 添加环境变量
+    出了手动，还可以直接使用命令，明显的方便很多。
+**** export
+    export PATH=$PATH:directory
+
+    export PATH
+    The export command tells the shell to make the contents of PATH available to child processes of this shell
+**** alias 别名
+     alias hello='echo hello world'
+     where name is the name of the new command and value is the text to be executed whenever name is entered on the command line.
+     输入hello就打印hello world。
+
+     today() {
+    echo -n "Today's date is: "
+    date +"%A, %B %-d, %Y"
+    }
+    草，这个不对啊 。
+
+**** here script
+     It provides a way to include content that will be given to the standard input of a command. In the case of the script above, the standard input of the cat command was given a stream of text from our script.
+     
+     command << token
+     content to be used as command's standard input
+     token
+     command作为命令，token可以是出了linux特殊保留字符外的任意字符串，约定是_EOF_（end of file）。
+     2个token之间的字符串作为command的输入或者输出参数，要看前面的符号是>还是<。
+
+** 重要的命令
+   find.sed,awk,top,vmstat,iostat, netstat,iptables
+
+** 书籍
+   推荐书籍： 
+   《鸟哥的私房菜基础篇、高级篇》 
+   《Advanced Bash Shell》 
+
+   中级：熟悉TCP/IP原理、OS原理、熟练使用C语言、Linux系统编程、网络编程。 
+   推荐书籍： 
+   《The C Programming Language》 
+   《Unix环境高级编程》 
+   《Linux程序设计》 
+   《TCP/IP协议详解卷一》 
+   《Unix网络高级编程》 
+   
+   高级： 
+   《Linux Device Driver》 
+   《深入理解Linux内核》 
+   《深入理解计算机系统》 
+   《深入理解LINUX网络内幕》 
+   
+   上面这些书单中，是我们公司一个玩Kernel的牛人开出的。 
+   任何知识的学习都不是一蹴而就的，需要反复实践，反复理解。
+** 任务
+   man bash
+   man man

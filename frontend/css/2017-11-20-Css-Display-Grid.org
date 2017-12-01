@@ -1,0 +1,31 @@
+* Css display=grid详解
+  可以进行二维控制，flexbox只能一维控制。
+
+  使用：
+  将一个元素设置为grid：
+  display:grid;
+
+  设置大小：
+  grid-template-columns and grid-template-rows,
+
+  子元素使用
+  grid-column and grid-row
+** 名词解释
+  grid line：
+  可以是水平的（row grid lines），也可以是垂直的（colum grid lines）
+  就是那个线条，
+
+  grid track
+  2个相邻grid line（线条）之间的空间。
+
+  grid cell
+  和table的cell一样，最小单元格。
+
+  grid area
+  有4条先（grid line）围成的空间，area可以包含任意多cell。
+
+** grid container属性
+   display:grid,inline-grid,subgrid(表明此grid容器本身就是更大grid的item，可以集成属性。)
+
+** 参考资料和扩展阅读
+   [[https://css-tricks.com/snippets/css/complete-guide-grid/][A Complete Guide to Grid]]

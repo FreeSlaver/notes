@@ -1,8 +1,10 @@
 * Css居中
+** 草稿
 ** 水平居中
 *** block块元素水平居中
     水平居中一个block元素，使用margin: auto;
     必须要设置width属性，否则没效果。
+    本质是：容器会自动将剩下的距离作为2遍的编剧。
     对于浮动元素（float:left）和定位元素（position:absolute）无效。
 *** text文字水平居中
     居中元素中的文字，使用text-align: center;
@@ -42,6 +44,9 @@
 
   margin-left，margin-top需要计算，而且值太固定，XXpx，对于自适应的不好。
   偏移量是根据content+padding值确定？？？
+*** 针对inline或者inline-*的block元素
+    使用text-align:center;
+
 ** 垂直居中
 *** 使用padding垂直居中
     .center {
@@ -66,6 +71,14 @@
       right: 0;
     }
 
+*** 在div中垂直居中一个图片
+    img{
+    display:inline-block;
+    height:100%;
+    vertical-align:middle;
+    }
+
+    参考https://stackoverflow.com/questions/7273338/how-to-vertically-align-an-image-inside-a-div
 ** 同时水平和垂直居中
 *** 使用display:flex居中
     div.container6 {
@@ -107,5 +120,6 @@
     You can't put block elements inside inline elements.
 
     vertical-align是什么
+
 ** 参考资料和扩展阅读
    [[https://jeffjade.com/special/vertical_center_methods.html][绝对居中六法]]

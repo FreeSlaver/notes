@@ -1,0 +1,22 @@
+* Thymeleaf FAQ
+** 要注意的是
+   和Sparkjava结合时，返回的model必须是map
+** 取值
+   <span th:text="${id}"></span>
+   必须将th:text="${xx}"放在标签里面
+
+** 遍历对象
+   Sparkjava代码：
+   Map<String,Object> modelMap = new HashMap<>();
+   modelMap.put("list",list);
+
+   return new ModelAndView(modelMap,"list");
+
+   在html中代码：
+   <ul>
+        <li th:each="todoVo : ${list}">
+            Index: <span th:text="${todoVo.id}"></span>
+        </li>
+    </ul>
+
+** html include

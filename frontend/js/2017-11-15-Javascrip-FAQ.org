@@ -1,0 +1,4 @@
+* Javascrip FAQ
+
+** innerHTML和value区别
+   Setting the value is normally used for input/form elements. innerHTML is normally used for div, span, td and similar elements.

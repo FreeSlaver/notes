@@ -1,0 +1,72 @@
+* Redis总结
+  任务
+  写一个java版的redis客户端，或者看完，贡献当前jedis的源码。
+** 安装
+   wget http://download.redis.io/releases/redis-3.2.8.tar.gz
+   tar -zxvf redis-3.2.8.tar.gz
+   cd redis-3.2.8
+   make
+   make test
+*** 启动
+   cd src && ./redis-server
+** 草稿
+   内存数据结构，可用作数据库，缓存，消息中间件。
+
+   重点：redis集群分区，持久化等
+
+** 大量插入
+   普通方式每次发送命令，都有一个网络往返。
+
+   最好的方式是使用Redis协议，将命令全部写到文本文件中，比如：
+   SET Key0 Value0
+   SET Key1 Value1
+   ...
+   SET KeyN ValueN
+
+   之前是使用netcat，
+   (cat data.txt; sleep 10) | nc localhost 6379 > /dev/null
+
+   多动手，比如这个地方，我就可以使用shell生产这个文件，然后使用下面的命令，
+   然后搞清楚，搞明白，下面的命令是撒意思，这样不就学到很多东西了吗？？？
+   netcat的缩写就是nc
+
+   但是netcat不能获得响应，不论是传送成功还是发生错误。
+   2.6以后，可以使用redis-cli客户端的pipe模式。
+
+** Twitter clone redis
+   *对啊，我为毛不在自己网站上做个个人twitter，然后做个手机客户端？*
+
+   根本原因还是自己太懒。
+   对啊，如果你自己从头开始山寨一个twitter或者微博，怎么做了？
+   从哪里开始？整个项目应该如何切分？
+   从登陆，注册开始？
+
+
+   Sorted Sets和一个浮点得分值关联起来，称为元素分（element score）
+** 事务
+   只支持原子性，不能回滚
+   使用append-only-file机制，调用系统的syscall。
+   但是如果系统被强行杀掉，那么就可能只执行部分，需要用redis-check-aof工具。
+
+   > MULTI
+   OK
+   > INCR foo
+   QUEUED
+   > INCR bar
+   QUEUED
+   > EXEC
+  1) (integer) 1
+  2) (integer) 1
+
+  调用DSCARD会清空这个QUEUE。
+
+  悲观锁和乐观锁
+  比如，现在我要修改一个i的值，将它加1，我在访问到它的时候，它的值是5，
+  这时，我就将这个i加锁，其他的客户端，线程，无法访问到这个i，因为这时
+  这个i是瞬态的，已挥发的，不稳定的，所以不让其他线程读取，更加不让修改，
+  这个是悲观锁。
+
+  乐观锁：
+  我读取到i的值为5，但是依然能让其他线程访问，有读权限，但是在我修改i为6的时候，
+  我发现i的值被改变了，被其他线程改变了，这时我的修改操作就要失败，然后进行重试。
+  这个就是乐观锁。

@@ -1,0 +1,59 @@
+* ftp知识汇总
+** ftp服务器搭建
+   服务器我用的是linode的vps，装的是Centos6.8版本的。
+*** 安装
+    sudo yum install ftp
+    sudo yum install vsftpd
+*** 配置
+    sudo vi /etc/vsftpd/vsftpd.conf
+    #去掉匿名登录
+    anonymous_enable=NO
+    #打开本地登录
+    local_enable=YES
+    #限制本机用户权限范围
+    chroot_local_user=YES
+*** 重启
+    sudo service vsftpd restart
+    #配置chkconfig，保证vsftpd服务随vps启动
+    chkconfig vsftpd on
+
+*** 给ftp配置域名
+    在dnspod中添加一个A记录，纪录值指向vps的ip。
+    然后在浏览器中输入：ftp://ftp.域名
+    就能访问ftp服务器了。
+
+**  要解决几个问题
+    ftp服务器搭建完了，想要共享文件，但是要解决以下几个问题。
+*** 1.ftp安全性问题
+    可以通过iptables来设置防火墙，但是添加21端口的ftp被动模式就比较麻烦。
+    首先使用命令手动安装所需模块：
+    modprobe ip_conntrack_ftp
+    然后大概率会出现：
+    FATAL: Module ip_conntrack_ftp not found.
+
+    使用Google得到了这个答案：
+    [[http://forum.ramhost.us/bbs/viewtopic.php?id=250][(Iptables Passive FTP) FATAL: Module ip_conntrack_ftp not found.]]
+    大意是说vps中的kernel没有将这些编译进去，而且也不能手动加载。
+    所以只能通过让21端口拥有所有权限， 但还是不能使用被动模式。
+    重新配置后需要重启
+     service iptables save
+     service iptables restart
+*** 2.ftp用户权限问题
+    最好设置一个单独的只读用户，只能下载，不能进行上传，修改，删除操作。
+    参考：[[https://www.eukhost.com/blog/webhosting/how-to-give-ftp-users-with-only-read-access-to-a-shared-directory/][How to give FTP Users with Only Read Access to a Shared Directory]]
+*** 3.linode流量限制问题
+    好像是有1TB的总流量，超了就要扣钱，linode控制台没有地方设置，但是可以通过
+    iptables的quota参数进行设置。
+
+** ftp客户端和工具推荐
+   1.xftp
+   2.FileZilla
+   3.WinSCP
+   xftp是和那个xshll一起的，界面简洁美观，一般开发够用。
+   如果经常要部署多个系统推荐第三个。
+** java ftp 例子
+
+*** java实现ftp
+   可以参看apache.commons.net依赖包下的ftp实现。
+** 参考资料和扩展阅读
+   [[https://unix.stackexchange.com/questions/83221/how-to-create-a-ftp-user-with-specific-dir-access-only-on-a-centos-linux-ins][How to create a FTP user with specific /dir/ access only on a Centos / linux installation]]

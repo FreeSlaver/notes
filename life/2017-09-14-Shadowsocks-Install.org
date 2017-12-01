@@ -27,11 +27,12 @@
 
 ** 命令
 *** 启动：
-    sudo ssserver -p 9002 -k sx198942 -m aes-256-cfb -d start
+    sudo ssserver -p 9001 -k sx198942 -m aes-256-cfb -d start
 *** 停止：
     sudo ssserver -d stop
 *** 查看日志
     sudo cat /var/log/shadowsocks.log
+    tail -n 100 /var/log/shadowsocks.log
 
 ** Shaowsocks总结
 启动前设置参数：ulimit -n 51200

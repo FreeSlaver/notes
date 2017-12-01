@@ -1,4 +1,13 @@
-* Font Awesome
-我在这个地方想显示一下内容
+* Font Awesome笔记
 
-Home/category/subcategory/title
+** 怎么用
+   1.使用CDN
+   在head中添加：
+   <script src="https://use.fontawesome.com/5484573b21.js"></script>
+
+   2.先下载，将font-awesome拷贝到项目里面去
+   在head中添加：
+   <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+
+** 怎么找到对应的图标
+

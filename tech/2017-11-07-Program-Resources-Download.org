@@ -1,0 +1,31 @@
+* 编程资源下载
+  下面是我平时学习编程时搜集到的一些资源，现在提供在此，以飨大家。
+  也避免大家在寻找这些pdf和下载过程中浪费时间。
+
+  可以使用FTP或者SFTP登陆，下载，但是要注意的FTP不要使用被动模式。
+  因为使用的Linode的vps，kernel中缺少ip_conntrack_ftp模块，装不上去。
+
+  账户：ftp-guest
+  密码：本站域名
+** 操作系统
+   Computer.Systems：A.Programmer's.Perspective深入理解计算机系统 第2版.pdf
+
+** 大数据
+   Google_Paper_Bigtable.pdf
+   Google_Paper_Google_File_System.pdf
+   Google_Paper_MapReduce.pdf
+   （Google三篇大数据相关的论文，强烈建议多读几遍。）
+   Large-scale cluster management at Google with Bor.pdf
+   Paper_Distributed_SQL_Database_That_Scales.pdf
+   Paper_LSMTree.pdf
+   The Design, Implementation, and Deployment of a System to Transparently Compress Hundreds of Petabytes of Image Files for a File-Storage Service.pdf
+
+** 前端
+*** javascript
+*** css
+    CSS权威指南CSS Mastery-Advanced Web Standards Solutions.pdf
+    CSS禅意花园.pdf
+** 计算机网络
+   计算机网络(谢希仁第五版).pdf
+   HTTP权威指南英文版HTTP The Definitive Guide.pdf
+   图解HTTP.pdf
