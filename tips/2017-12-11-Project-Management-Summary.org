@@ -1,0 +1,35 @@
+* Project Management
+
+  temporary ,defined beginning and end in time,defined scope and resources
+  a specific set of operations designed to accomplish a singular goal
+
+  Project management, then, is the application of knowledge, skills, tools, and techniques to project activities to meet the project requirements.
+
+  Project management processes fall into five groups:
+  1.Initiating
+  2.Planning
+  3.Executing
+  4.Monitoring and Controlling
+  5.Closing
+
+
+  Project management knowledge draws on ten areas:
+Integration
+Scope
+Time
+Cost
+Quality
+Procurement
+Human resources
+Communications
+Risk management
+Stakeholder management
+
+
+*Focus* management.
+
+goals:
+contraints: scope, time, quality and budget.
+
+If the project management objectives are ill-defined or too tightly prescribed it will have a detrimental effect on decision making.
+clear definition,tight prescribed

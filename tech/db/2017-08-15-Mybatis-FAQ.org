@@ -8,3 +8,4 @@
 
    BoundSql boundSql = ms.getBoundSql(parameters); // pass parameters for the SQL statement
    System.out.println("SQL" + boundSql.getSql());
+**

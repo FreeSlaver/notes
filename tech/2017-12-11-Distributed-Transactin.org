@@ -1,0 +1,12 @@
+* Distributed Transaction
+  JTA support Distributed Transaction
+
+  The application
+  The application server
+  The transaction manager
+  The resource adapter
+  The resource manager
+
+  The resource manager in our discussion is a relational database management system (RDBMS), such as Oracle or SQL Server.
+
+  The resource adapter is the component that is the communications channel, or request translator, between the "outside world,"this is a JDBC driver.

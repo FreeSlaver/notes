@@ -1,0 +1,99 @@
+* Design Pattern
+  This is a note taking from learning Design Pattern.More details just visit: [[https://github.com/iluwatar/java-design-patterns][Design patterns implemented in Java]].
+** Principles
+*** KISS xxx
+**** Excerpt
+     most systems work best if they are kept simple
+     simple,stupid,small,silly,short,straightforward
+     Simplicity is the ultimate sophistication
+     Less is More
+     Brevity is the soul of wit
+     无为
+
+     Sometimes developers might feel tempted to write “clever” solutions that use all these complex features.
+     The KISS principle states that a solution is better when it uses less inheritance, less polymorphism, fewer classes, etc.
+
+     easier to maintain. This includes increased readability, understandability, and changeability.
+
+     One reason to create more complex code is to make it more flexible to accommodate further requirements.
+     A common problem among software engineers and developers today is that they tend to over complicate problems.
+     or over enginnering.
+
+     Many great problem solvers were not great coders, but yet they produced great code!
+
+     weekday2 has less statements and less execution branches.
+      weekdays1 uses less language features
+**** my explanation:
+     only if you keep things simple enough,it's essence self-evident.
+     the others are bothering and disturbering,
+
+     simple,so we can understand.
+     short,so our little brain can observe all in scope and look in overall view angel.
+     staighforward,so we can solve the problem and finish the function directly.
+
+     stupid,I think it means anyone can understand it and fix it .so it can't be wrong.
+     also means the solution seems 'stupid',boring etc.
+
+https://people.apache.org/~fhanik/kiss.html
+*** YAGNI
+    you aren't gonna need it: don't implement something until it is necessary.
+*** Do The Simplest Thing That Could Possibly Work
+*** Separation of Concerns
+
+
+** Patterns
+*** Adapter
+*** Data Access Object(DAO) xxx
+    It is an object that provides an interface to some type of persistence mechanism.
+    mapping application calls  to the persistence layer without exposing details.
+
+*** Data Mapper
+    DM is a layer separete in-memorey objects to database.
+    using for decouple data objects from DB access layer
+    or you need multiple data retrieval/persistence implementations.
+
+    we dont' know anything,but get data from mapper,then mapper will
+    persisit data or retrieval data from database,file,etc.
+
+*** Data Transfer Object(DTO)
+    one request to transfer many attributes,avoid other requests.
+*** Value Object(VO)
+    equas not base on reference but same value.
+    should be immutable
+    using for measure equality base on values.
+
+*** Callback
+*** Property ?
+    using for objects with dynamic set of fields and prototype inheritance
+    not using class but a hashMap contains all the propreties and values.
+    Then get properties value from the object's hashmap not from get method directy.
+    This pattern is used for add properties in run time and don't change the class defination.
+
+    general-purpose persistence strategy.
+    modeling problems.
+
+
+*** Balking
+    used to prevent an object from executing certain code if it is an incomplete or inappropriate state
+    you want to invoke an action on an object only when it is in a particular state
+
+    judge if it's in an inappropriate state,if so, do nothing,else change state and doing.
+    persistent status,keeping for a time.
+
+*** Double Checked Locking
+    before real locking, send a locking hint testing the criterion is meet.
+    designed to support lazy initialization
+    synchronized method 100 times slower
+
+*** Delegation
+    Also means Proxy Pattern.
+    Thinking about buying the ticket,CTrip delegate 12306 and other plantforms.
+*** Factory Method 工厂方法
+*** Facade 门面模式
+    比如你现在感到不舒服，需要去看病，你只需要走去街上的医院，打开大门就行。
+    至于剩下的其他复杂操作，系统就交给医生，可能要测量，可能要打针，甚至还可能动手术，
+    但是你只需要知道不舒服，去医院就行了。
+*** Execute Around
+    使用这个方式，当有成对的操作出现，比如打开关闭连接，文件等。
+    简单说，就是将实现了特定操作接口的类传递进来，然后由另外的类来执行打开，关闭。
+*** Event Aggregator

@@ -8,9 +8,32 @@
   包管理，类似maven？
 
   sass compiler
+** Intro FINISH
+   include:
+   file:Starter-Template.org
+   use global box-sizing
+   override it:
+   .selector-for-some-widget {
+       box-sizing: content-box;
+   }
+
+   learn slack and IRC free time
 ** 下载安装
   使用npm安装
   npm install bootstrap@4.0.0-beta
   需要一个package.json
 
 ** 图片
+** 草稿
+*** 重写bootstrap css样式最佳实践方法
+    根据选择器的重量来重写，比如添加一个class之类的。
+    1. 新建一个css文件，在bootstrap css后引用
+    2. 在class中添加自己的class，
+
+    100 points for IDs
+    10 points for classes and pseudo-classes
+    1 point for tag selectors and pseudo-elements
+
+**** 参考资料和扩展阅读
+     [[https://stackoverflow.com/questions/20721248/best-way-to-override-bootstrap-css][best way to override bootstrap css]]
+     [[https://teamtreehouse.com/community/best-practices-to-customise-bootstrap-3-vanilla-css][Best practices to customise Bootstrap 3]]

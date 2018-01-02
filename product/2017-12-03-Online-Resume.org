@@ -1,0 +1,152 @@
+* 免费在线简历
+** 草稿
+   在线简历，其实就是信息，然后和模板一起拼接成为一个html文件，
+   然后用Chrome打印时，就能保存为pdf。
+** Github project Support
+*** github resume
+   https://github.com/resume/resume.github.com
+   使用Github信息生成简历。
+   它是怎么实现的了？我估计是根据用户名，然后到个人主页，然后获取到所有相关信息，
+   然后结合模板生成的。这个的参考性不大。
+*** markdown 简历
+    https://github.com/geekcompany/DeerResume
+
+*** Cli json resume
+    https://github.com/jsonresume/resume-cli
+    这个是采用json数据格式，
+*** Latex Awesone-cv
+    https://github.com/posquit0/Awesome-CV
+    这个应该是基于Latex标记语言实现的（类似markdown），暂时不考虑这个。
+    简历模板都在这里：https://www.sharelatex.com/templates/cv-or-resume
+    除了简历模板还有很多其他模板，https://www.sharelatex.com/templates
+*** CV Vue Less
+
+    https://www.sharelatex.com/templates
+** 已有的商业化网站
+   乔布简历
+   http://cv.qiaobutang.com/
+   OfficePLUS.cn
+   http://office.msn.com.cn/
+   知了网
+   http://www.jianli9.com/
+   优简历
+   http://www.ujianli.com/
+   萌鹿简历
+   http://www.deercv.com/
+   简历在线
+   http://www.ijianli.com/
+   简历本
+   http://jianliben.sinaapp.com/
+   StriveCV
+   OfficePLUS，微软Office官方在线模板网站！
+   http://www.officeplus.cn/Template/Home.shtml
+   简历计划
+   http://www.jianlipro.com
+
+*** 脚步网
+    word模板
+    http://www.jiaobu365.com/
+*** 知页
+    https://www.zhiyeapp.com/
+*** cvmaker
+    https://cvmkr.com/?lang=zh
+    妈的，半天登录，注册不了。
+*** 五百丁
+    http://www.500d.me/editresume/
+
+
+*** 2篇综合性介绍简历的网站
+    http://www.trancircle.com/archives/1449
+    http://www.jianshu.com/p/38fabfe1e7cc
+
+** 设想
+    我也来做一个这个东西，但是切入点不一样，直接导入word，pdf，markdown，html等格式
+    然后选择模板，合成，完毕，每次收取1块钱。
+
+    如果有不对的，要修改的，可以直接上面修改，然后下载的格式也支持很多。
+
+    另外还有微信等支持，云端同步等。
+
+    不要急着编码，先想清楚整个怎么做？比较竞争对手的优劣等。
+    还有一个问题，如果对方山寨你，怎么搞？
+
+    在线简历制作这么多，你为什么认为能脱颖而出？？？
+
+    先做出功能，然后搞UI。
+
+    一分钟，3步，
+
+HWPF是word97~2007，poi-scratchpad-XXX.jar
+XWPF是.docx后缀的，新版word2007，poi-ooxml-XXX.jar
+
+org.apache.poi.hwpf.model 包下是内部的数据结构
+org.apache.poi.hwpf.usermodel  用户使用此包下的公共API。
+ org.apache.poi.hwpf.extractor tree是公共API的包装方便于榨取文字等。
+org.apache.poi.hwpf.converter包含word到html，fo的转换。可以用Apache FOP转PDF.
+
+HWPF 的入口是HWPFDocument，XWPF是XWPFDocument
+
+word解析的数据源不太可靠，使用form表单提交。
+提交之后和html的template一合成，合成之后转pdf，word，markdown等。
+
+
+可以做，不需要搞那么麻烦。
+
+现在要做的是，先有一个JSON字符串，也就是对象，分为那几个部分，
+然后将这个json注入到html模板中就行了。
+
+这里搞几个对象？？
+
+** 推广
+   去招聘现场招聘，顺便推广为草。
+
+** 项目规划
+   1. 拼接json数据，后续要做的是通过form表单来提交
+   2. 准备好html模板，将取值公式都放进去
+   3. 写java测试用例程序，生成html文件，并转为pdf，word等。
+
+   4. 来完成第一步未完成的form表单（注意点是怎么填写了的保存好）
+   5. 添加各种其他样式模板
+
+   不对，这里应该是先推广？
+   6. 添加注册，或者微信支付等东西。
+
+
+   但是他妈比的，每次都要根据模板，将那个取值的表达式重新搞进去？？？
+   蛋疼的很，
+*** 立马要干的
+    1. 先将这个数据都填充好
+    2. 将页面的那个样式搞好。
+
+    3. 将表单做好，form形成复杂的json文件
+    一个个的来，首先将简历填充成好的json，这次要搞对，搞完全。
+
+    OK，差不多了，现在要搞的是做一个form表单，提交数据。
+
+    利用这段空闲时间打基础吧。
+
+
+
+*** TODO 2017-12-05 学习bootstrap表单，并完成简历表单填写
+    今天要完成这个
+*** TODO 2017-12-06 还要添加js，比如添加多个教育信息等
+    反正就是当练习的，明天完成这个
+    获取所有的#edu_form的子div元素，然后去除掉最下面的button。
+    搞错了，应该是先去掉这个button，然后在添加全部的。
+
+
+*** TODO 2017-12-07 前后端结合一起，搞。
+
+草，做这么点东西都要很多时间和精力啊。
+没有font怎么解决了？
+
+这里其实不需要每个地方都弹出保存成功，
+对，这个应该是后面加个按钮，添加技能，每次点击完后，就变成了减号，
+但是当前正在编辑的怎么删除了？
+
+问题1：添加加减技能的东西
+但是这个要考虑2中情况，一种是像添加教育，项目经验的，是大个模块的，
+有的是添加一行的，比如技能名称的，或者统一处理，对。
+问题2：
+
+*** TODO 给这个加上markdown的编辑功能，针对项目经验

@@ -1,0 +1,52 @@
+* Mybatis 总结
+  SqlSessionFactory
+  SqlSessionFactoryBuilder can build a SqlSessionFactory instance from an XML configuration file, or from a custom prepared instance of the Configuration class.
+  utility class, called Resources,
+
+  XML config contains TransactionManager for determining how transactions should be scoped and controlled
+
+  Notice the XML header, required to validate the XML document.
+
+  The mappers element contains a list of mappers – the XML files and/or annotated Java interface classes that contain the SQL code and mapping definitions.
+
+SqlSession contains absolutely every method needed to execute SQL commands against the database
+*** Scope and Lifecycle
+    SqlSessionFactoryBuilder只是用来创建SqlSessionFactory的，因此用完就能丢弃，只用一次，
+    所以它的最好的Scope作用域是本地方法。
+
+     There should be little or no reason to ever dispose of it or recreate SqlSessionFactory
+     the best scope of SqlSessionFactory is application scope，The simplest is to use a Singleton pattern or Static Singleton pattern.
+     没有任何原因需要重建SqlSessionFactory，它的作用域是应用级别，使用单例或者静态单例模式来创建。
+
+     每个线程都应该有个SqlSession的实例，因为它不是安全的。
+     所以最好的作用域是请求（request）或者方法。
+*** 学习方法
+     OK，代码跑通了，然后开始debug，看看具体的几个类，以及它们相关的实现。
+** Mapper XML Files
+   cache – Configuration of the cache for a given namespace.
+   resultMap	A named reference to an external resultMap. Result maps are the most powerful feature of MyBatis, and with a good understanding of them, many difficult mapping cases can be solved. Use resultMap OR resultType, not both.
+*** Result Maps
+
+** Dynamic SQL
+
+** Cache
+   By default, just local sessión caching is enabled that is used solely to cache data for the duration of a sessión.
+   global second level of caching need to add this to SQL Mapping file:
+   <cache/>
+
+
+SqlSession            作为MyBatis工作的主要顶层API，表示和数据库交互的会话，完成必要数据库增删改查功能
+Executor              MyBatis执行器，是MyBatis 调度的核心，负责SQL语句的生成和查询缓存的维护
+StatementHandler   封装了JDBC Statement操作，负责对JDBC statement 的操作，如设置参数、将Statement结果集转换成List集合。
+ParameterHandler   负责对用户传递的参数转换成JDBC Statement 所需要的参数，
+ResultSetHandler    负责将JDBC返回的ResultSet结果集对象转换成List类型的集合；
+TypeHandler          负责java数据类型和jdbc数据类型之间的映射和转换
+MappedStatement   MappedStatement维护了一条<select|update|delete|insert>节点的封装，
+SqlSource            负责根据用户传递的parameterObject，动态地生成SQL语句，将信息封装到BoundSql对象中，并返回
+BoundSql             表示动态生成的SQL语句以及相应的参数信息
+Configuration        MyBatis所有的配置信息都维持在Configuration对象之中。
+
+**** TODO finish mybatis in forenoon
+     1. 要实践FIFO，LRU等
+     2. 在最小代码中debug cache的功能
+     3. 了解相关代码的具体实现。

@@ -1,0 +1,27 @@
+* Code Snippets
+** java 8
+*** Optional
+    if (resultSet.next()) {
+        return Optional.of(createCustomer(resultSet));
+      } else {
+        return Optional.empty();
+      }
+*** Stream
+    StreamSupport.stream(new Spliterators.AbstractSpliterator<Customer>(Long.MAX_VALUE,
+          Spliterator.ORDERED) {
+
+        @Override
+        public boolean tryAdvance(Consumer<? super Customer> action) {
+          try {
+            if (!resultSet.next()) {
+              return false;
+            }
+            action.accept(createCustomer(resultSet));
+            return true;
+          } catch (SQLException e) {
+            throw new RuntimeException(e);
+          }
+        }
+      }, false).onClose(() -> mutedClose(connection));
+*** Lambda Example
+    Callback c = () -> LOGGER.info("I'm done now.");

@@ -1,0 +1,5 @@
+* Mybatis Cache
+
+
+** 参考
+   [[http://blog.csdn.net/m0_37949270/article/details/78200440][MyBatis的二级缓存的设计原理，属于转载，内容很详细，值得学习]]

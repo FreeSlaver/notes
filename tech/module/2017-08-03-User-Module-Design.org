@@ -1,4 +1,3 @@
 * 用户模块设计
 
 ** 参考
-   [[http://wpceo.com/user-database-table-design/][浅谈数据库用户表结构设计]]

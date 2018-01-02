@@ -5,8 +5,13 @@
    使用RVM(Ruby Version Manager)来安装
    curl -L get.rvm.io | bash -s stable
 
-** 安装java环境
-   先手动下载rpm包，然后
-    sudo yum localinstall jdk-8u102-linux-x64.rpm
+** 安装JDK8环境
+   先手动下载rpm包，切忌是linux-x64.rpm的，然后
+   sudo yum localinstall jdk-8u102-linux-x64.rpm
+   vi .bash_profile
 
-    vi .bash_profile
+** 安装mysql
+   sudo yum install mysql-server
+   sudo /sbin/chkconfig --levels 235 mysqld on
+   sudo service mysqld start
+   然后在mysql的工具中，先建立SSH通道，然后通过此SSH通道再连接mysql

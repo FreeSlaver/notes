@@ -1,1 +1,0 @@
-* 在CentOS6.8上安装Ruby Jekyll

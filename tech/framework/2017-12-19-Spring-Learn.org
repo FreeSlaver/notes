@@ -1,0 +1,52 @@
+* 如何学习Spring
+  Spring整个项目太大了，不知从何学起，所以需要思考，spring最重要的几个机制，特性，
+  比如IOC，AOP，注解等。
+
+  然后网上搜索别人是如何学习Spring的，这个就是借助了外部系统，别人的学习经验。
+  这样就让自己更好的学习Spring了。
+
+  Basics
+  Section1，2，4，5
+
+  DB Functionality
+  11，12，13
+
+  Spring MVC
+  16
+** Overview
+   The term "Spring" means different things in different contexts
+
+   When you learn about a framework, it’s important to know not only what it does but what principles it follows
+
+** Core
+*** IOC最重要的
+     Often each individual XML configuration file represents a logical layer or module in your architecture.
+     一个逻辑层或者单个模块，用一个文件。
+
+     不要将配置文件通过绝对路径的方式解耦出去，相当于是程序的边界扩大了，会更进不稳定。
+     可以考虑使用${..}来配置。
+
+     可以将外部生成的bean注入到容器中
+     OutsideObj obj;
+     ApplicationContext ac;
+     DefaultListableBeanFactory bf = ac.getBeanFactory();
+     bf.registerSingleton(obj);
+
+     但运行时的注册有可能造成一些并发问题？
+
+     上层的应用对下层的服务有依赖，但是代码已经写成，如果底层的服务需要改变，
+     这样造成代码结构的改变和巨大的维护工作量，所以面向接口的编程，到时候有服务的改变。
+
+     Notice that our application class is just using the service. It does not initialize the service that leads to better “separation of concerns“. Also use of service interface allows us to easily test the application by mocking the MessageService and bind the services at runtime rather than compile time.
+
+*** AOP
+AspectJ最成熟的实现
+
+
+** Data Access
+
+** Web Servlet
+*** Spring MVC
+
+** Reference
+   https://www.quora.com/How-do-I-learn-Spring-Framework

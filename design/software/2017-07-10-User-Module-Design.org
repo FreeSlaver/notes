@@ -1,4 +1,6 @@
 * 用户模块设计
+** 草稿
+   user,groups,roles,permissions
 ** 概述
    首先想想用户模块这个东西是干嘛的？
    主要就是，如何描述一个用户？
@@ -27,3 +29,22 @@
    事物：用户，问题：
    1.如何来定义一个用户？一个人，他有哪些属性，哪些功能（这个又离不开他在此系统内的作用，集合等。）
    2.用户和用户之间是什么关系？如何来管理用户？
+
+
+   S = Subject = A person or automated agent
+   R = Role = Job function or title which defines an authority level
+   P = Permissions = An approval of a mode of access to a resource
+   SE = Session = A mapping involving S, R and/or P
+   SA = Subject Assignment
+   PA = Permission Assignment
+   RH = Partially ordered Role Hierarchy. RH can also be written: ≥ (The notation: x ≥ y means that x inherits the permissions of y.)
+   A subject can have multiple roles.
+   A role can have multiple subjects.
+   A role can have many permissions.
+   A permission can be assigned to many roles.
+   An operation can be assigned many permissions.
+   A permission can be assigned to many operations.
+** 参考
+   [[http://wpceo.com/user-database-table-design/][浅谈数据库用户表结构设计]]
+
+   unix user manage

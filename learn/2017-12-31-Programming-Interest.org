@@ -1,0 +1,78 @@
+* 编程兴趣的培养
+  工作是扼杀兴趣的主要凶手。
+
+  我意识到，我想做的工作是那种具有挑战性的，创新性的，采用最新技术的工作。
+  它必须包含有创造性和技术性，能让我如饥似渴。当我把它们展示给家人和朋友，
+  能赢来“酷！”的一声赞赏，而不是面无表情和一声“哦!”。
+
+  兴趣来源于快感。
+  当你从事自己真正感兴趣的活动，通常会体验到不一样的快感——这快感就是你的动力
+趣与爱好导致的快感，大致可以分为两类：“过程性的快感”和“结果性的快感”。
+　　这两种快感的差别在于：“过程性的快感”持久但是强度不高；“结果性的快感”只在短暂时间段发生，但是强度很高。
+　　举例：
+　　就拿俺的老本行来说事儿。当俺在写程序的时候，（不管是在公司里写还是在业余时间写）总是乐在其中。也就是说，单单是“写代码的过程”就可以让俺觉得快乐——这是“过程性的快感”；当连续几个月，终于完成了某个软件，这时候体验到的是“结果性的快感”。
+　　“过程性的快感”虽然强度不高，但也很重要——这类快感使得你可以持久地从事感兴趣的活动，即便在你尚未获得成果的阶段
+喜悦感和成就感.
+
+要让一个没有心思研究编程的人静下心来学习这门需要大量时间和精力才能入门的学科
+除非是后来发掘了兴趣，不然没几个“不幸”的人可以在计算机行业立足
+
+要想入门快，我们当然离不开一些这方面的成功案例，多看多读一些编程方面的牛人牛事。培养基础感情。
+有驱动才是你深入的基础。我们一直在学编程却一直没入门多数原因还是一点原动力即动机，
+
+写代码一定是为了一个特定的目的。这个目的可以是刷面试题，做一个有趣的应用，或者完成课程作业等
+我对编程产生浓厚兴趣，这是好几个因素综合作用的结果
+
+*我依旧记得当时做展示时台下一片惊叹的表情。这是大学时期为数不多的一个巅峰体验。
+收获了巨大的肯定，我意识到自己在这方面还是很有潜力的，于是打算继续搞下去。*
+
+在那近两年无聊的时光里，我就靠 coursera 和 edX 刷掉了 22 门课程。一张张证书不断激励着我开新的课程，对编程的兴趣随着熟练度的提升也就愈发强烈。原本只是为了打发时光，到不料竟成了真爱。
+获得足够的激励，以便持续投入，不断提升水平
+无论是 C++ 还是 verilog 上机考试，我都是第一个交卷的，而且会比第二个人早半个小时。
+这种赤裸裸的炫耀和碾压给我带来了极大的成就感。
+直到今天都不断有人问我这个博客是怎么搭建起来的，每次被问的时候心中都是一阵窃喜：其实并不难的，但你们的无知成为了我装逼的资本。
+
+
+*最关键的一点是对编程不自信，而且认为自己是被迫（被生活所迫）*
+成就感和满足感。
+有个小男孩跟我说“老师，我第一次这么不喜欢下课”。
+这些，让作为主讲老师的我，产生了很大的成就感。
+自信
+
+Once you will become passionate, ideas will start coming on your mind.
+One day a great idea will come. Now you have a goal with vision.
+Start working on that. Remember work on small ideas also until you get
+your best idea. This will increase your ability to think, knowledge, boost
+your confidence and you will end up in programs or apps
+which is useful to you and others.
+
+
+It’s fun to build things! Programming is rather like playing with Lego.
+But you’re building things not from physical objects but from your mind!
+The things you build are digital, and because they’re digital,
+they’re also infinitely malleable. You can shape – and reshape! – them any way you like.
+It’s really nice when things come together to form a useful product or tool.
+It provides a great sense of accomplishment and personal pride.
+Programming is empowering. You are like a digital god.
+
+Lots of people will simply tolerate problems without looking for a
+proactive way to solve them, particularly if tolerating the problem is easier.
+
+*I had worked contract work to avoid the soul-sucking desperation that comes with office work!*
+办公室工作吸收灵魂。
+
+I enjoy programming. Don’t get me wrong. If I didn’t, I wouldn’t have gotten
+where I’ve gotten to if I didn’t enjoy it. But it’s not my passion.
+Programming is my hobby. It’s a hobby that pays really damned well and
+that treats me well and enables me to do what I want to do
+that I’m actually “passionate” about.
+
+
+*People shouldn’t resort to doing work with something they’re passionate about.*
+You shouldn’t convert your passion into work because work will suck the fun out of it
+
+搞懂不熟悉的代码是一件艰难甚至令人恐惧的事情，很多人都不敢尝试就放弃了。
+A passion in something suggests a want for some kind of grandeur,
+a want to progress further and get better.
+To get some kind of self-satisfaction from your efforts.
+A hobby is something you do in your time off for relaxation or just as something “to do”.

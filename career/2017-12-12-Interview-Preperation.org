@@ -1,0 +1,41 @@
+#+STARTUP: overview
+#+TAGS: PROJECT(p) INTERVIEW(i) JOB(j) JAVA
+#+STARTUP: hidestars
+
+* Preparation for Interview                                                     :PROJECT:INTERVIEW:
+
+** Why?
+- the hive box company is too remote.
+- over work heavily
+- it's very crisp to be a fresh guy from a been acquired company
+- the position and working content not fit
+- salary will raise if i apply a new job
+- the project work is dirty and i can't learn anything.no career advacement.
+
+oh that's really helpful,it makes the thing's necessity more clarity.
+
+** Outcome
+   What will this project look like when it is done?
+- enter a new company and meet new guys
+- a more profitable salary
+- litter over work and i have free time to do my things
+- the disgusting feelings will be fuck away,shit
+
+** Brainstorming Ideas
+
+***
+
+** Who?
+   Me
+** What?
+*** Knowledge
+*** Resume and Delivery
+*** Interview
+*** Salary negotiate
+*** Know the company and product
+** When?
+   deadline:2018-1-15 33days 8*15+3*18=174hours
+** Where?
+   Shenzhen Nanshan,Baoan,Futian
+** How
+   DEADLINE: <2018-01-15 >

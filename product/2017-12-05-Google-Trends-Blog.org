@@ -1,0 +1,24 @@
+* Google趋势抓取并翻译文章后发布
+
+    对啊，先用Google trend得到全球最热的文章，
+    然后用程序抓取出来，再用Google翻译，翻译成中文，发布成博文不就完了？
+
+    我不会写，但是我会抄啊。
+
+    首先获取google trends最热的东西，然后找到对应的url，去页面抓取文章，
+    之后将文章内容搞出来，然后翻译成为中文，发布。
+*** Google trends
+    javascript
+    https://github.com/pat310/google-trends-api
+    python
+    https://github.com/GeneralMills/pytrends
+
+    java版本
+    https://github.com/elibus/j-google-trends-api
+
+*** Google translate
+    国人的
+    https://github.com/yixianle/google-translate
+    国人的java版
+    https://github.com/lsj9383/translate-set
+    妈的，这一个就够了

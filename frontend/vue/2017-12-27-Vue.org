@@ -1,0 +1,107 @@
+* Vue
+** example
+  <div id="app">
+  {{ message }}
+</div>
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    message: 'Hello Vue!'
+  }
+  })
+
+  通过el属性来绑定html元素，然后通过data属性来传递数据，
+  通过类似jekyll的liquid模板语言来取值。
+  *必须注意的是曾js块必须放在取值元素之后，如果放在之前，el中的#app无法知道是那个元素。*
+
+  不过也是，js一般都是放在后面的。
+
+  v-bind:title="message"
+  绑定title属性，是个directive?（指令，编程式指向）
+  Here, it is basically saying “keep this element’s title attribute up-to-date with the message property on the Vue instance.”
+** component
+    build large-scale applications composed of small, self-contained, and often reusable components.
+** Vue Instance
+   A Vue application consists of a root Vue instance created with new Vue
+
+   var data = {a:1};
+   var vm = new Vue({
+       data: data
+   });
+   //直接这样取值
+   console.info(vm.a);
+   //赋值
+   vm.a = 2;
+   会影响到data，因为Vue传值的方式是传递引用。
+
+   自身的属性使用$前缀取值
+   比如
+   vm.$data就是取的自身属性。
+*** Instance Lifecycle
+series of initialization steps
+it needs to set up data observation, compile the template, mount the instance to the DOM, and update the DOM when data changes.
+
+生命周期hooks有created,mounted,update,destroyed，都是function。
+这些东西都称作为options property，同时不要使用箭头函数。
+箭头函数bound到parent context，but hooks are bind to this context.
+** Template Syntax
+   Under the hood, Vue compiles the templates into Virtual DOM render functions.
+
+   <p>Using v-html directive: <span v-html="rawHtml"></span></p>
+   用这种方式输出html。
+   data bindings are ignored.
+
+   <button v-bind:disabled="isButtonDisabled">Button</button>
+   只有指定了true，才会disable，null，underfined，false都不会把disabled属性包含进来。
+
+*** Modifiers
+    <form v-on:submit.prevent="onSubmit"> ... </form>
+    表示监听submit时间，但是调用了event.preventDefault()。
+*** Shorthands
+    v-bind
+    <a v-bind:href="url"> ... </a>
+    <a :href="url"> ... </a>
+
+    v-on
+    <a v-on:click="doSomething"> ... </a>
+    <a @click="doSomething"> ... </a>
+** Computed Properties and Watchers
+   for any complex logic
+
+    However, the difference is that computed properties are cached based on their dependencies.
+*** Computed vs Watched Property
+    observe and react to data changes on a Vue instance: watch properties.
+
+    use watcher when you want to perform asynchronous or expensive operations in response to changing data.
+** Event Handling
+
+
+** Internals
+
+*** Reactivity in Depth
+    Every component instance has a corresponding watcher instance, which records
+    any properties “touched” during the component’s render as dependencies.
+    Later on when a dependency’s setter is triggered, it notifies the watcher,
+    which in turn causes the component to re-render.
+
+    Vue不能对动态添加的属性保证React，但是可以通过Vue.set(object, key, value)实现。
+    也可以用this.$set(this.someObject, 'b', 2)
+
+    Sometimes you may want to assign a number of properties to an existing object, for example using Object.assign() or _.extend()
+
+** Component
+   全局
+   Vue.component('my-component', {
+       template: '<div>A custom component!</div>'
+   })
+
+   局部
+   var Child = {
+       template: '<div>A custom component!</div>'
+    }
+    new Vue({
+        components: {
+            'my-component': Child
+        }
+    })

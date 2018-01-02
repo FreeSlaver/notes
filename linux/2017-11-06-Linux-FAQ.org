@@ -13,3 +13,6 @@
     语法：chown [option] owner objects
     chown alice
     多使用man，习惯性使用man。
+** Time
+*** Set Time
+    date +%Y%m%d -s "20120418"

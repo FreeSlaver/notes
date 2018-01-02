@@ -45,3 +45,26 @@
 
 
 *原则：在没有好好完成一件事情之后，不要开始另外一项工作*
+遇到不懂的，马上问，马上搞清楚。
+实在无法弄清楚的，询问他人，让别人教你。
+
+可能是我这辈子学习效率最高的时光, 接触了一大堆以前都没怎么听过的概念, TDD, Continuous integration, Pair, Scrum, Refactor, Deployment... 这里面任何一个单独的概念都足以写好几本书, 并够我研究上好一整子. 但可惜的是没有这么多时间让我先看完所有相关的书, 再开始干活, 于是边干边学成了我唯一选择. 先知道一些粗浅的概念, 然后开始干, 通过 Tim 的反馈再结合自己遇到的问题, 然后针对性的看书和 google 资料.
+
+*不要期望看完了书再开始做事, 边学边干才是高效的学习方式 我越来越觉得这是唯一的学习方式了. :p*
+
+, 好的工程师不是只会"追求极致", 而是懂得如何在 "质量" 和 "成本" 上 make a right trade-off.
+
+想尽一切办法和更优秀的人一起工作，即使你可能只能当凤尾。(蒜泥也好，清炒也罢)
+
+找到你的社区，加入他们，参加他们的活动。同一个社区的人总是有某种程度的相似性，你很容易认识那些和你有 common sense 的人。相信我这些人将在你未来的职业生涯里起到举足轻重的作用。
+Learning out of context is more difficult than learning with relatable context.
+
+https://www.reddit.com/r/learnprogramming/comments/5zc24o/the_best_way_to_learn_how_to_code/
+很多事情根本不需要提问，你自己就能动用大脑思考出来。
+   现在的人们太蠢，被Google，知乎这种东西给惯坏了。
+because we realized that in order to build something we need to quit thinking about it, and actually do it.
+调试代码，看代码，写代码，是最好的学习方式，和写作是一样的。
+
+在学习的过程中学会学习，反思自身学习的过程。
+
+多学习，理解基础的东西。

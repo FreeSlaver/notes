@@ -1,2 +1,104 @@
-* 找工作
-  先试试找远程工作，不行再按之前的找。
+* Hunting a Job
+** Goals
+*** Vision Picuture
+
+*** Job Constraints
+- above 400K/Y and five insurance and one fund normal percentage
+- position: architecture,at least senior above
+- no over work
+** 规划
+   将找工作整体作为一个项目进行规划：
+   1.首先过滤出符合要求的招聘岗位
+   2.之后看岗位的招聘要求共性的东西，列出来
+   3.制定时间安排来完成复习，学习来掌握这些东西
+   4.估计，验证制定安排的有效性（这可能需要在完成1，2个安排之后，通过反馈来判断）
+   5.当完成所有复习之后，开始准备面试
+   6.面试需要准备什么了？1.简历，2,穿着礼仪3面试策略，注意；4谈薪资；5。上班
+
+   在这整个项目的进展过程中，肯定会遇到问题，此时，我们就需要停下来，
+   问自己问题，追究到问题所在，
+   然后再来考虑如何解决这个问题。
+
+** Draft
+   了解NIO,AIO,BIO工作原理
+   熟悉MySQL, Oracle分库分表原则和设计,熟悉MyCat等数据库中间件.
+   熟悉分布式技术（包括存储、缓存、消息系统等）优先
+   精通Java EE相关的主流开源框架，能了解到它的原理和机制
+
+   jvm本来我TM还想看书的，但是一看，都TM是浪费时间。
+   *动手*
+   直接从open jdk官网开始看起。然后找个jvm相关知识点查质料，动手，学习。
+   JB看书一章章，简直浪费生命。
+
+   What you are asked in an interview depends on variables such as:
+   How much experience you have
+   What your technical background is
+   What positions you are interviewing for
+   Which companies you are interviewing with
+   Luck
+** Some Jobs
+   这个鸟外企可以看看，试试
+   https://www.lagou.com/jobs/3920299.html
+   商汤科技的
+   https://www.lagou.com/jobs/3438719.html
+
+   VIVO
+   中间件架构师**
+   https://www.lagou.com/jobs/3682604.html
+   互联网java软件工程师
+   https://www.lagou.com/jobs/3916809.html
+   招商证券
+   JAVA开发工程师
+   https://www.lagou.com/jobs/3270127.html
+   广发证券
+   https://www.lagou.com/jobs/3316232.html
+
+   搞quant的
+   https://www.lagou.com/jobs/3771111.html
+   https://www.lagou.com/jobs/3818372.html
+   蚂蚁金服
+   https://www.lagou.com/jobs/3905266.html
+
+** review plan
+*** design-pattern
+    102 patterns in 10days?i can't plan,because i don't do it before. so i need practice one tomorrow.
+
+*** jvm
+**** GC
+**** class load
+*** database and mysql
+**** database read the book
+**** mysql read offical document
+*** network
+**** http
+**** udp
+**** rpc
+**** protocol and protocol design
+
+*** memory management
+*** frameworks
+**** mybatis 1D 2017.12.13
+     1. what is orm
+     2. mybatis vs others
+     3. mybatis most ask question stackoverflow
+     4.
+
+*** spring
+**** AOP
+**** IOC
+**** spring cloud
+**** spring boot
+*** concurrent
+*** kafka
+*** zipkin 1D
+*** micro-service 1D
+     熟悉微服务架构，熟悉dubbo的使用和实现原理，熟悉服务治理的思想，熟悉dubbo服务治理的方式和实现
+*** cache
+*** distributing and cluster
+**** distributing lock and transaction
+**** cluster communication,failover,high avalibility,leader election
+     redis cluster,kafka cluster,zookeeper cluster
+     communication,failover,high avalibity,election,
+**** redis cluster 1D
+     https://redis.io/topics/cluster-tutorial
+     https://redis.io/topics/cluster-spec
