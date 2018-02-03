@@ -1,0 +1,46 @@
+* MySQL Optimize
+
+OPTIMIZE TABLE reorganizes the physical storage of table data and associated index data, to reduce storage space and improve I/O efficiency when accessing the table. The exact changes made to each table depend on the storage engine used by that table.
+
+Table does not support optimize, doing recreate + analyze instead
+
+Optimization involves configuring, tuning, and measuring performance,
+applications that perform frequent updates often have many tables with few columns, while applications that analyze large amounts of data often have few tables with many columns.
+
+** Database Level
+1. table structured properly;right column data type;right columns;
+2. right indexes for queries
+3. approriate storage engine.
+4. row format,such as compression
+5. locking stategy,relating to InnoDB storate engine
+
+** Hardware Level
+1. Disk seeks
+2. Disk read and write
+3. CPU cycles,big table overseed Memory size,need more CPU cycles
+4. Memory bandwidth,if cpu cache not enugh
+
+Indexes are especially important for queries that reference different tables, using features such as joins and foreign keys.
+
+WHERE evaluation to filter rows as soon as possible.
+
+the small table read first,such as empty table or table with few row,
+or table using WHERE on PK,or UNIQUE index
+
+minimize their space on the disk.  reducing the amount of data written to and read from disk.
+Use the most efficient (smallest) data types possible.
+Declare columns to be NOT NULL if possible. It makes SQL operations faster, by enabling better use of indexes and eliminating overhead for testing whether each value is NULL. You also save some storage space, one bit per column. If you really need NULL values in your tables, use them. Just avoid the default setting that allows NULL values in every column.
+
+The primary index of a table should be as short as possible.
+
+create a single composite index on them rather than a separate index for each column. The first part of the index should be the column most used. If you always use many columns when selecting from the table, the first column in the index should be the one with the most duplicates,
+If it is very likely that a long string column has a unique prefix on the first number of characters, it is better to index only this prefix,
+
+If a table contains string columns such as name and address, but many queries do not retrieve those columns, consider splitting the string columns into a separate table and using join queries with a foreign key when necessary. When MySQL retrieves any value from a row, it reads a data block containing all the columns of that row (and possibly other adjacent rows). Keeping each row small, with only the most frequently used columns, allows more rows to fit in each data block. Such compact tables reduce disk I/O and memory usage for common queries.
+
+SELECT col1, col2 FROM table1 PROCEDURE ANALYSE(10, 2000);
+get optimization for fields.
+
+Internal Temporary Table:
+UNION,views,subqueries,different columns in ORDER BY and GROUP BY,
+DISTINCT with ORDER BY,

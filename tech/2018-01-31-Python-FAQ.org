@@ -1,0 +1,31 @@
+* Python FAQ
+** Install
+   https://www.digitalocean.com/community/tutorials/how-to-set-up-python-2-7-6-and-3-3-3-on-centos-6-4
+
+   yum -y update
+   yum groupinstall -y 'development tools'
+   yum install -y zlib-dev openssl-devel sqlite-devel bzip2-devel
+   wget http://www.python.org/ftp/python/2.7.6/Python-2.7.6.tar.xz
+   yum install xz-libs
+   xz -d Python-2.7.6.tar.xz
+   tar -xvf Python-2.7.6.tar
+   cd Python-2.7.6
+   ./configure --prefix=/usr/local
+   make
+   make altinstall
+
+   使用时，需要带上全路径
+   /usr/local/bin/python2.7 --version
+*** setuptool
+    wget --no-check-certificate https://pypi.python.org/packages/source/s/setuptools/setuptools-1.4.2.tar.gz
+*** 安装pip
+    curl  https://bootstrap.pypa.io/get-pip.py |python2.7 -
+*** 3.x
+    wget http://www.python.org/ftp/python/3.3.3/Python-3.3.3.tar.xz
+    ./configure
+    make && make altinstall
+
+*** 2.7
+
+** Windows下安装python和pip
+https://www.cnblogs.com/yuanzm/p/4089856.html

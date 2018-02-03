@@ -1,0 +1,21 @@
+* TDD Test Driven Development
+To write a test, the developer must clearly understand the feature's specification and requirements. The developer can accomplish this through use cases and user stories to cover the requirements and exception conditions,
+
+ Object, class, module, variable and method names should clearly represent their current purpose and use, as extra functionality is added.
+
+It helps ensure that the application is written for testability, as the developers must consider how to test the application from the outset rather than adding it later.
+It also ensures that tests for every feature get written.tests first leads to a deeper and earlier understanding of the product requirements,
+Receiving the expected test results at each stage reinforces the developer's mental model of the code, boosts confidence and increases productivity.
+
+Reduced debugging effort – When test failures are detected, having smaller units aids in tracking down errors.
+Self-documenting tests – Small test cases are easier to read and to understand.[8]
+
+A commonly applied structure for test cases has (1) setup, (2) execution, (3) validation, and (4) cleanup.
+they only rarely felt the need to invoke a debugger.
+
+*By focusing on the test cases first, one must imagine how the functionality is used by clients.So, the programmer is concerned with the interface before the implementation.*
+
+It’s a good practice to name test methods in a way that it is easy to understand what is being tested
+I prefer a variation of BDD with When [ACTION] Then [VERIFICATION].
+
+不要使用具体数字，不要使用自己的大脑，最好让程序替你计算，这样语义化能保证，并且更容易重构

@@ -1,6 +1,211 @@
 * 2018年
   每周回顾，每月回顾
+ 采取与目标意图相反的执行意图。它采取的是如果。。。那么。。。，比如：
+ 如果我晚上8点回到宿舍，我就立即打开Github敲代码，并提交。
+ 包括时间因素，地点因素，可操作的具体事情。
+ 然后获得期望的正反馈。
 ** 2018年1月 算法和数据结构
+*** 2018年1月1日
+    公司整理简历，搞问题
+*** 2018年1月2日
+**** DONE 整理简历
+     CLOSED: [2018-01-02 周1 10:00]
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2018-01-03 周三 14:00]
+     :END:
+*** 2018年1月3日
+**** DONE 学习了解JUnit
+     CLOSED: [2018-01-03 周三 14:01]
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2018-01-03 周三 14:01]
+     :END:
+**** DONE 售后列表和添加编辑营业点修改
+*** 2018年1月4日
+**** DONE 学习spring的事务管理
+     CLOSED: [2018-01-04 周四 16:53]
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2018-01-04 周四 16:53]
+     :END:
+     直接看源码中的那个org.springframework.transaction.TransactionDefinition
+     和测试用例用到的org.springframework.transaction.annotation.Transactional
+     PlatformTransactionManager,AnnotationTransactionAttributeSource,RuleBasedTransactionAttribute,Propagation
+     ,DefaultTransactionAttribute
+
+     主要学习掌握了事务传播级别和隔离级别。
+**** DONE 了解mysql的数据类型
+     CLOSED: [2018-01-04 周四 10:42]
+     :LOGBOOK:
+     了解了numberic和String
+     - State "DONE"       from "TODO"       [2018-01-04 周四 10:42]
+     :END:
+
+**** DONE 掌握mysql的alert语法，添加，修改字段
+**** DONE 售后列表状态字段修改
+*** 2018年1月5日
+**** DONE 学习了解TDD Test Driven Development
+     CLOSED: [2018-01-05 周五 18:38]
+     :LOGBOOK:
+     - State "DONE"       from "NEXT"       [2018-01-05 周五 18:38]
+     :END:
+
+*** 2018年1月6日
+    来公司加班，整理简历，但是状态不好，干活不多
+*** 2018年1月7日
+    在家休息，思考后续职业选择，策略，找工作是最好的选择
+*** 2018年1月8日
+**** DONE 修改简历，先改终端故障自探测的这个
+     CLOSED: [2018-01-08 周一 16:30]
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2018-01-08 周一 16:30]
+     :END:
+
+**** DONE 修改简历，再改maxwell sink
+     CLOSED: [2018-01-09 周二 16:56]
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2018-01-09 周二 16:56]
+     :END:
+
+**** TODO 整理maxwell-sink，moja项目
+     主要是看项目整体结构，分成那几块，然后改进一下。
+     之后要搞得，就是目前的常用框架flume等的区别，要自己搭建flume，使用起来，体会优缺点。
+*** 2018年1月9日
+**** DONE mysql optimization
+     CLOSED: [2018-01-09 周二 14:43]
+     :LOGBOOK:
+     - State "DONE"       from "NEXT"       [2018-01-09 周二 14:43]
+       还差蛮多需要干的
+     :END:
+现在最重要的是搞简历，晚上投出去。
+
+*** 2018年1月10日
+现在最重要的就是准备技术面试，技术当中最重要的就是
+**** NEXT 学习了解下dubbo
+
+**** TODO 完成简历格式修改
+**** NEXT mysql alert,create syntax
+**** DONE 学习了Unicode
+**** DONE 学习了two's-complement 二级制补码
+*** 2018年1月11日
+**** DONE 学习ES的安装，文档的CRUD
+     CLOSED: [2018-01-12 周五 10:09]
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2018-01-12 周五 10:09]
+     :END:
+**** DONE 学习JVM的一章和二章
+     CLOSED: [2018-01-12 周五 10:09]
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2018-01-12 周五 10:09]
+     :END:
+*** 2018年1月12日
+**** TODO
+*** 2018年1月13日
+    上午看了汉书，下午睡觉，晚上打守望屁股
+*** 2018年1月14日
+    来公司加班，看知乎上赚钱相关的东西，投递简历
+*** 2018年1月15日
+**** TODO 看了100 startup一点点
+**** DONE 短信需求
+*** 2018年1月16日
+**** CANCELLED 需要将这个SOJOB的项目规划一下
+     CLOSED: [2018-01-17 周三 10:02]
+     :LOGBOOK:
+     - State "CANCELLED"  from "TODO"       [2018-01-17 周三 10:02] \\
+       无法很好的规划资源，只能当做主要任务，来了就干。
+     :END:
+**** CANCELLED 了解下webmagic这个项目
+     CLOSED: [2018-01-16 周二 10:46]
+     :LOGBOOK:
+     - State "CANCELLED"  from "TODO"       [2018-01-16 周二 10:46] \\
+       垃圾项目，没撒必要的，应该后续是在craw4j上做扩展。
+     :END:
+**** DONE 完成微信和短信的工作任务
+     CLOSED: [2018-01-16 周二 20:01]
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2018-01-17 周三 10:01]
+     :END:
+*** 2018年1月17日
+**** CANCELLED 复习简历上的东西，准备下午电话面试
+     CLOSED: [2018-01-18 周四 09:59]
+     :LOGBOOK:
+     - State "CANCELLED"  from "NEXT"       [2018-01-18 周四 09:59] \\
+       傻逼，要是打我电话就叼一顿，不去了。
+     :END:
+     妈个逼，一群傻逼
+***** protobuf，thri?，avro
+*****
+**** TODO 继续搞那个SOJOB
+*** 2018年1月18日
+
+*** 2018年1月19日
+
+*** 2018年1月20日
+    在家上午看书，下午睡觉，晚上打游戏
+*** 2018年1月21日
+    在家上午发呆，中午就开始打游戏达到晚上，晚上直接睡觉，浪费了大半天时间
+*** 2018年1月22日
+    忘记干撒了，反正也是看看这看看那，改改BUG，一天就过了
+*** 2018年1月23日
+    在公司，看看这，看看那，金庸小说，神雕侠侣啊，漫画啊等。
+    就是看了一天太累了，晚上加他麻痹班，看漫画。
+    进击的巨人真是一部好漫画，原始，蛮荒，看来我还是太弱。
+*** 2018年1月24日
+*** 2018年1月25日
+**** DONE 学习了Anki的基本用法
+     CLOSED: [2018-01-26 周五 09:46]
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2018-01-26 周五 09:46]
+     :END:
+**** DONE 完成了ArrayQueue的数据结构
+     CLOSED: [2018-01-26 周五 09:46]
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2018-01-26 周五 09:46]
+     :END:
+*** 2018年1月26日
+**** DONE 写程序将有道的导入到Anki中
+     CLOSED: [2018-01-26 18:00]
+     :LOGBOOK:
+     - State "DONE"       from "NEXT"       [2018-01-29 周一 09:53]
+     :END:
+**** NEXT 完成Anki的学习，全部过一遍
+**** TODO 学习算法和数据结中的图
+**** TODO 找到解决打坐伤膝盖的方法
+**** TODO 不管怎么样，我要迅速脱离这种傻逼浪费生命的加班
+*** 2018年1月27日
+**** DONE 上午去医院看老爸，下午吃饭完去图书馆看书，晚上看电视剧《大时代》
+*** 2018年1月28日
+**** DONE 在图书馆看书，晚上看电视剧《大时代》，真是一部非常好的电视剧
+*** 2018年1月29日
+*** 2018年1月30日
+    公司看了一天的《我的期货经历》和《神雕侠侣》
+*** 2018年1月31日
+**** DONE 将AnkiTool搞上去
+     CLOSED: [2018-01-31 周三 10:40]
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2018-01-31 周三 10:40]
+     :END:
+**** TODO 开始搞stock master这个项目
+*** 2018年1月 回顾
+    一个月又过去了，一年
+** 2018年2月
+*** 2018年2月1日
+**** DONE 看完了《女trader的自白》，《我的期货经历》，《K线里面有杀气》
+**** 看了
+*** 2018年2月2日
+**** DONE 简历整理一下，发winfer
+     CLOSED: [2018-02-02 周五 10:29]
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2018-02-02 周五 10:29]
+     :END:
+**** TODO 学习python，将easy-trade和tushare集合起来做交易
+**** DONE 深圳出入境，办理香港
+     CLOSED: [2018-02-02 周五 17:21]
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2018-02-02 周五 17:21]
+     :END:
+*** 2018年2月3日
+**** TODO 一步一个脚印，先将之前的没完成的东西完成了。
+**** TODO 看完CSAPP，还有那个lisp的教程
+**** TODO 学习JS等，搞开源项目
 ** 2018年2月 软件工程
    软件工程用读《人月神话》，做笔记的方式完成
    2月只有15天，过年10天。
@@ -13,27 +218,4 @@
 
 看我如何吊打面试官
 
-* 2018年1月
-** 2018年1月第一周
-*** 2018年1月1号
-**** TODO 看art of unix 09:30~11:00
-      helloworld
-**** DONE 完成标签系统 11:00~12:00
-      CLOSED: [2017-07-25 周二 20:00]
-      :LOGBOOK:
-      - State "DONE"       from "PROJECT"    [2017-07-25 周二 20:00]
-      - State "PROJECT"    from "DONE"       [2017-07-25 周二 20:00]
-      - State "DONE"       from "PROJECT"    [2017-07-25 周二 20:00]
-      - State "PROJECT"    from "DONE"       [2017-07-25 周二 20:00]
-      - State "DONE"       from "PROJECT"    [2017-07-25 周二 20:00]
-      - State "PROJECT"    from "DONE"       [2017-07-25 周二 20:00]
-      :END:
-**** DONE 学习org mode 13:10~14:10
-*** 2018年1月2号
-** 2018年1月第一周 回顾
-   这一周做了什么事情，有哪些不错，哪些做的不好，有什么可以改进。
-* 2018年1月 回顾
-  这个月做了什么，
-* 2018年7月
-
-**** TODO
+** 2018年7月

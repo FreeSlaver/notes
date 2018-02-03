@@ -122,6 +122,21 @@ popular页面在script中还有这个：
 我R，这个就是要去的url页面，然后就能在单张图片的页面得到drscdn的图片地址了。
 
 
+** 爬虫翻墙
+   使用shadowsocks，然后代理设置为本地就行了
 
+** 抓取图片，音频等
+   要设置这个，因为它们是二进制文件
+    config.setIncludeBinaryContentInCrawling(true);
+    还要了解下Apache的TIKA
+
+*** 抓取tofo.me
+    首先直接网页请求得到的是600*600左右的图片，
+    然后页面会发送更多的单独请求，请求图片，都是高清的大图。
+
+
+    我现在搞得这个，对付的就是这个网站的建设程序员，他是我的竞争对手，
+    如果我比他强，就能抓取到页面中想要的信息，然后sold out。
+    还是要先将技术练好啊。
 ** 参考
    http://blog.csdn.net/historyasamirror/article/details/7061059

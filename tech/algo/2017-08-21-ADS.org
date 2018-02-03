@@ -1,11 +1,12 @@
-算法与数据结构
+* ADS算法与数据结构
   参考的这个网站:：[[http://btechsmartclass.com/DS/U1_T1.html][Data Structure]] 。
 
   为什么一定要做笔记了？？？？？
-
-* UNIT1
+** 学习建议
+   学完一个，写测试用例，然后看JDK里面的实现，比较下优劣
+** UNIT1
 ** Introduction to Algorithm
-
+** UNIT2
 *** SingleLinkedList
     妈的，最基础的东西都没掌握好。
 

@@ -16,3 +16,9 @@
 ** Time
 *** Set Time
     date +%Y%m%d -s "20120418"
+** 多媒体处理
+*** 图片
+    查看图片大小：
+    先装ImageMagick
+    sudo yum install ImageMagick
+    之后用identity

@@ -1,0 +1,97 @@
+* Anki Flashcard
+** 草稿
+   用来记东西的，可以web和IOS，
+
+   好像支持蛮多的文件类型
+** 概念
+   主动召回测试：就是自己主动给自己出题目，然后看自己是否能够回答，
+   这增加了学习的机会，并增加了测验的平率。
+
+   间隔重复，不断敬意
+   48小时忘记75%的内容。
+
+   间隔效应
+   和在一个时间段集中进行多次学习相比，如果在时间的推移过程中我们有过分散的复习，那么会更有效地记住事情。
+
+   它不能给你一个你应该再次复习的确切日期,也不能很好地应对不同难度的学习材料。
+
+   用最少的努力去学习东西或者记住东西
+   每个牌组可以有不同的设置，如 每天展示多少新卡片，或等多长时间卡片再次出现。
+
+   树状层级结构，以::分割，
+   default是默认牌组，牌组最好用来放置较大门类的卡片
+   法语：Bonjour
+   中文：你好
+   页码：12
+   Anki 中这些相关的信息称为笔记,每条信息称为字段
+*** 卡片类型模板
+    问：Boujour
+    答：你好
+    页码：12
+    需要这样设置模板：
+    问：{{法语}}
+    答：{{英语}}<br>
+    页码：{{页码}}
+
+    这样一条笔记就能生成一个对应的卡片了。
+
+    诸如语言和科学等学科能简单地理解为 记忆事实，实际上它们需要解释和上下文来学习。
+
+    如果你是一名语言学习者，你可能倾向于下载一个长的词表 和它们的翻译。但是，这样学习一门语言就像是 利用记忆科学公式来学习天体物理学。为了更好地学习， 你需要课本、教师，或置身于真实语境中。
+    *不要学习你不理解的东西。*
+    --SuperMemo
+
+    他们从学习材料中挑选感兴趣的要点 并把它们放到Anki。因为他们已经理解了材料，所以他们一般不会在卡片 中添加背景信息或解释。因此，当其他人下载他们的记忆库并且尝试 使用时，会感觉学习起来很困难，因为没有背景信息和 解释。
+    标签是 附在笔记上的标签，使得管理或查找笔记更简单。你可以 不加标签，或是加一个或多个标签， 标签用空格隔开
+
+    当你发现你需要在正面或背面包含多于 一条的信息时，更好的方式是将这些信息切分到更多的区域中。
+*** 添加笔记类型
+    “添加”是指在来自Anki的base上创建一个新类型 。
+    “克隆”意味着将新创建的类型设置在已收集的集合上。
+
+    Instead of creating lots of little decks, it’s a better idea to use tags and/or fields to classify your content.
+*** search
+    book:'my book' page:63
+
+This allows you to review your content mixed together in a single deck most of the time (for optimum memory), but also create temporary decks when you need to focus on particular material,
+it should be in a normal deck, and if you only occasionally need to be able to study it separately (for a test, when under a backlog, etc), tags/fields and filtered decks are better.
+
+尽量用tags和field，结合搜索search来使用，
+Due is the count of waiting reviews and cards currently in learning
+When you click on a deck, it will become the current deck,
+*** 看到study overview
+** Filtered Decks and Cramming
+*** Home Decks
+
+** FAQ
+   Thus if the card was scheduled for 5 days but you didn’t study for a month, the next interval will be closer to 60 days than 10 days.
+
+   Resetting the entire deck means you have to waste time studying material you already know.
+   they allow the person studying to demonstrate their ability to recognize the correct answer even if they can’t produce it themselves.
+** Reference
+https://apps.ankiweb.net/
+** Anki Connect
+   AnkiConnect can download audio files and embed them in newly created notes.
+   If you choose to include it, the url and filename fields must be also defined
+
+
+  需要保存这么写东西：
+  1. 短语
+  2. 柯林斯双解词典
+  3. 同义词
+  4. 同根词
+
+
+  怎么判断字符是中文
+
+  div.collinsMajorTrans
+
+  ul.ol collinsMajorTrans
+
+  exampleLists
+
+  删除之后是不能在添加的？bury和delete的区别
+  delete note是可以再次添加进去的；
+  bury是不行的
+
+  经常有时候会timeout，还有就是好像批量插入的时候结果会错误。

@@ -10,3 +10,6 @@
    可以用函数转int存起来，但是取出来怎么搞？
 ** 对字段加减天数
 DATE_ADD(tc.`update_time`,INTERVAL  3 DAY)
+** 添加字段
+
+** 修改字段

@@ -1,0 +1,10 @@
+* Dubbo Note
+** Draft
+dubbo is based around the idea of defining a service, specifying the methods that can be called remotely with their parameters and return types.
+
+Dubbo offers three key functionalities, which include interface based remote call, fault tolerance & load balancing, and automatic service registration & discovery.
+面试怎么搞？rpc，容错，负载均衡，服务注册和发现
+RPC是个什么鬼东西？
+dubbo的服务注册，发现和消费是怎么回事？
+dubbo的容错，负载均衡怎么实现的？
+** RPC

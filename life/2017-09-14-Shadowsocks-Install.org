@@ -27,7 +27,7 @@
 
 ** 命令
 *** 启动：
-    sudo ssserver -p 9001 -k sx198942 -m aes-256-cfb -d start
+    sudo ssserver -p 1024 -k sx198942 -m aes-256-cfb -d start
 *** 停止：
     sudo ssserver -d stop
 *** 查看日志

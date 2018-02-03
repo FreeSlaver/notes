@@ -1,0 +1,4 @@
+* Spring Transaction
+
+isolation level and timeout settings will not get applied unless
+ * an actual new transaction gets started.

@@ -1,0 +1,158 @@
+* Elastic Search
+** Getting Started
+  full-text search and analytics engine,store, search, and analyze big volumes of data,
+
+Logstash to collect, aggregate, and parse your data,
+*** Basic Concepts
+    join cluster by name
+ an index for customer data, another index for a product catalog,
+** Install
+wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.1.1.rpm
+sudo yum install elasticserach-6.1.1.rpm
+sudo chkconfig --add elasticsearch
+sudo -i service elasticsearch start
+sudo -i service elasticsearch stop
+
+/etc/init.d/elasticsearch start
+
+
+Boot auto start
+sudo chkconfig --add elasticsearch
+sudo /bin/systemctl daemon-reload
+sudo /bin/systemctl enable elasticsearch.service
+** Configure
+
+es config file path: /etc/elasticsearch/elasticsearch.yml
+RPM es system configuration: /etc/sysconfig/elasticsearch
+elasticsearch.yml for configuring Elasticsearch
+jvm.options for configuring Elasticsearch JVM settings
+log4j2.properties for configuring Elasticsearch logging
+** Document APIS
+*** Index add or update
+curl -XPUT 'localhost:9200/twitter/tweet/1?pretty' -H 'Content-Type: application/json' -d'
+{
+    "user" : "kimchy",
+    "post_date" : "2009-11-15T14:12:12",
+    "message" : "trying out Elasticsearch"
+}
+'
+
+version field used to control concurrent modify,only use the same version can be processed.
+*** Create
+curl -XPUT 'localhost:9200/twitter/tweet/1/_create?pretty' -H 'Content-Type: application/json' -d'
+{
+    "user" : "kimchy",
+    "post_date" : "2009-11-15T14:12:12",
+    "message" : "trying out Elasticsearch"
+}
+'
+or
+curl -XPUT 'localhost:9200/twitter/tweet/1?op_type=create&pretty' -H 'Content-Type: application/json' -d'
+{
+    "user" : "kimchy",
+    "post_date" : "2009-11-15T14:12:12",
+    "message" : "trying out Elasticsearch"
+}
+'
+
+By default, shard placement — or routing — is controlled by using a hash of the document’s id value
+curl -XPOST 'localhost:9200/twitter/tweet?routing=kimchy&pretty' -H 'Content-Type: application/json' -d'
+{
+    "user" : "kimchy",
+    "post_date" : "2009-11-15T14:12:12",
+    "message" : "trying out Elasticsearch"
+}
+'
+*explicit* by setting routing values,so routing using hash(kimchy)
+*** GET
+curl -XGET 'localhost:9200/twitter/tweet/1?pretty'
+
+check existence
+curl -XHEAD 'localhost:9200/twitter/tweet/0?pretty'
+
+If you only need one or two fields from the complete _source, you can use the _source_include & _source_exclude parameters to include or filter out that parts you need.
+curl -XGET 'localhost:9200/twitter/tweet/1?_source_include=*.id&_source_exclude=entities&pretty'
+*** Stored Fields
+    used to config stored this field or not,example:
+curl -XPUT 'localhost:9200/twitter?pretty' -H 'Content-Type: application/json' -d'
+{
+   "mappings": {
+      "tweet": {
+         "properties": {
+            "counter": {
+               "type": "integer",
+               "store": false
+            },
+            "tags": {
+               "type": "keyword",
+               "store": true
+            }
+         }
+      }
+   }
+}
+'
+**** how to set routing and retrieve by params
+curl -XPUT 'localhost:9200/twitter/tweet/2?routing=user1&pretty' -H 'Content-Type: application/json' -d'
+{
+    "counter" : 1,
+    "tags" : ["white"]
+}
+'
+curl -XGET 'localhost:9200/twitter/tweet/2?routing=user1&stored_fields=tags,counter&pretty'
+*** Get _source
+Use the /{index}/{type}/{id}/_source endpoint to get just the _source field of the document,
+*** Delete API
+curl -XDELETE 'localhost:9200/twitter/tweet/1?pretty'
+** Search APIs
+*** alternative  replica selection
+curl -XPUT 'localhost:9200/_cluster/settings?pretty' -H 'Content-Type: application/json' -d'
+{
+    "transient": {
+        "cluster.routing.use_adaptive_replica_selection": true
+    }
+}
+'
+*** Multiple Indices
+all for all indices). It also support wildcards, for example:
+test* or *test or te*t or *test*, and the ability to "exclude" (-), for example: test*,-test3.
+*** Examples
+search with index 'twitter' and paramas 'user=kimchy'
+curl -XGET 'localhost:9200/twitter/_search?q=user:kimchy&pretty'
+
+search within specific types 'user'
+curl -XGET 'localhost:9200/twitter/tweet,user/_search?q=user:kimchy&pretty'
+
+curl -XGET 'localhost:9200/_all/tweet/_search?q=tag:wow&pretty'
+_all means from all available indices
+
+curl -XGET 'localhost:9200/_search?q=tag:wow&pretty'
+
+be fewer larger shards.
+you can update the action.search.shard_count.limit cluster setting in order to reject search requests that hit too many shards.
+*** Search Template
+    fill paramas into template to search
+*** Search shards API
+The search shards api returns the indices and shards that a search request would be executed against
+** Concepts
+*** analysis
+Analysis is the process of converting full text to terms. These terms are what is actually stored in the index.analysis (both at index time and at search time)
+
+*** index
+An index is like a table in a relational database. It has a mapping which contains a type, which contains the fields in the index.
+ An index is a logical namespace which maps to one or more primary shards and can have zero or more replica shards.
+*** mapping
+A mapping is like a schema definition in a relational database. Each index has a mapping, which defines a type, plus a number of index-wide settings.
+A mapping can either be defined explicitly, or it will be generated automatically when a document is indexed.
+The mapping for each field has a field type (not to be confused with document type) which indicates the type of data that can be stored in that field,
+*** routing
+When you index a document, it is stored on a single primary shard. That shard is chosen by hashing the routing value. By default, the routing value is derived from the ID of the document or,
+if the document has a specified parent document, from the ID of the parent document (to ensure that child and parent documents are stored on the same shard).
+This value can be overridden by specifying a routing value at index time, or a routing field in the mapping.
+*** shard
+*A shard is a single Lucene instance.* It is a low-level “worker” unit which is managed automatically by Elasticsearch. An index is a logical namespace which points to primary and replica shards.
+Other than defining the number of primary and replica shards that an index should have, you never need to refer to shards directly. Instead, your code should deal only with an index.
+Elasticsearch distributes shards amongst all nodes in the cluster, and can move shards automatically from one node to another in the case of node failure, or the addition of new nodes.
+*** term
+A term is an exact value that is indexed in Elasticsearch. The terms foo, Foo, FOO are NOT equivalent.
+** Aggregations

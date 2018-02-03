@@ -1,0 +1,46 @@
+* JVM Specification Note
+** Chapter 1. Introduction
+*** 1.2. The Java Virtual Machine
+Like a real computing machine, it has an instruction set and manipulates various memory areas at run time.
+JVM only knows class.
+ Java Memory Model and Thread Specification
+** Chapter 2. The Structure of the Java Virtual Machine
+*** 2.2. Data Types  ***
+Like the Java programming language, the Java Virtual Machine operates on two kinds of types: primitive types and reference types.
+There are, correspondingly, two kinds of values that can be stored in variables, passed as arguments, returned by methods, and operated upon: primitive values and reference values.
+
+All type checking done by compiler before run time by JVM.
+ Values of primitive types need not be tagged or otherwise be inspectable to determine their types at run time, or to be distinguished from values of reference types.
+而是直接使用相应的JVM 指令直接操作并返回结果。
+An object is either a dynamically allocated class instance or an array.
+Values of type reference can be thought of as pointers to objects.
+引用的值应该不是对象本身，而是内存地址？
+Objects are always operated on, passed, and tested via values of type reference.
+对象的操作是通过引用的值。
+2.3. Primitive Types and Values
+primitive data types ：the boolean type (§2.3.4), and the returnAddress type
+two's-complement ，都是二进制补码。
+
+The values of the returnAddress type are pointers to the opcodes of Java Virtual Machine instructions
+*** 2.4. Reference Types and Values
+There are three kinds of reference types: class types, array types, and interface types.
+array type,component type,element type of the array type
+*** 2.5. Run-Time Data Areas
+JVM data areas and Thread data areas
+**** 2.5.1. The pc Register
+At any point, each Java Virtual Machine thread is executing the code of a single method,
+ If that method is not native, the pc register contains the address of the Java Virtual Machine instruction currently being executed.
+if is native it's undefined
+**** 2.5.2. Java Virtual Machine Stacks
+stack stores frames,only push and pop frames,doesn't need contiguous memory
+
+*If the computation in a thread requires a larger Java Virtual Machine stack than is permitted, the Java Virtual Machine throws a StackOverflowError.*
+*If Java Virtual Machine stacks can be dynamically expanded, and expansion is attempted but insufficient memory can be made available to effect the expansion, or if insufficient memory can be made available to create the initial Java Virtual Machine stack for a new thread, the Java Virtual Machine throws an OutOfMemoryError.*
+**** 2.5.3. Heap
+The memory for the heap does not need to be contiguous.
+*If a computation requires more heap than can be made available by the automatic storage management system, the Java Virtual Machine throws an OutOfMemoryError.*
+**** 2.5.4. Method Area
+The Java Virtual Machine has a method area that is shared among all Java Virtual Machine threads.
+Method Area stores per-class structures such as the run-time constant pool, field and method data, and the code for methods and constructors, including the special methods used in class and interface initialization and in instance initialization
+** C5
+** C4

@@ -1,0 +1,8 @@
+* Emacs Workflow
+** Ideas
+   take log of what he did,the results and why he did it.
+   logging who,what,why,when,where,how,result.
+   keep you remember what you did yesterday.
+
+   use functions to finish repetitive tasks.
+** Reference
