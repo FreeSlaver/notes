@@ -1,1 +1,4 @@
 * Web Service总结
+** What is
+   A web service is a function that can be accessed by other programs over the web (Http).
+   By programs not by Humans.

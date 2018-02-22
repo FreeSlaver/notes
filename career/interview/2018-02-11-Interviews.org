@@ -1,0 +1,35 @@
+* Interviews
+https://github.com/kdn251/interviews
+** Interview Plan 面试准备
+  当然首先是锁定行业，公司，职位，然后根据职位上的要求进行准备。
+
+  其次工作中用到的技能要有一定的深入程度。
+
+  再者，简历中写的，但工作中没用到的要非常熟悉，自我学习下。
+** 行业，公司，职位
+** 复习计划
+   先整体的全部复习一遍，也算作是学习，然后针对岗位要求，各个突破。
+
+
+** Github interviews Repo
+*** TODO Data Structures
+*** TODO 计算机网络
+*** TODO JVM
+** Plan
+   2月22日到2月23日
+*** TODO  2天搞定简历上的东西，列表如下：
+    1. Restful
+    2. ActiveMQ
+    3. 微服务架构
+    4. Netty
+    5. Redis
+    6. Zookeeper
+    7. Webservice
+    8. HTTP
+    9. Kafka Connect的加载机制
+
+*** TODO 2天搞完Kafka
+*** TODO 1天搞完Zipkin
+*** TODO 1天设计模式
+*** TODO Spring
+*** TODO 多线程，锁

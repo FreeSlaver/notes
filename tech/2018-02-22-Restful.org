@@ -1,0 +1,30 @@
+* Restful
+  Get,Put,Post,Delete
+  They use GET to retrieve a resource; PUT to change the state of or update a resource, which can be an object, file or block; POST to create that resource; and DELETE to remove it.
+  representational state transfer (REST) technology表述性状态转移
+  A RESTful API breaks down a transaction to create a series of small modules. Each module addresses a particular underlying part of the transaction.
+  The presumption is that all calls are stateless; nothing can be retained by the RESTful service between executions.
+  Because the calls are stateless, REST is useful in cloud applications
+
+  REST is the underlying architectural principle of the web.
+   URLs. However, today they have a much more generic and abstract definition that encompasses every thing or entity that can be identified, named, addressed, or handled, in any way whatsoever, on the web.
+   REST principles that were known as the "HTTP object model"
+
+   a core set of principles, properties, and constraints that are now called REST.
+   REST's client–server separation of concerns simplifies component implementation, reduces the complexity of connector semantics, improves the effectiveness of performance tuning,
+   and increases the scalability of pure server components. Layered system constraints allow intermediaries—proxies, gateways, and firewalls—
+   to be introduced at various points in the communication without changing the interfaces between components, thus allowing them to assist in communication translation or improve performance
+   via large-scale, shared caching. REST enables intermediate processing by constraining messages to be self-descriptive: interaction is stateless between requests, standard methods and media types
+   are used to indicate semantics and exchange information, and responses explicitly indicate cacheability.
+** REST constraints
+   Client-server architecture
+   Statelessness
+Cacheability
+Layered system
+Code on demand (optional)
+Uniform interface
+** REST vs SOAP
+REST accesses data while SOAP performs operations through a more standardized set of messaging patterns.
+Additionally, while it’s rarely needed, some use cases require greater transactional reliability than what can be achieved with HTTP (which limits REST in this capacity). If you need ACID-compliant transactions, SOAP is the way to go.
+In some cases, designing SOAP services can actually be less complex compared to REST. For web services that support complex operations, requiring content and context to be maintained, designing a SOAP service requires less coding in the application layer for transactions, security, trust, and other elements.
+SOAP is highly extensible through other protocols and technologies. In addition to WS-Security, SOAP supports WS-Addressing, WS-Coordination, WS-ReliableMessaging, and a host of other web services standards, a full list of which you can find on W3C.

@@ -12,4 +12,26 @@
 
 *** CircularLinkedList
 
+** UNIT3
+*** Tree
+**** Concepts
+
+     N Nodes with maximum of N-1 Edges.
+     Node:every individual element
+     Edges:connecting link between two nodes
+     Root:the first Node
+     Parent:
+     Child:
+     Siblings:
+     Leaf: A node has no child,also called External Nodes,Terminal Nodes.
+     Degree: total number of children of a node
+     Level:
+     Height:
+**** Binary Tree
+     delete:
+为毛要是最小的？
+替换以后依然要满足，比左子节点要打，比右边子节点要小。
+假设是右边最小，肯定满足比右边子节点要小。
+那么肯定比左节点大吗？
+
 ** Performance Analysis
