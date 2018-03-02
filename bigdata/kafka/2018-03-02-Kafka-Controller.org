@@ -1,0 +1,8 @@
+* Kafka Controller笔记
+  Kafka Controller是个比较容易遗忘的概念，但是又非常重要。
+  这篇笔记记录下相关的知识点，加深理解。
+** 草稿
+   可以通过修改log4j来看到详细的选举过程的日志
+   log4j.logger.kafka.controller.KafkaController=DEBUG, stdout
+
+   responsible for managing the states of partitions and replicas and for performing administrative tasks like reassigning partitions.

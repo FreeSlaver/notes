@@ -282,14 +282,124 @@
      :LOGBOOK:
      - State "DONE"       from "TODO"       [2018-02-22 周四 15:49]
      :END:
-**** TODO 微服务架构
 *** 2018年2月23日
-**** TODO 了解ActiveMQ，以及一个消息中间件有哪些部分组成
-**** TODO Netty笔试面试题
-**** TODO Redis会问哪些问题了？
+    工作多年，小有所成和我期望的差距太大了。
+    我还有那么的梦想，或者准确来说是“奢望”没有实现。
+    但是现在可以赶紧复习，然后离开这个鬼地方了。
+**** DONE 微服务架构
+     CLOSED: [2018-02-23 周五 14:14]
+     :LOGBOOK:
+     - State "DONE"       from "NEXT"       [2018-02-23 周五 14:14]
+     :END:
+**** DONE 了解ActiveMQ，以及一个消息中间件有哪些部分组成
+     CLOSED: [2018-02-23 周五 16:46]
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2018-02-23 周五 16:46]
+     :END:
+**** DONE Redis会问哪些问题了？
+     CLOSED: [2018-02-23 周五 16:30]
+     :LOGBOOK:
+     - State "DONE"       from "NEXT"       [2018-02-23 周五 16:30]
+     :END:
      很多东西并不是能Google出来的，你自己在学的过程中，就应该带问题去学习
-**** TODO Zookeeper
 *** 2018年2月24日
+方法论，学习方法，工作方法
+**** DONE Zookeeper 真TM蛋疼，官网写的文章一坨屎一样的
+     CLOSED: [2018-02-24 周六 17:27]
+     :LOGBOOK:
+     - State "DONE"       from "NEXT"       [2018-02-24 周六 17:27]
+     :END:
+**** CANCELLED Netty笔试面试题
+     CLOSED: [2018-02-24 周六 17:27]
+     :LOGBOOK:
+     - State "CANCELLED"  from "TODO"       [2018-02-24 周六 17:27] \\
+       不搞这个了，时间不够到时候问到就说很长时间没用，忘了。
+       全力搞好zipkin和kafka，然后jvm。
+     :END:
+**** DONE 分布式事务，两阶段提交
+     CLOSED: [2018-02-24 周六 14:36]
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2018-02-24 周六 14:36]
+     :END:      l
+*** 2018年2月25日
+    明天周末放假，去图书馆看深入JVM虚拟机并做笔记。
+    这是第二遍，一定要搞清楚都，
+**** DONE 看JVM这本书，并做笔记，搞了2章还差一点
+     CLOSED: [2018-02-26 周一 10:00]
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2018-02-26 周一 10:00]
+     :END:
+*** 2018年2月26日
+    今日任务就是搞定Zipkin并将博文搞上去，然后投简历
+**** CANCELLED 将简历投递出去
+     CLOSED: [2018-02-26 周一 13:41]
+     :LOGBOOK:
+     - State "CANCELLED"  from "TODO"       [2018-02-26 周一 13:41] \\
+       晚上回家去再投
+     :END:
+**** DONE Zipkin
+     CLOSED: [2018-02-27 周二 15:52]
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2018-02-27 周二 15:52]
+     :END:
+     将Google Paper再看一遍，将Zipkin的官网再看一遍。
+     写2篇教程或笔记。
+*** 2018年2月27日
+**** TODO 将面试可能会遇到的问题列表出来
+**** DONE 搜集学习方面的资料
+     CLOSED: [2018-02-27 周二 17:15]
+     :LOGBOOK:
+     - State "DONE"       from "NEXT"       [2018-02-27 周二 17:15]
+     :END:
+**** CANCELLED Kafka2天
+     CLOSED: [2018-02-27 周二 15:52]
+     :LOGBOOK:
+     - State "CANCELLED"  from "TODO"       [2018-02-27 周二 15:52] \\
+       看Paper去了，Kafka留到明后天。
+     :END:
+*** 2018年2月28日
+    先复习Kafka，然后半下午投递简历？
+**** DONE 改简历，投简历
+     CLOSED: [2018-03-01 周四 09:59]
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2018-03-01 周四 09:59]
+     :END:
+**** DONE Kafka1天
+     CLOSED: [2018-03-01 周四 09:59]
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2018-03-01 周四 09:59]
+     :END:
+*** 2018年3月1日
+    10:00~11:00 学习分布式系统定义等
+    11:00~11:50 Kafka复习
+
+    13:41~ Kafka
+**** DONE Kafka1天
+     CLOSED: [2018-03-01 周四 16:37]
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2018-03-01 周四 16:37]
+     :END:
+     这两天有一天面试，有一天将面试可能遇到的题目模拟一份出来。
+*** 2018年3月2日
+    周五了，妈的，还没人通知老子面试，傻逼。
+**** DONE redis persistent
+     CLOSED: [2018-03-02 周五 17:43]
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2018-03-02 周五 17:43]
+     :END:
+**** DONE 将Kafka复习完毕，然后stack overflow上刷分，完成自己提的问题
+     CLOSED: [2018-03-02 周五 17:43]
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2018-03-02 周五 17:43]
+     :END:
+     主要有Kafka Controller具体作用
+**** NEXT 学习SWOT，并做自我的SWOT，要认清缺点
+*** 2018年3月3日
+**** TODO 多线程，锁等
+*** 2018年3月4日
+**** TODO TCP,HTTP等
+**** TODO 改简历
+*** 2018年3月5日
 
 ** 2018年3月 找工作，15号之前搞定
    刷笔试，面试题，校验前段时间学习的内容

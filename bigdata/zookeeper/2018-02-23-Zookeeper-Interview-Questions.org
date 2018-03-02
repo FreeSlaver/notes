@@ -1,0 +1,25 @@
+* Zookeeper面试题
+** Zookeeper是如何选举的，fail over机制是怎么样的
+   1. 所有的节点在同一路径，如/app/leader_election/guid_下，创建顺序的，短暂的ZNode，
+   2. ZK会在后面添加10位的10进制数字，比如/app/leader_election/guid_0000000001,如/app/leader_election/guid_0000000002等
+   3. 等所有节点创建完毕后，相互通信，产生最小数字ZNode的节点就成为Leader，其他成为Follower
+   4. Follower会依次在比自己小的ZNode上设置Watch，如00000008会Watch00000007，00000007会Watch000006
+   5. 当Leader挂掉的时候，相应的ZNode会被删除，并且上步设置Watch的节点会得到通知，然后所有节点广播自己的Zxid，
+      确保自己的ZNode是最小的，如果是，就被选为新的Leader。
+** 如何用Zookeeper实现分布式锁
+   1. 首先，我们创建一个持久化的ZNode，叫做lock-node，对应到共享的资源
+   2. 访问的客户端以lock-node作为parent node并在下面创建顺序性，短暂的ZNode，叫做child node，并对lock-node设置watch
+   3. 客户端通过对lock-node调用getChildren方法来判断自己创建的ZNode是否是最小的，如果是，就认为自己持有锁
+      否的话，就对比刚好比自己大的ZNode设置Watch
+   4. 前面一个客户端资源访问完毕，删除锁，然后创建下一个较小的ZNode的客户端就能得到通知，
+      它会getChildren确认下，自己持有最小的ZNode，认为自己持有锁。
+
+   整个过程有点类似ZK的Leader选举过程。
+   [[file:http://img.3gods.com/2018-02-23-Zookeeper-Interview-Questions-1.png]]
+*** 一些问题
+    如何辨别是自己设置的child node了？可以通过ZK session id或者将此child node名称保存在本地。
+    上面如果都Watch这个lock-node，每个child都会得到通知，所以最好像ZK Leader选举那样，依次Watch自己前面的ZNode。
+    如果前面的ZNode挂了，下一个会得到通知，但不是释放锁的，所以就需要重新Watch这个挂了的ZNode前一个。
+** Zookeeper是如何配合其他应用起作用的，比如Dubbo，Kafka等
+** Zookeeper中Leader和Follower是如何通信的
+   是通过广播的方式。比如Leader挂了的时候，

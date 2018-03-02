@@ -1,0 +1,34 @@
+* Kafka面试题
+** 草稿
+   消息队列要满足哪些功能？
+   高吞吐量接受消息，消息投递语义ack，多topic，多订阅，持久化，
+   fail over，高可用，
+
+   ISR的定义没搞太清楚啊！
+** 集群如何通信，fail over机制是怎么样的
+** Kafka对比其他你使用过的MQ，有撒优缺点
+** Kafka选举是怎么搞的
+** Kafka和Zookeeper的关系是怎么样的，如何协同工作？Zookeeper充当什么角色
+** CG是如何协同工作，如果线程挂了，恢复是怎么个过程
+** Kafka什么情况下会丢消息，什么情况下会重复消费，如何解决？
+** Controller具体作用是什么
+** 回答问题
+   That's easy,and no need to write back to different topics.
+   You say 2 consumers,but not specific,2 consumer group or 2 consumer thread in 1 consume group?
+   i will talk it both.
+
+
+   If it is 2 consumer threads in 1 consumer group,you can set the message 'Key' field.
+   For example, 'a' prefix message with key field 'a','b' prefix message with key field 'b',
+   then Kafka will send the message to constant 'Partition' accroding to the key hash,
+   Then consumer thread A can subscribe the specified 'Topic-PartitionA'，thread B can subscribe
+   'Topic-PartitionB'.
+   You can visit 'assign' method in class 'org.apache.kafka.clients.consumer.KafkaConsumer'.
+
+   The tricks is set specific prefix to specific 'Partition'.
+   Use the message 'Key' filed,because Kafka send the same 'Key' message to same 'Partition' according to the key hash value.
+
+   If you really want filter,maybe you can use Kafka Connect plugin.
+
+      If it is 2 consumer group,just subscribe the topic and filter in the code.
+      If unsatisfactory,use the trick above.

@@ -30,8 +30,6 @@
    什么问题。这个也真是蛋疼。
    issue205 搞定了。
    issue357 没太搞明白是干嘛，好像是复活一个什么默认标签，区分local endpoint？
-  。
-   
 ** 待处理的pr
 
 ** 重要的pr issue
@@ -47,7 +45,6 @@
 
     issue292
 
-     issue273 好像是说添加runnable和callable到span中，针对某些情况运行一些特定代码
 ** 待处理的issues
    issue386 brave添加CDI支持，Contexts&Dependence Injection
    https://groups.google.com/forum/#!topic/microprofile/YxKba36lye4

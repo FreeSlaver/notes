@@ -1,0 +1,103 @@
+* Zookeeper总结
+** What
+ZooKeeper is a centralized service for maintaining configuration information, naming, providing distributed synchronization, and providing group services.
+You can use it off-the-shelf to implement consensus, group management, leader election, and presence protocols.
+
+分布式集群协调服务，解决竞态条件和死锁。
+** Overview
+*** Design Goals
+     ZooKeeper allows distributed processes to coordinate with each other through
+     a shared hierarchal namespace which is organized similarly to a standard file system
+
+     The name space consists of data registers - called znodes,similar to files and directories
+
+     Zookeeper service maintain an in-memory image of state, along with a transaction logs and snapshots in a persistent store.
+     ZooKeeper is ordered. ZooKeeper stamps each update with a number that reflects the order of all ZooKeeper transactions.
+     Subsequent operations can use the order to implement higher-level abstractions, such as synchronization primitives.
+*** Nodes
+     each node in a ZooKeeper namespace can have data associated with it as well as children.
+
+     Znodes maintain a stat structure that includes version numbers for data changes, ACL changes, and timestamps, to allow cache validations and coordinated updates
+     Each node has an Access Control List (ACL) that restricts who can do what.
+
+     ephemeral nodes.：session ends the znode is deleted。
+*** Conditinal updates and watchers
+    Clients can set a watch on a znodes. A watch will be triggered and removed when the znode changes.
+*** Guarantees
+    Sequential Consistency - Updates from a client will be applied in the order that they were sent.
+    Atomicity - Updates either succeed or fail. No partial results.
+    Single System Image - A client will see the same view of the service regardless of the server that it connects to.
+    Reliability - Once an update has been applied, it will persist from that time forward until a client overwrites the update.
+    Timeliness - The clients view of the system is guaranteed to be up-to-date within a certain time bound.
+*** Implementation
+    Read requests are serviced from the local replica of each server database.
+    读请求是从本地的服务器数据库副本中读。
+    When the leader receives a write request, it calculates what the state of the system is when the write is to be applied and transforms this into a transaction that captures this new state.
+** Zookeeper Internals
+   收和接都有序
+   Proposal:
+   a unit of agreement. Proposals are agreed upon by exchanging packets with a quorum of ZooKeeper servers.
+   Most proposals contain messages, however the NEW_LEADER proposal is an example of a proposal that does not correspond to a message.
+   ZooKeeper exposes the total ordering using a ZooKeeper transaction id (zxid)
+   All proposals will be stamped with a zxid when it is proposed and exactly reflects the total ordering.
+*** zxid
+    The zxid has two parts: the epoch and a counter. In our implementation the zxid is a 64-bit number. We use the high order 32-bits for the epoch and the low order 32-bits for the counter.
+    The epoch number represents a change in leadership. Each time a new leader comes into power it will have its own epoch number.
+    the leader simply increments the zxid to obtain a unique zxid for each proposal.
+*** Leader Activation
+    The leader has seen the highest zxid of all the followers.
+    A quorum of servers have committed to following the leader.
+** Zookeeper Recipes and Solutions
+   even though ZooKeeper uses asynchronous notifications, you can use it to build synchronous consistency primitives,
+   such as queues and locks. As you will see, this is possible because ZooKeeper imposes an overall order on updates.
+*** Barriers栅栏
+    当enter方法被调用时，成员被阻塞，直到所有的成员都调用了enter。
+    当leave方法被调用时，它也阻塞调用线程， 知道所有的成员都调用了leave。
+
+    下面不对：
+    就是一个分布式锁，设定一个节点N，客户端A先判断N是否存在，
+    是，设置一个watcher并进行等待；
+    否，客户端设置一个节点，并进行处理，处理完，删除节点N。
+    这时客户端B得到通知，然后进行处理。
+
+    为了防止客户端A获取锁后处理，应该会将节点N设置为朝生暮死的。
+*** Queue 用ZK实现分布式队列
+    首先创建一个znode对应持有这个queue
+    然后生产者客户端调用create()方法，在此znode的子目录下创建queue-的pathname（其实就是子节点），
+    就会产生有序的结果集。
+    最后消费者使用getChildren()方法并设置watch，然后开始消费znode下面的子节点，从小到大，
+    直到消费完成，再次调用getChildren()。
+*** Locks ZK实现分布式锁
+    1. 创建一个资源对应的lock node，比如_locknode_
+    2. 使用create()方法在lock node下创建子节点，如_locknode_/lock-，它是有序并临时的
+    3. 调用getChildren()方法，不要设置watcher
+    4. 如果自己创建的是最小的lock-X，那么就能进入访问资源
+    5. 另外的客户端调用exists()方法判断是否有锁，并设置watcher，以便得到通知
+
+you cannot have concurrent writes.
+
+The guarantee of linear writes is the reason for the fact that ZooKeeper does not perform well for write-dominant workloads.
+**  ZooKeeper Programmer's Guide
+***  The Zookeeper Data Model
+**** Znodes
+     The version number, together with the timestamp, allows ZooKeeper to validate the cache and to coordinate updates.
+     Each time a znode's data changes, the version number increases. For instance, whenever a client retrieves data, it also receives the version of the data.
+     And when a client performs an update or a delete, it must supply the version of the data of the znode it is changing.
+     If the version it supplies doesn't match the actual version of the data, the update will fail.
+     Each node has an Access Control List (ACL) that restricts who can do what(read and write).
+**** Concepts
+     Watches,Ephemeral Notes,Sequence Nodes,data version,Zxid,
+***** Zxid (重要)
+      Every change to the ZooKeeper state receives a stamp in the form of a zxid (ZooKeeper Transaction Id). This exposes the total ordering of all changes to ZooKeeper.
+      Each change will have a unique zxid and if zxid1 is smaller than zxid2 then zxid1 happened before zxid2.
+***** Version numbers
+      Every change to a node will cause an increase to one of the version numbers of that node. The three version numbers are version (number of changes to the data of a znode), cversion (number of changes to the children of a znode), and aversion (number of changes to the ACL of a znode).
+***** czxid
+      The zxid of the change that caused this znode to be created.
+      导致这个节点产生的ZXID。
+***** mzxid
+      The zxid of the change that last modified this znode.
+      最后一次改变这个节点的ZXID。
+***** pzxid
+      The zxid of the change that last modified children of this znode.
+      最后一次改变这个节点的子节点的ZXID。

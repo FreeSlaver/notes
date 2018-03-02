@@ -1,0 +1,7 @@
+* 客户端缓存一致性
+** 草稿
+   Write Propagation
+   Changes to the data in any cache must be propagated to other copies(of that cache line) in the peer caches.
+
+   Transaction Serialization
+   Reads/Writes to a single memory location must be seen by all processors in the same order.

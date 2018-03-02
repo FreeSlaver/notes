@@ -1,1 +1,8 @@
 * Microservice
+** Draft
+a particular way of designing software applications as suites of independently deployable services.
+common characteristics around organization around business capability, automated deployment, intelligence in the endpoints, and decentralized control of languages and data.
+把变化封装在当前的小范围服务内。
+
+
+** Reference

@@ -33,3 +33,4 @@ https://github.com/kdn251/interviews
 *** TODO 1天设计模式
 *** TODO Spring
 *** TODO 多线程，锁
+*** TODO 分布式事务，2阶段提交
