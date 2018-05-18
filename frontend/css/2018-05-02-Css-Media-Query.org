@@ -1,0 +1,51 @@
+* Css Media Query详解
+** 什么是Media Query
+   中文翻译：媒体查询。就是以@media规则开头的一段css代码，只有当条件满足时，才执行相应的CSS代码。
+
+   @media only screen and (max-width: 600px) {
+        body {
+            background-color: lightblue;
+        }
+    }
+    只有当是屏幕，并且最大宽度为600px（也即屏幕宽度小于等于600px）的时候，
+    将body的背景色变成淡蓝。
+
+    也就是说这个东西是为了特定屏幕大小的时候，应用某种特定的CSS。
+    比如我现在PC版的是三栏布局，手机浏览时，三栏放不下，就能设置每栏的宽度，使得成为单栏单列的布局了。
+
+    这个括号里面的条件(max-width: 600px)就叫做断点，满足这个断点条件就执行以下的CSS样式。
+    所以这样的话，我们的网站设计就要：以手机为先。
+
+    移动互联网的设计原则是：手机优先。
+    所以，所有写的css最先应该是满足手机端的需求，然后再@media中写PC端的CSS样式。
+
+    但是，我们除了手机，PC还有平板电脑，iPad等，这时就要添加多个@media了。
+    .col-1 {
+        width: 100%;
+    }
+
+    @media (min-width: 600px){
+        .col-1 {
+            width:8.33%;
+        }
+    }
+
+    @media (min-width: 768px){
+        .col-1 {
+            width:16.66%;
+        }
+    }
+
+    那么当屏幕大于等于768px，PC上显示，col-1的长度就是16.66%，
+    当屏幕大于等于600px，小于768px的时候，平板iPad上显示，col-1的长度就是8.33%，
+    当屏幕小于600px，手机上显示，col-1的长度就是100%。
+    最先写的css就是针对手机端的样式。
+*** 方向
+    当移动设备的宽度比高度大的时候（一般是手机，平板横置）的情况。也可以设置特定的样式。
+    @media only screen and (orientation: landscape) {
+        body {
+            background-color: lightblue;
+        }
+    }
+    //当移动设备横置的时候，背景颜色变为浅蓝。
+** Bootstrap的Media Query

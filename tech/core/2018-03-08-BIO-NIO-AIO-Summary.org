@@ -1,0 +1,18 @@
+* BIO,NIO,AIO总结
+** 草稿
+   NIO提供了与传统BIO模型中的Socket和ServerSocket相对应的SocketChannel和ServerSocketChannel两种不同的套接字通道实现。
+   在NIO库中，所有数据都是用缓冲区处理的。
+   我们对数据的读取和写入要通过Channel。Channel是全双工的。 SelectableChannel：用户网络读写
+    FileChannel：用于文件操作
+
+    Selector会不断轮询注册在其上的Channel，如果某个Channel上面发生读或者写事件，这个Channel就处于就绪状态，会被Selector轮询出来，然后通过SelectionKey可以获取就绪Channel的集合，进行后续的I/O操作
+    一个Selector可以同时轮询多个Channel，因为JDK使用了epoll()代替传统的select实现
+
+
+    NIO同步非阻塞，不断轮询水壶状态，看是否发生改变，采取下一步操作。
+    DirectByteBuffer 是通过full gc来回收内存的，DirectByteBuffer会自己检测情况而调用 system.gc()，但是如果参数中使用了 DisableExplicitGC 那么就无法回收该快内存了，
+    -XX:+DisableExplicitGC标志自动将 System.gc() 调用转换成一个空操作，就是应用中调用 System.gc() 会变成一个空操作，那么如果设置了就需要我们手动来回收内存了，
+    所以DirectByteBuffer使用起来相对于完全托管于 java 内存管理的Heap ByteBuffer 来说更复杂一些，如果用不好可能会引起OOM。
+    Direct ByteBuffer 的内存大小受 -XX:MaxDirectMemorySize JVM 参数控制（默认大小64M），在 DirectByteBuffer 申请内存空间达到该设置大小后，会触发 Full GC。
+
+    AIO异步非阻塞

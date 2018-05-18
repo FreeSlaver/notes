@@ -28,7 +28,7 @@ tail -f root.log | grep 'keyword'
 ** 查本机外网ip
    curl ipecho.net/plain; echo
 ** 查看防火墙
-chkconfig iptables --list
+   chkconfig iptables --list
 
 ** 查看端口 lsof -i:port
 方法二：直接使用 netstat -anp | grep portno

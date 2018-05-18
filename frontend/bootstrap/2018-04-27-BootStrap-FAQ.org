@@ -1,0 +1,16 @@
+* Bootstrap FAQ
+**  $(...).bootstrapTable is not a function
+    很明显缺js
+
+    需要添加bootstrap-table.css,bootstrap-table.js,bootstrap-table.zh-cn.js
+
+    妈的，怎么感觉自己这么蠢了。
+
+    用table可以直接搞数据，但是样式需要用table来布局，搞样式。
+
+    如果直接用div+css来搞布局，那这个数据怎么搞？？？
+
+    很明显是后端传递到前端，好假设，到jquery中了，然后再页面上进行for循环，
+    如果只用js？那么就会在js中搞入HTML代码，数据也在。
+
+    如何

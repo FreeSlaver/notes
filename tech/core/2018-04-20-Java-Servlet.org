@@ -1,0 +1,42 @@
+* Java Servlet详解
+** 什么是Servlet
+   一个servlet就是Java语言的一个类，用来扩展Server端的应用能力，处理请求响应模型的。
+   主要用于生成动态网页内容。
+** Servlet的生命周期
+   servlet的生命周期是由容器控制的，也是由容器来部署的。
+   servlet实例不存在，容器装载servlet类，产生一个实例，通过init方法初始化。
+   调用service方法来响应请求，传递request和response对象。
+   需要移除servlet时，容器调用servlet释放相关资源，并同步内存和持久化的姿态。
+*** 处理生命周期中产生的事件Listener
+    通过Listener对象来监听和响应生命周期中产生的事件。
+** 共享信息
+*** 通过作用域对象
+    作用域对象                类
+    Web Context            ServletContenxt
+    Session                     HttpSession
+    Request                    ServletRequest
+    Page                         JspContext                   JPS页面产生的对象
+** 过滤请求和响应Filter
+   filter是一个可以转变请求或响应的header和content的对象。
+   - 查询请求并相应处理
+   - 阻止请求或响应继续向下传递
+   - 修改请求头和数据。
+   - 修改响应头和数据
+   - 和外部资源交互
+
+     authentication, logging, image conversion, data compression, encryption, tokenizing streams, XML transformations, and so on.
+** Dispatcher
+   RequestDispatcher：接受客户端的请求，并将它们发送到任意资源，如servlet，html，jsp等。
+   由servlet容器来创建这个类对象，此接口被用来作为特定路径的资源包装对象。
+   此接口意在包装servlet，但其实可以包装任何资源。
+** 客户端状态维护Session
+   HttpSession
+   一个session对应到一个用户，server可以用多种方式来维护session，比如cookies或重写URL。
+*** Session Tracking
+    如何跟踪用户的请求了，比如，用户先点击了一本书A的链接，然后点击一本书B的链接，
+    这样我们就能知道用户在寻找哪方面的书籍了，也能找到和A,B相关的书籍，进行立刻推荐。
+    关键是如何记录用户的点击顺序，A，B，D,G这样，
+    可以通过2种方式，一种是用Cookie的唯一标识来记录；第二种是，通过Response中的encode(url,sessionId)
+    来记录，也就是将用户的请求链接A，加上一个sessionId，然后请求B的时候也带上这个sessionId，
+    不对，应该是说用户每次请求一个链接，都加上一个sessionId，这样每次都能取出来，然后进行聚合。
+** 释放servlet

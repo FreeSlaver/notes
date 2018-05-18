@@ -47,6 +47,6 @@ in order to reassemble a complete trace. Five pieces of information are required
     实现一个Zipkin的三方库，必须先了解以下内容：
     1. 核心数据结构-哪些信息需要被收集和发送到Zipkin Server
     2. 跟踪标识符-需要那些标记信息才能构建组装一个逻辑顺序链
-       1. 生成标识符-如何生成这些ID，那些ID要背继承下去
+       1. 生成标识符-如何生成这些ID，那些ID要被继承下去
        2.  如何添加额外信息
     3. 时间戳和耗时-如何记录操作的耗时信息

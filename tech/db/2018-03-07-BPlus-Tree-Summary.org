@@ -1,0 +1,35 @@
+* B+树总结
+  有序的字段查询起来更快。
+
+  为什么要用B+树了，而不是二X平衡树之类的？
+  因为磁盘的读写是操作整个block，一般4KB，所以根据局部性原理，
+  最好的策略是将相邻的数据保存到同一个block里面，同时读出来。
+  举例来说的话：有1万条学生记录，好的策略就是将id从0到2000的放一块，2000到4000的放一块。
+  如果是二叉平衡树，我们要读写的东西很可能是分开存储的，只能利用到一部分数据。
+
+  只有叶子节点才包含key value。非叶子节点包含router值。
+  非叶子节点中包含：
+  • x.n the number of router values currently stored in node x
+  • The router values stored in node x in increasing order
+  x.router1 < x.router2 < ... < x.routerx.n
+  • x.leaf , a boolean field whose value is FALSE meaning that x is a non-leaf node
+  • x.n+1 pointers x.c1, x.c2, x.c3,...,x.cx.n+1 to the children of x.
+
+
+  属性：
+  root到叶子的深度和树的高度是相同的
+  除了root外的节点至少是一半被填充的。
+
+  哦，是这么个意思，比如t=2，也就是每个节点2个方框，那么就是3个指针，
+  如果t=2，s(x)表示x的子节点或者节点中的keys，
+  如果x是唯一节点，就是root，也就是叶子节点，那么key的数量必须大于等一1，小鱼等于4
+  这是正确的？其实最多只能有2个key。
+
+  如果还有其他节点，那么子节点最多只有4个？不对，应该是只有3个。
+** DONE 了解B+树原理
+   CLOSED: [2018-03-26 周一 16:58]
+   :LOGBOOK:
+   - State "DONE"       from "TODO"       [2018-03-26 周一 16:58]
+   :END:
+** TODO 完成代码实现
+** TODO 了解innodb和b+树的原理

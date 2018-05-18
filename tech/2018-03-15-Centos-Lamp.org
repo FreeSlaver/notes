@@ -1,0 +1,19 @@
+* Centos Lamp安装
+** Install Apache
+   sudo yum install httpd
+
+   sudo service httpd start
+** Install PHP
+   sudo yum install php php-mysql
+*** show php modules
+    yum search php-
+    sudo yum install php-cli.x86_64
+    yum info php-cli.x86_64 php-gd.x86_64
+** Test Lamp
+   sudo vi /var/www/html/info.php
+   #paste below into info.php
+   <?php
+   phpinfo();
+   ?>
+
+   sudo service httpd restart

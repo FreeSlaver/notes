@@ -1,0 +1,14 @@
+* Nginx总结
+** 日志在
+   /var/logs/nginx目录下
+** 将请求url重定向
+   貌似和index，什么之类的冲突，比如
+   # The rest of your server block
+        root /data/www;
+        index index.html index.htm;
+        location / {
+            proxy_pass http://localhost:4567;
+            try_files $uri $uri/ =404;
+        }
+        这样的话，好像就没撒效果了。不知道是root还是index的原因。
+** 配置文件在

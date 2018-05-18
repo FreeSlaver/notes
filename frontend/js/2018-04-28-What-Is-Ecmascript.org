@@ -1,0 +1,2 @@
+* ECMAScript是什么
+和javascript的区别

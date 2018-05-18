@@ -37,3 +37,43 @@
 **** 参考资料和扩展阅读
      [[https://stackoverflow.com/questions/20721248/best-way-to-override-bootstrap-css][best way to override bootstrap css]]
      [[https://teamtreehouse.com/community/best-practices-to-customise-bootstrap-3-vanilla-css][Best practices to customise Bootstrap 3]]
+
+** Components
+*** Navbar
+    BootStrap一定要学的非常熟，做好笔记，完整学习，
+    需要.navbar和.navbar-expand达成响应模式。
+
+    使用containers来限定快读。
+
+    使用<nav>标签保证可达性，如果使用了<div>，添加role="navigation"来显示表明
+    地标性的区域。
+
+    collapse搞清楚，
+
+    主要最初没弄懂的就是那个navbar-collapse这个，是说的，窗口过小，导航栏就会成为Button
+    给隐藏起来，点击Button后才显示，
+
+    Brand这个清楚，
+
+    导航的条目居中，这些也清楚，先将float:left清楚掉，然后让text-align:center.
+    Toggler就是隐藏后，那个导航栏条目是在左边还是右边的设置。
+    大概就是这样，如果还有不懂就Google吧。
+
+*** Breadcrumb 面包屑
+     aria-label="breadcrumb"，就是一个可达性标签？
+     不错，可以放在后面
+     可以使用多个Nav标签。
+
+
+
+** Content
+
+** Layout
+*** Container
+    @media搞清楚，Grid搞清楚。
+
+
+    将stackoverflow的问题搞成中文的？
+
+** Image Done
+** Text

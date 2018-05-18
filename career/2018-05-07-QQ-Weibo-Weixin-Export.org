@@ -1,0 +1,51 @@
+* QQ空间说说，微博，朋友圈导出
+  我现在想的问题是：
+  前台到底是文章和Boostrap的组合，还是直接是Boostrap页面。
+  展现给客户最少，直接来最直接的功能，所以应该是一个单Boostrap的页面。
+  说说，微博，朋友圈应该是放一起，还是分开放？
+
+
+  到底是直接用Javascript，还是后台java，前台
+** QQ空间
+https://user.qzone.qq.com/proxy/domain/r.qzone.qq.com/cgi-bin/user/qz_opcnt2?_stp=1525505139909&unikey=http://user.qzone.qq.com/504252262/mood/66470e1e0597865a98450b00.1<.>http://user.qzone.qq.com/504252262/mood/66470e1e0597865a98450b00.1<|>http://user.qzone.qq.com/504252262/mood/66470e1e7925155a60cb0200.1<.>http://user.qzone.qq.com/504252262/mood/66470e1e7925155a60cb0200.1<|>http://user.qzone.qq.com/504252262/mood/66470e1e87ba2a585b7e0600.1<.>http://user.qzone.qq.com/504252262/mood/66470e1e87ba2a585b7e0600.1<|>http://user.qzone.qq.com/504252262/mood/66470e1e3bed7457c8a40a00.1<.>http://user.qzone.qq.com/504252262/mood/66470e1e3bed7457c8a40a00.1<|>http://user.qzone.qq.com/504252262/mood/66470e1eaabd265796c20300.1<.>http://user.qzone.qq.com/504252262/mood/66470e1eaabd265796c20300.1<|>http://user.qzone.qq.com/504252262/mood/66470e1eb7a6ee568a700200.1<.>http://user.qzone.qq.com/504252262/mood/66470e1eb7a6ee568a700200.1<|>http://user.qzone.qq.com/504252262/mood/66470e1e9b461e560f9d0300.1<.>http://user.qzone.qq.com/504252262/mood/66470e1e9b461e560f9d0300.1<|>http://user.qzone.qq.com/504252262/mood/66470e1e9a091d56c2a70300.1<.>http://user.qzone.qq.com/504252262/mood/66470e1e9a091d56c2a70300.1<|>http://user.qzone.qq.com/504252262/mood/66470e1e0a6ce65592c40200.1<.>http://user.qzone.qq.com/504252262/mood/66470e1e0a6ce65592c40200.1<|>http://user.qzone.qq.com/504252262/mood/66470e1e6e20dd555a420400.1<.>http://user.qzone.qq.com/504252262/mood/66470e1e6e20dd555a420400.1&face=0<|>0<|>0<|>0<|>0<|>0<|>0<|>0<|>0<|>0&fupdate=1&g_tk=852835650&qzonetoken=37668506047b380a02f7c1b03857a4d3a0890084713830a7b8f822cc2eb7ae34c0b77527a9ffc704ef&g_tk=852835650
+*** URLS
+    https://user.qzone.qq.com/proxy/domain/taotao.qq.com/cgi-bin/emotion_cgi_msglist_v6?uin=504252262&ftype=0&sort=0&pos=0&num=20&replynum=100&g_tk=852835650&callback=_preloadCallback&code_version=1&format=jsonp&need_private_comment=1&qzonetoken=37668506047b380a02f7c1b03857a4d3a0890084713830a7b8f822cc2eb7ae34c0b77527a9ffc704ef&g_tk=852835650
+
+几个问题：
+qzontoken则么来的，
+unikey怎么来的
+g_tk怎么来的
+
+每一个key都能查到一条说说记录
+
+var divs = document.getElementsByClassName('content');
+var arr = [];
+for (var i = 0; i < divs.length; i++) {
+          var content = divs[i].innerHTML;
+          console.info(content);
+          arr.push(content);
+}
+arr.toString();
+这个可以了，但是还要输出时间。然后还有转移字符串。
+看来要学习下javascript啊，好好的搞下。
+
+
+var msgList = $("#msgList li .box ");
+var arr = [];
+for(var i=0;i<msgList.length;i++){
+      var msg = msgList[i];
+      var content = msg.find(".bd").find(".content").innerHTML;
+      var date = msg.find(".ft").find("a").innerHTML;
+      var str = "### "+date + "\n" + content +"\n" ;
+      arr.push(str);
+}
+arr.toString();
+
+我TM的怎么这么蠢？拿到这个字符串之后，我先要转截取出json，然后转list，然后从list的对象map中取出content和createTime。
+我真TM的蠢到家了。傻逼。蠢比。
+
+怎么最简单最快捷的搞定这个事情？用linux shell？用python？用ruby？我发现写业务代码和用java都已经傻逼。
+用框架也是永成了傻逼。反正就是傻逼。
+** 微博
+** 朋友圈
+** 炸弹 将所有这3者都综合起来展示？导出你喜欢人的微博图片，视频等。。

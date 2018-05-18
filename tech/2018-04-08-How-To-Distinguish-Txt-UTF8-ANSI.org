@@ -1,0 +1,76 @@
+* 如何区分文本是UTF8还是ANSI
+  微软在windows平台下用自带的notepad.exe生成UTF-8编码的文本文件时会在文件开头加入三个字节的BOM（byte order mark）EF BB BF，这样就通过有无BOM区别文本的编码是ANSI（GBK）还是UTF-8。
+
+但是了，UTF-8也可以不要这三个字节的BOM，
+第一个字节的第一个bit为0，说明是个ANSII字符，继续查看第二个比特，若第一个比特是1，则查看第二个比特，若第二个比特为0，说明这不是一个UTF-8编码的文本。依次类推，若一旦有一个bit不满足UTF-8编码要求，就判定文本为ANSI（GBK），若知道文本结束都不能判定，则说明文本是UTF-8编码的。
+
+Text files on disk may sometimes have a few bytes at the start, indicating their Unicode encoding. This is called the Byte Order Mark, or BOM. If it is there, you can determine the encoding with certainty, and hence decode the text file correctly. Java is pretty good at that stuff: see String, Reader, Writer etc.
+
+If there is no BOM in a text file, there is no 100% guaranteed way to determine its encoding.
+就是文件头部有BOM的就能区分，没有BOM的无法100%区分。
+
+public Encoding GetFileEncoding(string srcFile)
+        {
+            // *** Use Default of Encoding.Default (Ansi CodePage)
+            Encoding enc = Encoding.Default;
+
+            // *** Detect byte order mark if any - otherwise assume default
+            byte[] buffer = new byte[10];
+            FileStream file = new FileStream(srcFile, FileMode.Open);
+            file.Read(buffer, 0, 10);
+            file.Close();
+
+            if (buffer[0] == 0xef && buffer[1] == 0xbb && buffer[2] == 0xbf)
+                enc = Encoding.UTF8;
+            else if (buffer[0] == 0xfe && buffer[1] == 0xff)
+                enc = Encoding.Unicode;
+            else if (buffer[0] == 0 && buffer[1] == 0 && buffer[2] == 0xfe && buffer[3] == 0xff)
+                enc = Encoding.UTF32;
+            else if (buffer[0] == 0x2b && buffer[1] == 0x2f && buffer[2] == 0x76)
+                enc = Encoding.UTF7;
+            else if (buffer[0] == 0xFE && buffer[1] == 0xFF)
+                // 1201 unicodeFFFE Unicode (Big-Endian)
+                enc = Encoding.GetEncoding(1201);
+            else if (buffer[0] == 0xFF && buffer[1] == 0xFE)
+                // 1200 utf-16 Unicode
+                enc = Encoding.GetEncoding(1200);
+           else if (validatUtf8whitBOM(srcFile))
+
+                enc = UTF8Encoding(false);
+            return enc;
+        }
+
+private bool validateUtf8whitBOM(string FileSource)
+
+        {
+
+            bool bReturn = false;
+
+            string TextUTF8 = "", TextANSI = "";
+
+            //lread the file as utf8
+
+           StreamReader srFileWhitBOM  = new StreamReader(FileSource);
+
+           TextUTF8 = srFileWhitBOM .ReadToEnd();
+
+           srFileWhitBOM .Close();
+
+
+            //lread the file as  ANSI
+
+           StreamReader srFileWhitBOM  = new StreamReader(FileSource,Encoding.Defaul,false);
+
+           TextANSI  = srFileWhitBOM .ReadToEnd();
+
+           srFileWhitBOM .Close();
+
+           // if the file contains special characters is UTF8 text read ansi show signs
+
+            if(TextANSI.Contains("Ã") || TextANSI.Contains("±")
+
+                 bReturn = true;
+
+            return bReturn;
+
+        }

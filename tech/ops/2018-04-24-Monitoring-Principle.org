@@ -1,0 +1,10 @@
+* 监控系统设计原则
+  在搞监控之前，我们先思考下要监控那些功能。
+The key to successful monitoring is to select those very few ones we care about; and care enough to let them pester us with alerts and notifications.
+collect all metrics that help with troubleshooting, alert only on those that require an action.
+
+Required processes are running as expected
+System resources usage is within limits
+Queries are executed successfully
+Service is performing properly
+Typical failure points

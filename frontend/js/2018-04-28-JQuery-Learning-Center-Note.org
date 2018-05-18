@@ -1,0 +1,12 @@
+* JQuery Learning Center学习笔记
+  我发现直接读JQuery学习到了很多。
+  function.call
+
+  在开始的时候声明变量。但是这样的话，表示你对即将要做的东西都非常的清楚了。
+** 源码
+   读到第610行。
+   723
+   1049
+*** shift
+    remove the first item of array
+    这个

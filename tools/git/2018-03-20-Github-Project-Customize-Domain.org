@@ -1,0 +1,15 @@
+* Github项目自定义域名
+  项目如何直接绑定顶级域名，就要新建一条A记录指向，204.232.175.78
+  如果是子域名，就指向username.github.com。
+
+
+  来测试下项目直接绑定顶级域名，但是如果我一个项目绑定了，另外的一个项目了？
+  都指向这个ip地址？蛋疼的很啊。
+
+  想一想，在github上的设置就是，访问：https://songxin1990.github.io/notes
+  用301永久重定向到了http://fatecome.com
+
+  然后再DNSPOD这边，我们将fatecome.com这个域名解析到songxin1990.github.io对应的ip上去。
+  应该就会由github来定位到哪个项目？
+
+  果然如此，再来试试如果不用IP，用CNAME行不行？应该是不行的，一样可以啊，神奇。

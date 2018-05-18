@@ -27,3 +27,101 @@
 4.
 
 这对于目前来说是非常重要的功能吗？
+** TODO 添加评论
+   看了网上所有的添加评论的方式，感觉都不是很好，而且后期还需要添加其他功能，所以决定自己用VPS加个评论功能。
+
+   但是需要对外依赖Mysql，还要一个后台服务，貌似实现起来蛮丑陋的。但是用staticman这种，我的网站备案了，丢在阿里云的50块一个月的机器上。
+   单独有Ruby，jekyll的一年要300块，如果Jekyll部署在自己的VPS上，每次comment后都要pull request等，重新构建网站，也不太好。
+   另外一方面也想学习一下虾米，学习下设计，自己动手多做写东西。
+
+   comments这个东西，是一个功能一个功能加，还是整体规划？功能相互之间不影响啊。
+   做这个功能之前，应该怎么搞？不搞这些了，
+
+
+   我头脑中已经完全绘画出评论是怎么样的，完全不对，他妈的，好多详细功能没想到。
+   *引用*
+   不需要，其实直接显示A回复B就知道了，根据顺序知道上下文。
+   这是非常重要的功能，妈的，原来一点点东西都这么复杂啊。
+
+   怎么实现？
+   先看看js的best practice，然后看看目前的系统，
+
+   记住个人信息是怎么弄得？
+** TODO 添加阅读排行榜，评论排行榜，点赞
+
+** TODO 添加评分
+   其实这些都是花俏的功能，博客的本质在内容，以及持续不断的写作，投入。
+   但是我现在搞这个，也是为了培养产品的感觉等，
+   想想怎么实现？
+
+** TODO bootstrap搞TAB页，把
+
+   今天剩下的时间，打赏搞成tab，不对，最关键的，最重要的，现在是要做什么啊。草
+   不死搞这个，不死搞这些，是赶紧换一份工作，妈的，但是现在这里又有人，我曹，该怎么办
+
+   即使搞公众号也是吸引粉丝，搞流量，不是这个，我TM快要疯了，傻逼太多。
+   海投，去面？
+
+** TODO View 阅读次数
+   review_times，每次查询的时候加1就完了。
+   现在是要干嘛？ajax？不对，是后台先建表。
+
+   Failed to load http://localhost:4567/comment/add: No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'null' is therefore not allowed access.
+
+** DONE 搞成卡片
+   <ul class="post_list">
+
+
+    <li>
+      <div class="card">
+          <h4 class="card-title"><a class="pjaxlink" href="/">测试好看的页面</a></h4>
+          <p class="card-text"><img src="/public/img/test.jpg" class="card-img-right">
+            你还想继续拿着2,3W一月的工资，天天坐在那里当一个敲代码的美男子？
+            真以为自己成了马云口中说的“那些月入两三万，三四万的人最幸福”。
+            嗯，其实马云baba说的就是那些在给他打工的程序员</p>
+        </div>
+
+    </li>
+
+  </ul>
+
+.card{
+  width: 100%;
+  height: 200px;
+  display: block;
+  box-shadow: 4px 4px 8px 4px rgba(62, 55, 55, 0.2);
+  margin: 24px 0px;
+  border-radius: 8px;
+}
+.card-img-right{
+  float: right;
+  width: 260px;
+  height: 150px;
+  margin: 0px 24px;
+  border-radius: 4px;
+}
+.card-text{
+  font-size: 18px;
+}
+
+ul.post_list{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+** 总结到的知识
+   *不行，通过整个过程，我知道了应该先设计出样板，然后搞css，不然太慢*
+
+原来什么都要搞到手机上，手机真的是。。。
+** 发说说，发状态，发语录，发投机日记
+   能发图片吗？可以，就是一个链接而已，能发音乐吗？可以，也是一个链接
+   果然，虾米的每个页面上都有og相关的东西，所以可以用js生成单个的卡片。
+   图片，音频，视频都可以，都不过是一个资源链接而已。
+
+   但是看我个人的情况，貌似都是字多啊。所以可以先搞字，后续迭代。
+
+   是用post还是get？用post很麻烦啊。用get，
+   字段有：pwd，content,type（语录，思考，）
+   这个链接最好能复用，
+   怎么在指定位置添加东西了？有个RandomFileAccess的东西，
+   或者文件全部读出，然后写？不对

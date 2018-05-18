@@ -1,0 +1,29 @@
+* HTML Table详解和Table布局
+  table主要是由以下几个标签组成的。
+  table，
+  tr：表示table row，
+  th：表示table head，一般放在最上第一行（横向布局），或者参合着放，第一列（竖向布局）
+         th貌似和td区别不大，只是加黑居中了？
+  td：表示table data也就是一个table cell，是data containers of table，可以包含所有的HTML元素，text，image，list，table等。
+
+  发现一种稍微更好的学习方式，就是自己不断地调试css，这样印象更加深刻。
+  很明显，如果
+  table, th, td {
+      border: 1px solid black;
+  }
+  //这个border是会叠加的，就是重合的地方更加的黑，而且th和td的border貌似之间有间隔。
+
+  多个border折叠，合并为一个border，使用：
+  border-collapse: collapse;
+
+  border-spacing：设置td之间的间隔，很显然，如果使用了border-collapse:collapse;后，border是合并起来的，
+  因此不会有效果。
+
+  colspan属性：使得一个td横跨多列。
+  rowspan 属性：使得一个td竖跨多行。
+
+  colgroup和col是用来定义一列（column）的样式的。这样避免反复针对td来搞样式。
+
+  td中文字换行，用line-break，word-break之类的。？？？
+
+  对啊，还有一种方法，直接用jquery啊。那个什么table css之类的都可以不要了。

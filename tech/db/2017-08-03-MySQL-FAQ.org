@@ -11,5 +11,33 @@
 ** 对字段加减天数
 DATE_ADD(tc.`update_time`,INTERVAL  3 DAY)
 ** 添加字段
+   ALTER TABLE t_xxx ADD COLUMN xxx varchar(256) NOT NULL DEFAULT 'hello'
 
 ** 修改字段
+
+** 创建数据库
+   CREATE DATABASE mydatabase CHARACTER SET utf8 COLLATE utf8_general_ci;
+   更好的方式：
+   CREATE DATABASE mydatabase CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+** 控制台连接mysql
+   mysql -u root -p
+** 修改mysql root密码
+   GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'Sx0618@$&' WITH GRANT OPTION;
+   FLUSH PRIVILEGES;
+   然后重启mysql
+   sudo  /etc/init.d/mysqld restart
+
+   配置文件在/etc/mycnf
+** 查询，创建，添加索引
+*** 查询
+    SHOW INDEXES FROM t_xx
+*** 添加
+    ALERT TABLE t_xx ADD INDEX `product_id` (`product_id`)
+    如果product_id是integer，去掉括号中内容。
+
+    CREATE INDEX `product_id` on t_xx(`product_id`) using BTREE;
+
+    CREATE INDEX part_of_name ON customer (name(10));
+    创建一个名为part_of_name的索引在表customer的字段name上的前10个char。
+    使得索引文件更小，维护起来更快。关键在于前10个字符区分度是否够大。

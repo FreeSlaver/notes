@@ -1,0 +1,9 @@
+* Java Serializable总结
+** 草稿
+   必须实现Serializable或者ExtSerializable接口，
+   子类想要实现Serializable的话，因为它有继承父类，也有了父类的一些属性和方法，因此有责任去保存父类的方法和属性。
+   这样的话，父类就必须有无参的构造器能够初始化父类的实例。
+
+   抛出NotSerializableException
+   序列化保存的是对象的状态，静态变量属于类的状态，因此 序列化并不保存静态变量。
+   Transient 关键字的作用是控制变量的序列化

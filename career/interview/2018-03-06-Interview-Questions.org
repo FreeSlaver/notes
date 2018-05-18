@@ -1,0 +1,130 @@
+* 面试题总结大全
+** 基础
+*** Java的多态
+*** Object类的方法
+    getClass(),equals(),clone(),toString(),notify(),notifyAll(),wait(),finalize()
+
+    toString()方法返回的类名加当前对象的hashCode的16进制表示。
+    finalize()是在JVM进行第二标记时，会查询是否有重写此方法，是的话就会调用，
+    可以在这里将要被回收的对象和其他引用建立联系，这样就能避免被回收。
+*** notify和wait
+    notify是由持有当前对象锁的线程来调用，它只会唤醒一个等待线程，选择的机制是任意的，也可自己实现。
+    唤醒的线程来争夺锁没有任何优先权，而且必须等待当前线程释放锁以后。
+    调用notify的线程必须先持有监听器（锁），可以通过以下3种方式来获取锁：
+    1. 对对象调用synchronize方法
+    2. 对声明对象的body使用synchronize。
+    3. 执行类的同步静态方法
+
+    notifyAll是唤醒所有等待的线程。
+
+    wait：使当前线程进入等待，直到其他线程调用notify或者notifyAll。
+    调用的当前线程必须拥有对象的monitor监视器。调用wait后就进入休眠，
+    三种情况下可能会醒来：
+    1. 其他线程调用notify，但不一定是此线程醒来；调用notifyAll，醒来
+    2. 其他线程打断当前线程Thread.interrupt();
+    3. 指定的等待时间过去了
+     唤醒后，线程和此对象恢复到调用wait之前的状态。
+*** BIO,NIO,AIO区别
+*** HashMap和ConcurrentHashMap底层实现
+** 多线程
+*** ThreadLocal的作用和注意事项
+    作用：
+    1. 对开销较大的对象，可以使用ThreadLocal，保证每个线程都持有一个自己的此对象
+    2. 线程上线文绑定，可以在当前线程的ThreadLocal中绑定对象，然后在另外的地方取出
+    注意点：
+    使用前要设置为null；使用后也要清除。
+
+*** 线程池使用时的注意事项
+    主要是无界队列的问题，容易撑爆内存，使用ThreadPoolExecutor来创建比较好。
+    再者不同的需求配合不同的线程池，比如需要有序执行，使用Single，
+    执行任务时间非常短暂的用cachedPool，然后一般用fixedPool。
+
+    用ThreadPoolExecutor要传递的参数：corPoolSize，maximumPoolSize，keepAliveTime，TaskQueue，拒绝策略。
+*** 线程状态转移图
+    新建，就绪，运行，阻塞等待，死亡
+*** 创建线程的方式有哪些？
+    new Thread();
+    new Runnable();
+    ThreadFactory.newThread();
+    线程池提交
+*** 创建线程池的方式有哪些？
+    Executors.newSingleThreadPool();
+    Executors.newFixedThreadPool();
+    Executors.newCachedThreadPool();
+    Executors.newWorkStealingPool();
+    Executors.newScheduledThreadPool();
+
+    new ThreadPoolExecutor(corePoolSize....)
+**** 区别
+     所有这些线程挂掉，都会有新的替代。
+     1. single是单线程，有序的，最多只有一个任务执行
+     2. fixed是指定数量的线程活跃，无序的，最多指定的N个任务执行
+     3. cached是如果有之前已创建的线程完成任务了，可以重复使用，如果没足够的线程，会重新创建一个。
+        非常适合大量短暂任务的处理，而且里面的线程过了60秒会自动挂掉。
+     4. workStealing适合保证一定并发度的
+
+     无界队列：会溢出，建议用ThreadPoolExecutor创建。
+** JVM
+*** java类的加载机制，双亲委派是什么？
+*** 垃圾回收机制，算法有哪些？
+** 网路
+** 操作系统
+*** 进程间通信方式
+** 算法和数据结构
+*** HashMap的原理，为什么是2的幂次
+
+*** 堆排序的原理
+*** 快速排序实现
+** 框架
+*** Mybatis
+**** #{}和${}的区别
+     1. #是预编译处理，$是字符串替换
+     2. #会用PreparedStatement的set来复制，$是直接替换成变量值
+     3. #可以防止SQL注入
+**** 如何在Mybatis重配置读写分离
+     其实也就是配置多个数据源的问题，读的话，从重库读取，写，写主库。
+     1. 配置文件创建2个DataSource，将读操作配置在读文件中，写操作配置在写的文件中
+     2. 在业务层，DAO层调用钱定义切面，利用AbstractRoutingDataSource解决多数据源问
+     3. 通过插件进行拦截，对读操作转到丛库，对写操作转到主库
+**** 实体类和表字段名不一样，怎么办？
+     1. 使用AS别名
+     2. 使用resultMap进行映射
+**** Dao接口与XML映射文件如何对应，工作原理是什么？
+     Dao接口，就是人们常说的Mapper接口，接口的全限名，就是映射文件中的namespace的值，接口的方法名，就是映射文件中MappedStatement的id值，接口方法内的参数，就是传递给sql的参数。
+     Mapper接口是没有实现类的，当调用接口方法时，接口全限名+方法名拼接字符串作为key值，可唯一定位一个MappedStatement，
+     举例：com.mybatis3.mappers.StudentDao.findStudentById，可以唯一找到namespace为com.mybatis3.mappers.StudentDao下面id = findStudentById的MappedStatement。
+     在Mybatis中，每一个<select>、<insert>、<update>、<delete>标签，都会被解析为一个MappedStatement对象。
+
+     Dao接口里的方法，是不能重载的，因为是全限名+方法名的保存和寻找策略。
+     Dao接口的工作原理是JDK动态代理，Mybatis运行时会使用JDK动态代理为Dao接口生成代理proxy对象，代理对象proxy会拦截接口方法，转而执行MappedStatement所代表的sql，然后将sql执行结果返回。
+
+*** Spring
+**** Spring AOP
+**** Spring对象生命周期
+** Zookeeper
+*** Zookeeper有哪些用途
+** 分布式
+*** 分布式锁
+    就说Redis和ZK实现的分布式锁
+*** 分布式事务
+    1. 两阶段提交
+    2. 事务回滚
+    3. 事务重做，补偿
+*** 分布式缓存
+
+** 项目
+*** 消息幂等性如何设计，如何对请求去重？
+    1. 使用requestId去重
+    2. 使用Http Body hash去重
+    3. 使用事务去重，看短时间是否有执行形同的事务
+
+    因为requestId需要记录相应的状态，如果高并发请求下，相同的2个requestId过来，如何去重了？
+    最核心的点是：将整个事务的去重落到mysql的锁粒度上去。
+** 设计模式
+*** 抽象工厂和工厂方法模式的区别
+*** 工厂模式的思想，哪里用到了工厂模式
+** 数据库
+*** 垂直和水平拆分
+*** 谈谈索引，索引是什么，索引的优缺点，如何对慢查询优化
+    索引就是在数据的一列或者多列上建立一个Index，index将这列的所有数据集组合成一个B+树，查询的时候从这个B+树上查询，
+    时间复杂度是O(logN)，而不需要遍历这列的所有值，也就是不用全表扫描。

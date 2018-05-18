@@ -1,0 +1,10 @@
+* Javascript最佳实践
+  为什么学js最佳实践，为什么学js crud?因为要把博客的那个评论搞出来。
+
+  但是之前对js，什么的都没学过。
+
+  Avoid global variables,  avoid new,  avoid  ==,  avoid eval()
+  使用var定义local 变量，不然会变成全局变量。
+
+  不要使用new Object（）
+  eval()可以将文本像代码一样执行，会引发安全问题。

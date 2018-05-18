@@ -1,0 +1,15 @@
+* HashMap原理
+  和HashTable区别是：非线程安全的，允许key和value为null。
+  可以通过对持有，封装了Map的外部对象使用锁，保证线程安全。
+  Map m = Collections.synchronizedMap(new HashMap());
+  不保证顺序，也不保证顺序一直不变。
+  get和put是O(1)时间复杂度，遍历的时间复杂度是：容量（桶数量）*桶容量的倍数。
+
+  当条目数达到负载因子，就会进行rehashed，因此是桶的2倍数量。
+
+  Hash碰撞的解决方式之一使用Comparable，能让
+
+  使用Iterator进行遍历，不调用它的remove方法，而采用了其他改变Map结构的方法，
+  会抛出ConcurrentModificationException，使用的fast-fail机制，但是不完全保证触发。
+
+  桶里面数量大于8，会转换为Tree。

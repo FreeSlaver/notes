@@ -1,0 +1,8 @@
+* 计算机课程学习计划
+  不对，应该最先学算法和数据结构
+** 计算机理论？
+** 算法与数据结构
+   CS61B
+** Github上的assome coure简介
+*** CS Theory 偏重数学基础
+*** Introduction to CS 入门

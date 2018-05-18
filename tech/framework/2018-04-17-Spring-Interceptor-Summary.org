@@ -1,0 +1,14 @@
+* Spring Interceptor总结
+  HandlerMapping，
+
+  现在的关键就是：提防突变，任何不对的走势。
+** 日志处理的几种方式
+   第一种：Interceptor
+
+
+
+   第二种：使用LoggableDispatcherServlet
+   可以
+
+   第三种：使用Filter
+   这个也可以

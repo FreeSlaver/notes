@@ -1,0 +1,16 @@
+* Dropbox创业故事
+  MVP这个概念要搞清楚。
+
+minimum viable product
+
+A minimum viable product (MVP) helps entrepreneurs start the process of learning as quickly as possible.
+the goal of the MVP is to begin the process of learning, not end it.
+
+Unlike a prototype or concept test, an MVP is designed not just to answer product design or technical questions. Its goal is to test fundamental business hypotheses.
+The lesson of the MVP is that any additional work beyond what was required to start learning is waste, no matter how important it might have seemed at the time.
+TM的说的太好了。
+
+
+怎么搞这么一点东西需要搞这么多东西？
+如果是PHP怎么搞？真TM蛋疼的很，如果是JS怎么搞？
+先搞一个java的，然后搞一个PHP的？

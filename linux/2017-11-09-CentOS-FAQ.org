@@ -15,3 +15,17 @@
    sudo /sbin/chkconfig --levels 235 mysqld on
    sudo service mysqld start
    然后在mysql的工具中，先建立SSH通道，然后通过此SSH通道再连接mysql
+
+** 安装Git 2
+   yum install http://opensource.wandisco.com/centos/7/git/x86_64/wandisco-git-release-7-1.noarch.rpm
+   yum install git
+   git --version
+
+** 关于SSH
+   看日志
+   /var/log/secure
+
+** iptables的设置
+   放在/usr/local/bin/fwall-rules这个文件中。
+   需要加开放的端口，直接在文件中添加就行了
+   ${IPTABLES} -A INPUT -p tcp --dport xxport  -m state --state NEW -j ACCEPT

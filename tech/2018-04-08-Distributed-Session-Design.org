@@ -1,0 +1,30 @@
+* 分布式Session设计
+** 头脑风暴
+   首先我们想想单机服务器的处理，用户登录，然后session（和用户相关的数据）
+   保存在服务器的内存中，然后
+
+   首先想想session是什么？数据库的一次连接就会产生一个session，事务在session中控制，
+   一次登录也会产生一个session，然后用户的购物记录等放在session中？不对啊，下次登录依然有。
+   用户和服务器的整个会话过程中，需要保持一些数据和状态到session中。
+
+   分布式环境下，场景就是一个用户的session可能保存在多个服务器上，然后就是session被隔离起来了，
+   用户连接到另外的服务器上，比如ServerA，如何做到用户和ServerB相关的session？
+
+   面对的问题也就是一个：合的问题。
+   1. 可以合并起来放单独的第三方服务器上，但是会有：单点故障；单机容量问题；
+      所以最后得到的问题，还是个解决高可用，一致性hash的问题。
+
+      方案：可以将用户session放到Redis集群中，然后通过客户端根据userId进行一致性hash，服务器端取得时候也经过客户端相同的，
+      根据userId来进行一致性hash，找到对应的Redis，取相应的数据。
+
+   2. 约定，ServerA，ServerB...达成一个一致性约定，然后当，比如ServerA需要查询和ServerB有关的信息的时候，去ServerB上通行请求，
+      但是这种方案很明显不好，会加大服务器负担，而且延时的问题也很严重。
+
+      对，还有个问题，就是如果用户在一点登出了，其他店也要干掉session
+
+      所以大概的就是这样了？需要加上实现代码，还有文章完善吗？
+** 回答问题
+   For your situation,there are
+   what i know
+
+   Keeping in mind the mantra "build it right the first time,"

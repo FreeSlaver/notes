@@ -1,8 +1,0 @@
-* HTML Elements
-**** X
-     <center>
-       在HTML4和XHTML1中被废弃，是一个块级别的元素，水平居中。在<div>,<p>标签使用css的text-align代替。
-       或者使用margin-left,margin-right,auto在block元素上。
-       <div style="text-align:center">This text will be centered
-         <p>So will this paragraph</p>
-       </div>

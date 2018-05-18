@@ -38,6 +38,10 @@
    M-x recover file 从#xx#中恢复文件
    M-x make-directory 创建文件夹
 
+   C-home 跳到文件开头(M-<)
+   C-end 跳到文件尾部(M->)
+
+   替换M-x replace-string
 ** buffer相关：
    M-x erase-buffer 清空buffer
 
@@ -82,11 +86,11 @@ C-x 4 C-f 在下方新窗口中打开文件
 M-x make-frame 新建一个窗口
 
 
-关闭离开
+** 关闭离开
 ESC ESC ESC 是最通用的离开命令，关掉多余窗格，离开小缓冲
 不能使用C-g退出递归编辑，C-g的作用是取消本层递归编辑之内的命令和参数。
 
-帮助：
+** 帮助：
 C-h 加一个字符说明你需要说明帮助。
 C-h r 阅读Emacs手册
 C-h t 获取Emacs教程
@@ -103,11 +107,11 @@ C-h a 相关命令搜索，使用M-x来启动。
 C-h i 阅读手册
 
 
-插件：
+** 插件：
 M-x package-install xx 安装xx插件
 M-x package-refresh-contents
 
-编码：
+** 编码：
 M-x describe-current-coding-system 查看当前文件的编码
 C+x ret r utf-8 ret 以utf8打开文件
 M-x revert-buffer-with-coding-system 选择utf8，设置文件编码为utf8
@@ -123,5 +127,5 @@ M-x set-buffer-file-coding-system 保存文件时设置编码
 (modify-coding-system-alist 'process "*" 'utf-8)
 上面的命令一个个敲
 
-常见问题：
+** 常见问题：
 M-x table-insert 插入表格

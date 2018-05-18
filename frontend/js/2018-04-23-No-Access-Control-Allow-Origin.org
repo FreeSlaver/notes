@@ -1,0 +1,9 @@
+* No Access Control Allow Origin
+   cross-domain request
+
+   就是使用ajax的html页面和服务器不在同一个域domain。
+   Cross-Origin Resource Sharing（CORS）
+
+   一般页面上引入的img，css，js等都是CORS，是可行的。
+   但是安全考虑，浏览器禁止使用script的HTTP请求跨域。
+   For security reasons, browsers restrict cross-origin HTTP requests initiated from within scripts.

@@ -1,0 +1,34 @@
+* 关于创业用到的概念，工具
+** MVP
+   minimum viable product
+   collect the maximum amount of validated learning about customers with the least effort.
+** AB Test
+** 5W1H
+** 5Why
+   5 Whys is an iterative interrogative technique used to explore the cause-and-effect relationships underlying a particular problem。
+   The primary goal of the technique is to determine the root cause of a defect or problem by repeating the question "Why?" Each answer forms the basis of the next question.
+例子：
+The vehicle will not start. (the problem)
+Why? - The battery is dead. (First why)
+Why? - The alternator is not functioning. (Second why)
+Why? - The alternator belt has broken. (Third why)
+Why? - The alternator belt was well beyond its useful service life and not replaced. (Fourth why)
+Why? - The vehicle was not maintained according to the recommended service schedule. (Fifth why, a root cause)[2]
+
+但是我个人觉得是将Why与主谓宾等，时间空间等结合起来，这样效果会非常强大。
+比如：Why You (face the problem?can solve the problem?can success?)
+Why Now?(not before two years?not after two years?)时机
+Why Here?(为什么应该在这里推广？为什么从这儿开始？等等)地理
+Why What?(为什么要做这么一件事？)
+Why How？（为什么要通过这种方式，方法来达到目的，有更好的方式方法吗？）
+就这样不断的追问下去，不断迭代，直到彻底明白。
+ The key is to encourage the trouble-shooter to avoid assumptions and logic traps
+ and instead trace the chain of causality in direct increments from the effect through any layers of abstraction to a root cause that still has some connection to the original problem.
+
+ the real root cause should point toward a process that is not working well or does not exist.
+should not be something out of control,such as not enough time,investments, manpower,etc.
+
+** SWOT
+** Fail Fast
+** Speed
+** Agile

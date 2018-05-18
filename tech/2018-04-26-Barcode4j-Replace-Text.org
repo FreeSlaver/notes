@@ -1,0 +1,27 @@
+* Barcode4j如何替换掉文字
+** 介绍
+
+** 问题
+   需求是这样的，需要将Barcode4j下的文字替换成自定义的文字，但是原来的条形码
+还是根据之前的文字生成的。
+** Trick
+   Barcode4j是并不支持这样做的，原因是：可能导致蠕虫什么的。
+   详细的可以看这个链接：XX
+
+   这里实现的诡计就是：1. 先将原来的文字隐藏；2. 添加额外的文字。
+   或者说现将原来文字隐藏，再根据生成的条形码和自定义文字重新生成一张图片。
+*** Barcode4j隐藏文字
+    Code128Bean bean = new Code128Bean();
+    bean.setMsgPosition(HumanReadablePlacement.HRP_NONE);
+*** Barcode4j添加自定义文字
+** 草稿
+   这里要搞清楚几个问题：
+   1. 如何搞到文字的 *位置*
+   2. 如何组合生成新的图片
+
+      在DefaultCanvasLogicHandler这个类的endBarcode方法中。
+      里面是：
+      double ty = getTextBaselinePosition();
+      DrawingUtil.drawText(canvas, bcBean, formattedMsg,
+                    getStartX(), x, ty, TextAlignment.TA_CENTER);
+** 参考资料和扩展阅读

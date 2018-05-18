@@ -1,0 +1,5 @@
+* 常见的乱码解决方案
+** javascrip和java后台乱码
+   js中要传输的中文，使用encodeURI函数转换一下。
+
+   java后台，str = URLDecoder.decode(str , "utf-8");

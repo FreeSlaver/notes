@@ -1,0 +1,87 @@
+* 微信小程序
+  主要看pages目录，index目录下面是入口。
+
+  先看index.wxml这个就相当于是HTML，index.wxss这个相当于CSS，index.js就是js
+
+  wxml就是HTML,wxss就是CSS
+  Json是作为配置文件存在的，project.config.json是项目配置文件，其实是开发工具的个性配置。
+  app.json小程序全局配置，包括了小程序的所有页面路径、界面表现、网络超时时间、底部 tab 等
+  window字段 —— 小程序所有页面的顶部背景颜色，文字颜色定义在这里的。
+
+  page.json每个页面的颜色，细节，是否下拉更新。
+
+
+  例如，用户点击某个按钮的时候，JS 会记录一些状态到 JS 变量里边，同时通过 DOM API 操控 DOM 的属性或者行为，进而引起界面一些变化。当项目越来越大的时候，你的代码会充斥着非常多的界面交互逻辑和程序的各种状态变量，显然这不是一个很好的开发模式，因此就有了 MVVM 的开发模式(例如 React, Vue)，提倡把渲染和逻辑分离。简单来说就是不要再让 JS 直接操控 DOM，JS只需要管理状态即可，然后再通过一种模板语法来描述状态和界面结构的关系即可。
+  app.wxss是全局样式，page.wxss对当前页面生效，
+
+  微信API：调起微信提供的能力，例如获取用户信息、本地存储、微信支付等
+
+  通过 app.json 的 pages 字段就可以知道你当前小程序的所有页面路径:
+
+{
+  "pages":[
+    "pages/index/index",
+    "pages/logs/logs"
+  ]
+}
+
+小程序启动之后，在 app.js 定义的 App 实例的 onLaunch 回调会被执行:
+
+App({
+  onLaunch: function () {
+    // 小程序启动之后 触发
+  }
+})
+
+微信客户端会先根据 logs.json 配置生成一个界面，顶部的颜色和文字你都可以在这个 json 文件里边定义好。紧接着客户端就会装载这个页面的 WXML 结构和 WXSS 样式。最后客户端会装载 logs.js
+多数 API 的回调都是异步，你需要处理好代码逻辑的异步问题。
+
+
+多看看那个Demo的例子。
+** 快捷键
+
+  Ctrl+S：保存文件
+
+  Ctrl+[， Ctrl+]：代码行缩进
+
+  Ctrl+Shift+[， Ctrl+Shift+]：折叠打开代码块
+
+  Ctrl+C Ctrl+V：复制粘贴，如果没有选中任何文字则复制粘贴一行
+
+  Shift+Alt+F：代码格式化
+
+  Alt+Up，Alt+Down：上下移动一行
+
+  Shift+Alt+Up，Shift+Alt+Down：向上向下复制一行
+
+  Ctrl+Shift+Enter：在当前行上方插入一行
+
+     Ctrl+ / : 注释或者取消注释
+
+
+归纳整理的光标操作：
+
+  Ctrl+End：移动到文件结尾
+
+  Ctrl+Home：移动到文件开头
+
+  Ctrl+i：选中当前行
+
+  Shift+End：选择从光标到行尾
+
+  Shift+Home：选择从行首到光标处
+
+  Ctrl+Shift+L：选中所有匹配
+
+  Ctrl+D：选中匹配
+
+  Ctrl+U：光标回退
+** 布局
+   使用的flex布局，看阮一峰的两篇文章就够了，还有Github上有例子。
+** 项目
+   现在的问题是什么？
+   数据也搞了，布局也大致会，我想的是做一个诗词歌赋的小app先。
+
+   界面怎么设计，交互如何做，
+
+   界面设计参照诗词app啊，

@@ -13,6 +13,8 @@
     语法：chown [option] owner objects
     chown alice
     多使用man，习惯性使用man。
+*** chmod详解
+
 ** Time
 *** Set Time
     date +%Y%m%d -s "20120418"
@@ -22,3 +24,14 @@
     先装ImageMagick
     sudo yum install ImageMagick
     之后用identity
+** 如何删除文件夹
+   rm -r yourdir
+** 产生大文件
+   truncate -s 10G foo
+   fallocate -l 5G bar
+** 定时任务Crontab
+   crontab -e
+   然后加入以下内容：
+   0 0 1 * * /usr/bin/certbot renew --force-renewal
+   5 0 1 * * /usr/sbin/service nginx restart
+   0 1 * * * certbot renew
