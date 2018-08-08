@@ -2,7 +2,7 @@
 ** 移动
 *** 字符：
     Del 删除光标前的一个字符
-    C-d 删除光标后的一个字符
+    C-d 删除光标后的一个符
 *** 单词：
     使用M-？
 
@@ -42,6 +42,9 @@
    C-end 跳到文件尾部(M->)
 
    替换M-x replace-string
+
+   创建目录：M-x make-directory
+   或者在Dired模式下，使用+
 ** buffer相关：
    M-x erase-buffer 清空buffer
 

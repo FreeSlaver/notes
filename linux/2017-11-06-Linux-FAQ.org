@@ -35,3 +35,15 @@
    0 0 1 * * /usr/bin/certbot renew --force-renewal
    5 0 1 * * /usr/sbin/service nginx restart
    0 1 * * * certbot renew
+** 性能监控命令
+   top
+   VmStat- Virtual Memory Statistics
+   Lsof- List Open Files
+   Tcpdump-Network Packet Analyzer
+   Netstat-Network Statistics
+   Htop – Linux Process Monitoring ThirdParty
+   Iotop – Monitor Linux Disk I/O
+   Iostat – Input/Output Statistics
+   IPTraf – Real Time IP LAN Monitoring
+   Psacct or Acct – Monitor User Activity
+   Monit – Linux Process and Services Monitoring

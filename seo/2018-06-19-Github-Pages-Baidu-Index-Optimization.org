@@ -1,0 +1,8 @@
+* Github Pages百度收录优化
+** 发在v2ex和ourcoders的文章
+
+
+
+   1. 使用Nginx对百度爬虫请求次数进行限制
+   2. 更好的伪装user agent
+   3. 后续会不会有其他问题，比如通过Host命令进行DNS反向查询？

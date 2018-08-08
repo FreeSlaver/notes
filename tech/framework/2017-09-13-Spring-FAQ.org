@@ -18,3 +18,8 @@
         }
 
 **
+** Spring xml中获取环境变量参数
+   你妈的，这个真是个巨坑，
+   首先在spring的xml配置文件中添加#{systemProperties['zk']}
+   然后用java命令行启动的时候传入参数，记得用-D，并且要立刻在java之后。
+   java -Dzk=127.0.0.1 -jar xxx.jar这样来启动。

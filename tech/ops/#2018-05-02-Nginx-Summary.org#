@@ -1,0 +1,184 @@
+* Nginx总结
+  配置选项被称为directives。
+  Directives are organized into groups known as blocks。
+  ser, worker_processes, error_log, and pid in main context。
+   Sites which are disabled (not being served by NGINX) should be named example.com.conf.disabled.
+   server configuration files will contain a server block
+
+   listen         80 default_server;
+   listen         [::]:80 default_server;
+    The argument default_server means this virtual host will answer requests on port 80 that don’t specifically match another virtual host’s listen statement.
+    The second statement listens over IPv6 and behaves similarly.
+
+    可以配置
+    #处理所有example.com和www.example.com的请求
+    server_name   example.com www.example.com;
+    #处理所有二级域名的请求
+    server_name   *.example.com;
+    server_name   .example.com;
+    #处理所有已example开头的域名example.3gods.com,exmple.fata.com
+    server_name   example.*;
+
+    也可以指定非法的假域名。
+    When a location directive is followed by a tilde (~)
+    以飘号键表明匹配正则表达式。
+    ~* 就大小写不敏感
+    ^~ 表明特定匹配优先级，也就是匹配到了这个就用这个，即使下面有匹配到更加明确的。
+    = 就是精确匹配
+*** 例子
+    location / {
+    root html;
+    index index.html index.htm;
+}
+
+Request: http://example.com/blog/includes/style.css
+
+Returns: NGINX will attempt to serve the file located at /etc/nginx/html/blog/includes/style.css
+
+** 配置
+*** proxy_pass
+
+** 将请求url重定向
+   貌似和index，什么之类的冲突，比如
+   # The rest of your server block
+        root /data/www;
+        index index.html index.htm;
+        location / {
+            proxy_pass http://localhost:4567;
+            try_files $uri $uri/ =404;
+        }
+        这样的话，好像就没撒效果了。不知道是root还是index的原因。
+** 配置文件在
+   /etc/nginx/nginx.conf
+*** 怎么将apache和nginx合起来用？
+** 学习总结
+*** 全配置
+    https://www.nginx.com/resources/wiki/start/topics/examples/full/
+    看了。
+** 怎么将Nginx和Apache http结合使用
+   首先将Apache http的端口改掉，
+   vim /etc/httpd/conf/httpd.conf
+   然后查询Listen
+   /Listen
+  然后将端口80改成8080
+
+  修改Nginx的配置
+  将比如/adduser路径的搞到apache处理，
+  添加一下内容：
+  server {
+        location /adduser {
+          proxy_pass http://localhost:8080;
+        }
+    }
+** 日志
+   error_log logs/error.log warn;
+   warn是日志级别，logs/error.log是日志文件目录。
+   In this case, messages of warn, error crit, alert, and emerg levels are logged.
+   The error_log directive can be also specified at the http, stream, server and location levels and overrides the setting inherited from the higher levels.
+*** 日志在
+    /var/log/nginx目录下
+    在nginx.conf中没有配置绝对路径，日志到这里了
+    /usr/share/nginx/logs/access.log
+    我现在是要将所有HTTP请求信息全部打印出来。
+
+    log_format  main
+    '$remote_addr - $remote_user [$time_local] "$request" '
+    '$status $body_bytes_sent "$http_referer" '
+    '"$http_user_agent" "$http_x_forwarded_for"';
+
+    113.116.141.191 - - [15/Jun/2018:14:26:29 +0800] "GET /hello HTTP/1.1" 404 3652 "-" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.87 Safari/537.36" "-"
+** 草稿
+*** 解决思路
+    首先将Nginx的日志都开启起来，然后搞清楚那2个参数撒意思，
+       然后修改，测试。
+       Github是通过 UA 来判定百度爬虫并返回 403 Forbidden 的。而百度爬虫的 UA 一般是这样的：
+
+       Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+       牛逼。
+
+     1. 现在要做的，支持HTTPS。还有就是最好每个配置文件都分开。
+        配置分开，搞定，然后是HTTPS。不一定所有人都需要HTTPS把？
+     2. 还有就是只能百度抓取，不能被访问
+        后续有没可能ip被封？
+     3. 想想还可能遇到哪些问题？哪些BUG？
+        比如www.xx.com，还有二级域名等等
+        如何限制只让baidu spider访问（还是可以通过agent来控制）
+        所有日志打印，支持https，然后搞个页面就可以了
+
+        记录所有header和body撒都不好搞啊，那先搞https吧。
+        https也不行，妈的，需要不同的域名签发不同的证书啊。
+        不对，不要那么快的说不行，深入的了解下，然后看能否解决。
+
+        先不支持HTTP，可以先上上去，看看反应。
+     4. 搞懂user agent
+
+        麻痹的，整个设计到整个流程就傻逼了。
+        也就是说不能模拟百度爬虫来测试用户的域名所有权，
+        因为DNS商户都是通过反向DNS查找（reverse DNS lookup）来得到相关信息的。
+        运行命令：
+        $ host 123.125.66.120
+        得到结果：
+        120.66.125.123.in-addr.arpa domain name pointer
+        Baiduspider-123-125-66-120.crawl.baidu.com.
+        哦，原来TM的百度自己也不能校验，只能通过修改网站的一些内容来搞。
+        但是我怎么知道了，他加的百度东西是多少？
+        而且xxx，所以我也只能使用baidu相同的方式了。
+        草，蛋疼，要不先放放？
+        首先用户界面上请求，然后会返回一个特殊的字符串，然后让用户去index.html
+        中添加，然后点击校验，域名和这个特殊字符串要对应起来。
+
+        校验通过后，输入Githubpage的url，然后生成nginx的东西，然后就行了。
+        先把这个上上去再说，蛋疼的很啊。但是。。哎
+
+        我发现真是难，做事情真是难。
+
+
+     写个简单的文档，然后举例子，示例。
+     第一步是干什么？第一步是去百度添加网站，
+     不对，第一步应该是去DNSPOD中添加一个A记录
+
+     将这个改成js异步提交的东西。
+     现在要将这个改成js异步提交。
+
+     <div class="alert alert-success" role="alert"  id="successMsg">添加成功</div>
+<div class="alert alert-danger" role="alert" id="failMsg">添加失败</div>
+
+对啊，可以直接github上拉代码，然后编译啊，然后需要的maven依赖什么的，从中央私服库搞下来不就完了？
+
+**** 搞清楚几个问题
+     1. github pages为何封杀baidu spider DONE
+        说是违反规则，抓取太频繁等原因
+     2. 如何限流百度的抓取次数
+
+     3. 除了baidu spider其他禁止访问。
+     4. user agent搞懂  DONE
+        用户客户端，主要包含应用类型，操作系统，软件发行商，软件版本，
+        User-Agent switcher 插件
+
+       还需要优化的点
+
+     在V2EX和ourcodes上发篇文章，
+     将代码搞完，
+** 限制请求次数
+   http{
+       # limit_req_zone必须放在http这个context下
+       # 开辟10M内存共享区域perip，然后以远程客户端ip为key，频率控制在平均1秒1个请求
+       limit_req_zone $binary_remote_addr zone=perip:10m rate=1r/s;
+       limit_req_zone $server_name zone=perserver:10m rate=10r/s;
+
+       server {
+           ...
+           # 对此server应用perip的区域，每秒最大请求5个，无延迟，超过的请求直接丢弃
+           # 不对，妈的burst=5表示之前超量后，最多在将5个请求丢到延迟队列中。
+           limit_req zone=perip burst=5 nodelay;
+           limit_req zone=perserver burst=10;
+       }
+   }
+
+
+** Cook Book
+*** Part3
+**** Chapter 29
+NGINX allows you to divide access
+logs into different files and formats for different contexts and to
+change the log level of error logging

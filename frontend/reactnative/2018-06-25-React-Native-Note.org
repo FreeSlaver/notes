@@ -1,0 +1,38 @@
+* React Native笔记
+  Install
+  npm install -g create-react-native-app
+
+  Create Project # windows上有问题
+  create-react-native-app AwesomeProject
+  需要将npm的路径添加到环境变量中。
+
+  yarn start前需要输入
+  sudo sysctl -w fs.inotify.max_user_instances=1024
+  sudo sysctl -w fs.inotify.max_user_watches=12288
+** 什么鸟Expo
+   需要装个开发客户端，还要装个手机客户端。
+
+   需要一个什么Expo的客户端。
+
+   麻痹的，是相当的复杂啊，我曹，必须要先将node的服务器启动起来，
+   然后搞个什么鸟Expo，然后还要桌面端部署，IOS还要下载那个APP应用才能搞。
+   我曹，TM的还要搞个顺序，真是疯了。
+
+   先启动node server，然后是Expo Desktop，然后是手机上看。
+   每次都要Building JavaScript bundle 非常慢，我RTM的。
+
+   然后手机这边还要不断下载，我曹，真TM日了狗，这是程序员干的事情吗？
+
+   可以热部署，这点算是拯救我了。我曹。
+   项目放在C:\Users\00013708\AwesomeProject
+   而且TM的还必须要在一个局域网，坑。
+
+   如果是后端开发人员的话，前端首选ts，不要原生js，ts语法像Java，后端容易上手，写的代码很容易维护。想试坑可以玩NS
+   如果是前端开发人员，angular方向也必然要选ts，APP个人推荐ionic3（当前版本3.9.2），官方计划处4.0了，还有干其他事情，具体看官方Ionic: 2017-18 Roadmap 。另外推荐阅读Ionic框架开发者调查报告：Ionic Framework - 2017 Developer Survey。
+** Ionic
+   npm install -g ionic cordova
+   ionic start helloWorld blank
+   cd helloWorld
+   ionic serve
+   # 开始一个新App
+   ionic start MyIonicProject tutorial

@@ -1,0 +1,27 @@
+* 自建图床
+  使用Lychee
+
+  先安装：
+  https://github.com/electerious/Lychee/blob/master/docs/Installation.md
+  PHP的插件开启这几个：
+  session, exif, mbstring, gd, mysqli, json, zip
+  我直接是在php.ini里面添加的
+  extension=session
+  这样
+
+  参数改下：
+  max_execution_time = 200
+post_max_size = 100M
+upload_max_size = 100M
+upload_max_filesize = 20M
+memory_limit = 256M
+
+支持的文件类型：
+
+** 配置
+   所有配置存在数据库中。
+*** 数据库Mysql
+    在data/config.php中，安装后才会有这个文件。
+** 错误信息
+   可以再http://198.74.48.82/Lychee/plugins/Diagnostics/index.php
+   这里看。

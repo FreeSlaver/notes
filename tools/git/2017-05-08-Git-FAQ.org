@@ -32,3 +32,8 @@
 
 ** idea git怎么和远程repository比较
    在TM的最右下角，找到远程的仓库，然后compare之后点开diff面板。
+
+** jgit 如何clone
+   Git git = Git.cloneRepository()
+  .setURI( "https://github.com/eclipse/jgit.git" )
+  .call();

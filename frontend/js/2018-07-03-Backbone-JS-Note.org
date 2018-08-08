@@ -1,0 +1,35 @@
+* Backbone JS笔记
+** 核心概念
+   structure
+   models：k-v，
+   collections
+   views
+
+   one of the first things you learn is to stop tying your data to the DOM
+   With Backbone, you represent your data as Models, which can be created, validated, destroyed, and saved to the server.
+   Whenever a UI action causes an attribute of a model to change, the model triggers a "change" event;
+   all the Views that display the model's state can be notified of the change, so that they are able to respond
+   accordingly, re-rendering themselves with the new information.
+
+   Model是数据层，View是展示层，UI交互导致数据变化，Model会触发一个change事件，
+   所有的View能得到通知，并且通过重新渲染reRendering来展示数据变化。
+
+   Design your models as the atomic reusable objects containing all of the helpful functions for manipulating their particular bit of data. Models
+   should be able to be passed around throughout your app, and used anywhere that bit of data is needed.
+
+
+   A Collection helps you deal with a group of related models,
+
+   var Books = Backbone.Collection.extend({
+       url: '/books'
+   });
+
+   GET  /books/ .... collection.fetch();
+   POST /books/ .... collection.create();
+   GET  /books/1 ... model.fetch();
+   PUT  /books/1 ... model.save();
+   DEL  /books/1 ... model.destroy();
+** Model
+** View
+   without having to redraw the page. Instead of digging into a JSON object, looking up an element in the DOM,
+   and updating the HTML by hand, you can bind your view's render function to the model's "change" event

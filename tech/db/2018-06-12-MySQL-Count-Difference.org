@@ -1,0 +1,1 @@
+* MySQL SELECT Count(*) VS Count(1)的区别

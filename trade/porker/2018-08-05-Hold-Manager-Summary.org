@@ -1,0 +1,9 @@
+* Hold Manager使用总结
+  
+** Database
+   数据库主要有个云同步，还有可以优化。
+
+** Site Setup
+   是设置扑克网站相关的。
+** Settings
+   

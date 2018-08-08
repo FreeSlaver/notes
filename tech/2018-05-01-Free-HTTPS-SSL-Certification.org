@@ -1,43 +1,25 @@
 * 免费的HTTPS SSL证书
-  Let's Encrypt
-  https://letsencrypt.org/
-** 正文
-   安装Nginx
-   yum install epel-release
-   yum install nginx
-
-   下载Let's Encrypt SSL
+  微信小程序必须绑定支持HTTPS的域名，我们 [[https://letsencrypt.org/][使用 Let's Encrypt]] 来实现。
+  本文机器是centos 6.8。
+** 安装下载必要组件
+*** 1. 安装Nginx
+    yum install epel-release
+    yum install nginx
+*** 2. 下载Let's Encrypt SSL
     yum install git
     cd /opt
     git clone https://github.com/letsencrypt/letsencrypt
-
-    为Ngnix生成免费的证书
-    用插件完成，必须保证80端口可用，
+*** 3. 为Ngnix生成免费的证书
+    用插件完成，必须保证80端口可用，所以务必停掉Nginx和Apache之类的
     cd letsencrypt
-    ./letsencrypt-auto certonly --standalone -d your_domain.tld -d www.yourdomain.tld
-
-    为Ngnix安装证书
+    ./letsencrypt-auto certonly --standalone -d yourdomain.tld -d www.yourdomain.tld
+    yourdomain替换成你自己的域名，可以是二级域名。后续要去添加DNS解析。
+*** 4. 为Ngnix安装证书
     证书文件存放放/etc/letsencrypt/lives目录下
-    2018-07-31过期，冲洗跑一次letsencrypt-auto命令，或者./letsencrypt-auto renew自动
 
-    vi /etc/nginx/nginx.conf
-
-
-    重启Ngnix
-    systemctl restart nginx
-    service nginx restart
-
-
-    自动化重新生成证书：
-    使用crontab -e命令，添加以下内容
-    0 0 1 * * /usr/bin/certbot renew --force-renewal
-    5 0 1 * * /usr/sbin/service nginx restart
-   ACEM协议，
-** 参考文章与扩展阅读
-   [[https://www.tecmint.com/setup-https-with-lets-encrypt-ssl-certificate-for-nginx-on-centos/][Setting Up HTTPS with Let’s Encrypt SSL Certificate For Nginx on RHEL/CentOS 7/6]]
-
-
-   server {
+    vim /etc/nginx/nginx.conf
+    添加一下内容
+       server {
     listen 80;
     listen [::]:80;
     server_name data.3gods.com
@@ -64,5 +46,17 @@ server {
         index index.html index.htm;
         location / {
                 try_files $uri $uri/ =404;
+                }
         }
-}
+
+    重启Ngnix
+    service nginx restart
+*** 5. 自动化重新生成证书：
+    因为letsencrypt会自动过期，可以使用linux的crotab。
+    使用crontab -e命令，添加以下内容
+    0 0 1 * * /usr/bin/certbot renew --force-renewal
+    5 0 1 * * /usr/sbin/service nginx restart
+
+    也可以使用./letsencrypt-auto renew命令自动续期。
+** 参考文章与扩展阅读
+   [[https://www.tecmint.com/setup-https-with-lets-encrypt-ssl-certificate-for-nginx-on-centos/][Setting Up HTTPS with Let’s Encrypt SSL Certificate For Nginx on RHEL/CentOS 7/6]]

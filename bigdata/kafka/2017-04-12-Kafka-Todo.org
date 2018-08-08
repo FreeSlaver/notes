@@ -1,7 +1,23 @@
 * kafka todo list
 ** 10篇以上高质量的博文
-   1.kafka分享
-   2.
+*** Kafka Producer 3
+*** Kafka Consumer 4
+*** Kafka Config
+*** Kafka Broker
+*** Kafka Connect
+*** Kafka Log
+*** Kafka Command 再做这个
+*** Kafka Monitor 先做这个
+*** Kafka Example
+*** Kafka Resource 资源介绍
+*** Kafka Intro
+*** Kafka 如何学习
+*** Kafka教程之Kafka安装运行
+*** Kafka教程之Kafka配置详解
+*** Kafka教程之
+
+** Documentation笔记
+
 ** kafka源码研读
 
 ** kafka的架构玩法和其他系统的整合

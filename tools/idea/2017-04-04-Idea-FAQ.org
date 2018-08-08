@@ -69,3 +69,7 @@ http://www.cnblogs.com/Brake/p/create_maven_multi_module_project_via_intellij_id
 </build>
 
     *注意那个targetProject的值。写绝对路径？*
+
+** 比较2个文件异同
+  我曹，很强大啊，可以比对文件，文件夹，数据库对象。
+  还能比较粘贴板和文件，

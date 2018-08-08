@@ -1,0 +1,2 @@
+* Windows Emacs安装
+  直接去官网下载，然后点击runemacs.exe就行了。只是目前的界面撒的都不好看啊。

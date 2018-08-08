@@ -1,0 +1,48 @@
+* Kakfa官方文档笔记
+** 1.1 Intro
+   3个关键能力
+   1. 发布和订阅流式数据，类似MQ
+   2. 将流式数据以高容错的可靠方式存储
+   3. 处理流式数据
+
+   2个主要方面应用
+   1. 构建多系统，多应用间的实时数据流通道
+   2.构建实时的数据流转换，处理应用
+
+   4个主要方面的APIs：
+   Producer API:用于发布流式数据到Kafka集群的Topics中。
+   Consumer API:用于定于1到多个Topics并处理数据
+   Streams API:类似流式处理器，消费输入1到多个Topics的数据然后输出到1到多个Topics
+   Connector API:用于构建和运行可复用的Producers和Consumers，以连接Kafka的Topics数据和外部的数据系统。
+*** Topics and Logs
+    一个Topic是一个分类，记录发送过去的。多订阅。
+    每一个Partition都是一个有序的，不可变序列的记录集，持续性添加到一个有结构的
+    提交日志。每个记录都被分配一个唯一的序列id，称作offset，用来在当前partition来区分这条记录。
+
+    Kafka集群持续性的持久化所有发布的记录，不管是否被消费，然后使用可配置的时间保留机制
+    ，当超出保留时间后就会被删除。Kafka的性能常亮的，因此数据量过大并没什么影响。
+
+    事实上，每个Consumer只需要维护的元数据就是offset，随着消费，offset会向前线性推进，
+    但事实上，consumer可以以任意方式来消费记录(Recorder)。
+
+    这些特性表明consumer非常轻量，它们的加入和离开，对整个集群和其他消费者没有任何影响。
+
+    partitions有几个作用，首先，它们可以切割到一定的大小。
+    其次，它们可以以类似并行的机制运作。
+
+    首先可以将日志进行切割使得单机能够存储，第二，以并行的方式运作，比如添加记录，
+    并行消费等。
+
+    partition可配置几个相同的副本，并被分不到Kafka集群的不同机器上，保证此partition
+    服务的高可用，
+    每个partition有一到多个replication（副本），但是只有一个leader partition，
+    负责所有的读写操作，其他的副本成为flolowers partition，只负责复制leader。
+
+    当leader挂掉，某个follower会自动被选为新的leader。
+    每个server上都有一些leader partition和一些follower partiton以达到较好的负载均衡。
+
+    Geo复制 TODO
+*** Producers
+    Produer负责向Topic生产数据，并决定发送到Topic的那个Partition上，可通过round-robin
+    或者字段key的hash值。
+*** Consumers

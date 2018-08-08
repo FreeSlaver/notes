@@ -1,0 +1,6 @@
+* Sparkjava MVC框架搭建
+** 静态文件
+   staticFiles.location("/public");
+   然后这个public文件夹应该建立在？resource目录下，然后html中就直接使用/css/app.css就行，不用这个public了。
+** 草稿
+   首先第一个是要居中，怎么居中？

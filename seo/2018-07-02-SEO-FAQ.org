@@ -1,0 +1,55 @@
+* SEO FAQ
+** 标题
+   h1 定义网站标题，h2 来定义文章标题，h3 来定义侧边栏目标题，文章时间
+   仅从 SEO 方面来说，只需要注意在 h1,h2,h3 中出现关键词就行了
+** 网站标题
+   4. title避免多次重复，例如：“苏州seo_苏州seo优化_苏州seo外包_苏州seo推广”，这样的重复意义不是太大，
+   不妨使用：“苏州seo优化_外包_推广_xx网”这样的形式，对于关键词匹配影响不大，却能提升搜索结果展示体验和专业程度，提高点击率
+
+5. description你可以理解为，用title中的关键词很自然的造个句，另外加入你的营销内容和品牌信息即可
+
+   刚看完了，主要是title，description，keywords
+   keywords可以不写，
+   description就是以上面的title造句  70到80 个字
+   title最重要，主要是考虑到互联网一个网站是金字塔架构，然后想好你网站的主题，
+   比如：苏州seo优化_外包_推广_宋鑫的官网  30个字  25最好
+   这就是一个较好的标题，
+
+   想想我自己网站的主题：编程，教程，股票，投机，期货，交易，
+
+   想想别人是会如何来搜索，看到后，会点进来
+   title:
+   写作_编程_市场交易_职场_教程_思考_成长_创造_宋鑫的官网
+
+   description：
+   以上面的关键字造句。
+   编程写作，扩展思维边界；市场交易，磨炼心性智慧；成长创造，追求人生自由；
+   编程写作,扩展思维边界;市场交易,磨炼心性智慧;思考创造,追求人生自由。
+
+   网站的title是说的包含文章的title和网站的title也就是site title。
+
+*** 问题
+    我直接用site:3gods.com中看，得到的结果是，
+    1. 本文原创于XXX被搞到描述里面去了。
+    2. 作者，发布时间也在里面，
+    3. 描述最好一定要写，不然都是目录。
+
+    *我还发现了一点，就是如果网站内容有喵点的话，会在搜索结果下显示。*
+
+** Description和Keywords
+   每篇文章的最好都要写上。
+
+** 网站logo的处理，图片的处理
+   The image must be 112x112px, at minimum.
+   The image URL must be crawlable and indexable.
+   The image must be in .jpg, .png, or. gif format.
+
+   stackoverflow 网站是32*32，苹果什么的是158*158
+   <link rel="apple-touch-icon image_src" href="https://cdn.sstatic.net/Sites/stackoverflow/img/apple-touch-icon.png?v=c78bd457575a">
+
+
+   <link rel="fluid-icon" href="https://github.com/fluidicon.png" title="GitHub">
+   <link rel="mask-icon" href="https://assets-cdn.github.com/pinned-octocat.svg" color="#000000">
+    <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
+
+    github也是32*32，然后有个svg的，有个什么fluid，

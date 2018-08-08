@@ -1,5 +1,14 @@
 * CentOS开发环境搭建
   yum groupinstall -y development
+** 获取外网ip
+   curl ipinfo.io/ip
+** ip地理位置查询
+   sudo yum install geoip
+   geoiplookup 23.66.166.151
+** 安全
+   妈的，总有些人没事干啊，
+*** 日志
+    /var/log/secure
 
 ** 安装ruby
    使用RVM(Ruby Version Manager)来安装
@@ -29,3 +38,84 @@
    放在/usr/local/bin/fwall-rules这个文件中。
    需要加开放的端口，直接在文件中添加就行了
    ${IPTABLES} -A INPUT -p tcp --dport xxport  -m state --state NEW -j ACCEPT
+
+   然后重新执行命令，应用最新改变
+   fwall-rules
+
+   日志在：/var/log/message文件中
+
+** 安装PHP最新版本
+   yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm
+   yum install http://rpms.remirepo.net/enterprise/remi-release-6.rpm
+   yum install yum-utils
+   yum-config-manager --enable remi-php72
+   yum install php php-mcrypt php-cli php-gd php-curl php-mysql php-ldap php-zip php-fileinfo
+
+** 修改系统时间和时区
+rm -rf /etc/localtime
+ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+vi /etc/sysconfig/clock
+输入
+ZONE="Asia/Shanghai"
+UTC=false
+ARC=false
+//这一步没成功啊
+Write the system time into the hardware clock.
+
+hwclock --systohc --localtime
+
+
+安装ntp，貌似是一个互联网时间同步的东西
+sudo yum install ntp
+
+** 禁用root，新建用户，使用ssh登录
+   adduser sx
+   passwd sx1378@$&
+   添加用户到wheel组，有sudo权限
+   usermod -aG wheel sx
+   （centos 6这个不行，必须手动添加，执行visudo 命令，）
+   可以把wheel前的注释去掉，
+   ## Allows people in group wheel to run all commands
+   %wheel        ALL=(ALL)       ALL
+   或者将用户加到此列下面
+   ## Allow root to run any commands anywhere
+   root    ALL=(ALL)       ALL
+   sx    ALL=(ALL)       ALL
+
+   切换用户
+   su sx
+   校验权限
+   sudo ll /root
+   不行，会提示找不到这个ll命令，可以使用ls -a
+
+   妈的，暂时就这样吧。
+
+*** ssh ip 限制
+
+*** 禁用ssh root登录
+     /etc/ssh/sshd_config
+     # Prevent root logins:
+     PermitRootLogin no
+     service sshd restart
+
+     添加可以登录的用户，使用空格区分
+     AllowUsers sx
+
+     改端口
+** 上传文件
+   妈的，改了ssh端口到2246,然后ftp不能登录，然后及时登录了也不能上传文件，
+   然后使用了另外的工具
+   yum -y install lrzsz
+   rz
+   然后有窗口打开，可以上传文件。
+** Apache
+*** 修改端口
+    vim /etc/httpd/conf/httpd.conf
+    修改到8081
+
+    还有配置文件在：
+    /etc/httpd/conf.d目录下
+** 重启时，自动重启服务
+   使用Monit这个工具
+   yum install monit
+   /etc/init.d/monit start

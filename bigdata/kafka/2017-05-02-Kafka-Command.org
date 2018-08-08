@@ -63,6 +63,8 @@ cat topic-to-move.json
 ** Consumer
 *** 建立消费者接受消息
     bin/kafka-console-consumer.sh --bootstrap-server 10.33.2.228:9090,10.33.2.71:9090,10.33.2.185:9090,10.33.2.91:9090,10.33.2.63:9090 --topic smTopic --from-beginning
+    bin/kafka-console-consumer.sh --bootstrap-server 127.0.0.1:9090 --topic sms-message-report-new  --from-beginning
+    kafka-console-consumer.bat --bootstrap-server 127.0.0.1:9090 --topic sms-message-report-new  --from-beginning --zookeeper 127.0.0.1:2181
 
 *** 删除消费者
 bin/kafka-consumer-groups.sh --zookeeper 10.45.130.186:2181,10.45.130.187:2181,10.45.130.189:2181 --delete --group api-exception
