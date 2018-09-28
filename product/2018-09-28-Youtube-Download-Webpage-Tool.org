@@ -1,0 +1,6 @@
+* Youtube下载工具开发
+  首先是python的web框架，如何post form之类的example。
+  然后后台调用youtube-dl下载，放到apache目录，多少分钟后删除。
+
+
+  之后是如何推广？

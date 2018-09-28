@@ -1,0 +1,2 @@
+* PHP FAQ
+  握草，之前有个php faq的。

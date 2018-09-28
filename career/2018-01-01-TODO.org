@@ -1506,3 +1506,37 @@ OK，项目跑起来了。
 **** TODO 弄清楚跨域请求，jsonp等
 **** TODO 拔毛
 **** TODO 写篇文章
+** 2018年9月
+*** 9月27日
+    坚决不用rm -rf 操作，可以先移动到一个文件夹，之后去那个文件夹在删除
+**** DONE csapp 2.5小时 done
+     CLOSED: [2018-09-27 Thu 16:49]
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2018-09-27 Thu 16:49]
+     :END:
+**** DONE 今晚time machine备份
+     CLOSED: [2018-09-28 Fri 10:16]
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2018-09-28 Fri 10:16]
+     :END:
+**** DONE 今天上午浪费了宝贵的2小时，人太累
+     CLOSED: [2018-09-28 Fri 10:16]
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2018-09-28 Fri 10:16]
+     :END:
+*** 9月28日
+**** TODO 研究逻辑是什么
+**** TODO youtube reverse engine
+**** TODO csapp 2个小时
+**** CANCELLED 游泳2小时
+     CLOSED: [2018-09-28 Fri 13:52]
+     :LOGBOOK:
+     - State "CANCELLED"  from "TODO"       [2018-09-28 Fri 13:52] \\
+       感觉不能游泳，很累
+     :END:
+**** DONE 找本道氏理论的书籍看看，还有股市趋势技术分析
+     CLOSED: [2018-09-28 Fri 10:41]
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2018-09-28 Fri 10:41]
+     :END:
+     还是看英文版本的吧

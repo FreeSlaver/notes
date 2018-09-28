@@ -1,0 +1,64 @@
+* Python FAQ
+** python vritual Environments
+*** pipevn
+    使用pip安装东西。
+    pip install --user pipenv
+
+    查看python执行路径
+    python -m site --user-base
+
+    mac目录
+    /Users/songxin/Library/Python/2.7/bin
+
+    配置path在mac的~/.bash_profile里面之后就能使用pipenv了。
+    pipenv是用来管理单个项目的依赖的。
+
+    然后执行命令的时候，要这样，感觉不太友好啊！
+    pipenv run python main.py
+*** virtualenv
+    类似java用的maven啊，就是一个依赖管理工具，里面有很多python包。
+    不对。
+
+    应该就是单独为这个项目搞了一个python和pip环境。
+    virtualenv my_project
+
+    默认是2.7的，可以设置：
+    virtualenv -p /usr/bin/python3.7 my_project
+
+    使用虚拟环境前，先激活
+    source my_project/bin/activate
+    关闭虚拟环境
+    deactivate
+
+    删除虚拟环境，直接删除文件夹my_project
+    获取当前环境的依赖列表：
+    pip freeze > requirements.txt
+    直接安装相同的包依赖
+    pip install -r requirements.txt
+*** virtualenvwrapper
+    默认是搞到~/.local撒的下面，
+    创建一个虚拟环境，这个貌似依赖WORKON_HOME，
+    $ mkvirtualenv my_project
+
+    在虚拟环境上工作：
+    $ workon my_project
+
+    创建项目：需要先设置PROJECT_HOME
+    mkproject myproject
+
+    停止是一样的：
+    $ deactivate
+    删除：
+    $ rmvirtualenv my_project
+*** virtualenv-burrito
+    brew install autoenv
+    当您 cd 进入一个包含 .env 的目录中，就会 autoenv 自动激活那个环境。
+** python常用语法
+*** 发送http
+    import requests
+    response = request.get(url)
+    print(response);
+*** 格式化json
+    response.json()
+*** 从json中取出元素，其实也就是从map中取元素
+    response.json()['origin']
