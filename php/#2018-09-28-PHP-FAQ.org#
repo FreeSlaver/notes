@@ -1,0 +1,22 @@
+* PHP FAQ
+  握草，之前有个php faq的。
+** PHP环境配置
+*** debug
+**** max下面
+     安装xampp
+     修改配置：
+     brew install homebrew/php/php72-xdebug
+
+     http://www.biliyu.com/article/1143.html
+     
+     mac下直接这样就行：
+     pecl install xdebug
+
+     mac brew安装的php的php.ini文件在/usr/local/etc/php/7.2/php.ini
+     zend.assertions = 1
+     zend_extension="xdebug.so"
+     zend_extension=php_xdebug.dll
+
+     
+** PHP Get
+   
