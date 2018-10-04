@@ -1,0 +1,8 @@
+* Mac FAQ
+** 得到文件绝对路径
+   Option+Command+C
+
+   显示文件绝对路径，terminal输入：
+   defaults write com.apple.finder _FXShowPosixPathInTitle -bool YES
+** terminal open finder
+   open .

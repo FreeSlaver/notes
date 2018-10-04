@@ -54,6 +54,8 @@
     brew install autoenv
     当您 cd 进入一个包含 .env 的目录中，就会 autoenv 自动激活那个环境。
 ** python常用语法
+*** 特殊符号
+    ;估计是认为结束符
 *** 发送http
     import requests
     response = request.get(url)
@@ -62,3 +64,19 @@
     response.json()
 *** 从json中取出元素，其实也就是从map中取元素
     response.json()['origin']
+*** 遍历
+    for x in arr
+        print(x)
+*** 文件读取到字符串
+    content = open(your_file).readlines()
+*** 字符串是否在文件中
+    if 'balana' in open('example.txt').read():
+        print('true')
+** python乱码
+   使用codecs这个包。
+** 查询manu，官方doc，github这些才是正确的学习方式
+** 注意事项
+   app = Flask(__name__)
+   这里他妈的都是2个下划线。
+
+   from + import来导入包中的部分模块。

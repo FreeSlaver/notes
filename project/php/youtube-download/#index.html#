@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Youtube-Downloade</title>
+</head>
+<body>
+
+<form method="post" action="download.php" target="_blank">
+    <label for="youtubeUrl"></label>
+    <input type="text" name="youtubeUrl" id="youtubeUrl" required autofocus >
+    <input type="submit" value="确定">
+</form>
+
+</body>
+</html>

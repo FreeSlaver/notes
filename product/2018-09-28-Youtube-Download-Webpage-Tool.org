@@ -4,3 +4,14 @@
 
 
   之后是如何推广？
+** 工具里面重要的几个api
+*** 下载指定格式
+    youtube-dl -f best/mp4 Y6n5gdrvpvo
+*** 获取url
+    youtube-dl -g Y6n5gdrvpvo
+*** 获取可下载列表
+    youtube-dl -F Y6n5gdrvpvo
+** 问题
+   我发现在寻找bootstrap模板的时候涉及到用户的心理。
+
+   功能1：直接黏贴一个url，得到界面，

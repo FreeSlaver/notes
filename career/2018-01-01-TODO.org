@@ -1540,3 +1540,73 @@ OK，项目跑起来了。
      - State "DONE"       from "TODO"       [2018-09-28 Fri 10:41]
      :END:
      还是看英文版本的吧
+
+
+     草，发现连个下载的都搞不了。
+     自己好好想想，给到一个url，然后下载下来，想想那个pytho的http server。
+
+*** 9月29日
+    怎么做？首先做原型？没必要，直接抄袭就行。
+    功能：
+    1. 给一个url能下载 done
+    2. 添加搜索功能，列表界面  一天时间
+    3. 详情页面，也就是查询具体详情的。 2天时间
+
+    推广
+*** 9月30日
+** 2018年10月
+*** 10月1日
+**** DONE 看千面英雄，还剩30页，晚上看完
+     CLOSED: [2018-10-02 Tue 13:34]
+     :LOGBOOK:  
+     - State "DONE"       from "TODO"       [2018-10-02 Tue 13:34]
+     :END:      
+**** DONE 帮老头下载歌曲
+     CLOSED: [2018-10-02 Tue 13:35]
+     :LOGBOOK:  
+     - State "DONE"       from "TODO"       [2018-10-02 Tue 13:35]
+     :END:      
+
+*** 10月2日
+    这个月的任务就是完成思维比较的初稿，这是首要任务
+    将那个youtube下载的东西先搞了。
+**** TODO 今天的任务是搞一个界面，
+
+     俺们这老百姓 没有
+     
+*** 10月3日
+**** TODO 完成paste后的页面
+     OK,html搞定了，然后是测试数据传送。
+     后台数据拿到了，之后调用youtube-dl
+
+     那个什么f之类的东西，用的是ydl_opts，在里面写好就行了。
+     怎么将输出到console的搞到变量？
+
+     好难搞啊。握草，一个简单的事情远远比我想象的复杂。
+
+     这个过程中，还要考虑用户交互，蛋疼的很。
+
+     用户输入一个链接，然后得到
+     youtube-dl --get-url https://www.youtube.com/watch?v=BaW_jenozKc
+     直接获取url。
+     
+
+     这个前端做的很有问题啊。先应该是有画个原型。
+     前端问题很大，主要是布局。所以各个攻破，学习布局。
+
+     主要是要思考清楚。
+extract_flat:      Do not resolve URLs, return the immediate result.
+                       Pass in 'in_playlist' to only show this behavior for
+                       playlist items.
+
+                    force_url得到的的确是最后的视频地址，但是没声音啊。
+
+     还是不能得到一个播放的链接啊。
+
+*** 10月4日
+**** TODO 开始做搜索功能
+**** TODO 写大纲
+**** TODO 写完一篇文章
+**** TODO 弄清楚layout
+**** TODO 看stack上面关于youtube-dl的问答
+
