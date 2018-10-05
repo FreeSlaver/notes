@@ -1603,10 +1603,23 @@ extract_flat:      Do not resolve URLs, return the immediate result.
 
      还是不能得到一个播放的链接啊。
 
+     
 *** 10月4日
-**** TODO 开始做搜索功能
-**** TODO 写大纲
+    OK,布局搞定，现在要做的是传输数据。
+    首先是页面输入的url
+
+**** DONE 写大纲
+     CLOSED: [2018-10-04 Thu 19:42]
+     :LOGBOOK:  
+     - State "DONE"       from "TODO"       [2018-10-04 Thu 19:42]
+     :END:      
 **** TODO 写完一篇文章
 **** TODO 弄清楚layout
-**** TODO 看stack上面关于youtube-dl的问答
+**** DONE 看stack上面关于youtube-dl的问答
+     CLOSED: [2018-10-04 Thu 11:08]
+     :LOGBOOK:  
+     - State "DONE"       from "TODO"       [2018-10-04 Thu 11:08]
+     :END:      
 
+*** 10月5日
+**** TODO 开始做搜索功能
