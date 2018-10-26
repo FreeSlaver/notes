@@ -64,3 +64,24 @@
    用了request.data之后，request.form里面的东西也会没有。
 
    如果直接提交form的话，data是null。
+** flask 引入html页面
+   {% include 'banner.html' %}
+
+   有没有一些通用的框架？每次都要学些新东西。
+
+   那么这个include和集成机制有什么区别？
+   也就是子template要覆盖的部分就用block之类的，然后在子template中覆盖。
+** flask模板继承
+   {% extends "base.html" %}
+
+   现在要做的是：这个body怎么弄？还是include？
+** Broken pip
+   需要结合WSGI使用，并且加上app.run(threaded=True)
+
+   https://stackoverflow.com/questions/12591760/flask-broken-pipe-with-requests
+   参考这个链接
+** 字符串
+*** contains
+if x in y
+*** multiple contains
+if any(x in str for x in a):

@@ -80,3 +80,9 @@
    这里他妈的都是2个下划线。
 
    from + import来导入包中的部分模块。
+** 源文件里面有中文字符
+   第一行添加# -*- coding: UTF-8 -*-
+** 读取yaml成为dict
+*** mac os
+    brew install libyaml
+    sudo python -m easy_install pyyaml
