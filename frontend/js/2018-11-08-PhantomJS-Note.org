@@ -1,0 +1,30 @@
+* PhantomJS 笔记
+  QtWebKit，
+** 用途
+   Page自动处理，可以配合jquery等操作数据。
+*** 截图
+
+*** 自动化测速
+*** 网页加载监控
+** 安装
+   以centos 6为例：
+   前置依赖：
+   yum install fontconfig freetype freetype-devel fontconfig-devel libstdc++
+   下载：
+   wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2
+   新建目录：
+   mkdir -p /opt/phantomjs
+   解压：
+   tar -xjvf ~/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2 --strip-components 1 /opt/phantomjs/
+   创建软连接：
+   ln -s /opt/phantomjs/phantomjs-2.1.1-linux-x86_64/bin/phantomjs /usr/bin/phantomjs
+   安装后测试
+   phantomjs /opt/phantomjs/phatomjs-2.1.1-linux-x86_64/examples/hello.js
+** 问题
+   ReferenceError: Can't find variable: Set,define
+   需要升级那个QtWebKit
+
+
+
+** 相关资源
+   https://github.com/knplabs/snappy

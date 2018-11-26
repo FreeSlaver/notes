@@ -1,0 +1,19 @@
+* Html Converter
+** 将html转图片
+   https://wkhtmltopdf.org/
+
+   对中文支持不行啊
+
+   想搭建一个php网页，但是尼玛的，不行。
+   操，先不搞这个了。
+** 将html转pdf
+
+** 中文乱码的问题
+   中文，转成图片后变成乱码方块，请安装相关字体
+   centos:
+   yum install wqy-zenhei-fonts
+   ubuntu:
+   apt-get install fonts-wqy-microhei ttf-wqy-microhei fonts-wqy-zenhei ttf-wqy-zenhei
+** 参考资料和扩展阅读
+   https://segmentfault.com/a/1190000011559379
+   https://github.com/wkhtmltopdf/wkhtmltopdf/issues/2886

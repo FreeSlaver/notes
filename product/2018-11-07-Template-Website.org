@@ -1,0 +1,75 @@
+* 模板网站
+  首先是搞一个模板做模板网站，
+  之后去到处收集网站模板，提供预览，付费，下载功能，之后添加i18n，付费下载功能。
+** 收集素材
+*** jekyll
+    先来手机jekyll的模板
+    坚持，不管是否赚钱，先做出来，就是成功。
+
+    那个撒jekyll themes需要加搜索，改语言，还有各种标签目录，等等。
+
+*** wordpress
+*** html
+    html5 themes git
+    https://github.com/rekysda/html5themesgit
+    非常好的一个git，里面大量html5的模板，
+
+    后台管理：
+     b4
+     https://github.com/modularcode/modular-admin-html
+     单页
+     https://github.com/BlackrockDigital/startbootstrap-creative
+
+
+     https://github.com/BlackrockDigital/startbootstrap
+     这个是单页的bootstrap的模板，也是可以用jekll构建的。
+
+     https://github.com/surjithctly/documentation-html-template
+     一个文本的，直接下载，
+     demo：http://surjithctly.github.io/documentation-html-template/
+     download：https://github.com/surjithctly/documentation-html-template/archive/master.zip
+
+
+     后台数据展示
+     demo：https://tabler.io/tabler/
+     download:https://github.com/tabler/tabler/archive/dev.zip
+
+     google手机适应：
+     https://github.com/ageitgey/amplify
+
+** 问题
+   就是jekyll，bs，html的那个不一样，但是可以放到一个域名下，
+   然后用nginx代理，而且别人对这个应该也无所谓的。能够预览，下载就好。
+
+
+   肯定是根据不同的哪个来分的。
+   模板都找到了，但是太大了，而且太多了，下载肯定是搞到网盘，
+   但是预览了？搞到github？预览也需要将项目解压出来啊。
+
+
+** 百度上传并设置私密共享链接和提取码
+   https://pan.baidu.com/share/set?channel=chunlei&clienttype=0&web=1&channel=chunlei&web=1&app_id=250528&bdstoken=40d75e628e6e84122ac5387050441bf3&logid=MTU0MTY2MTAwNTY4MzAuODE4Nzk4MDY1MzU3MDQwNg==&clienttype=0
+
+   schannel: 4
+   channel_list: []
+   period: 0
+   pwd: 6yfa
+   fid_list: [1029936042701046]
+
+   知道怎么搞了，可以通过浏览器的拦截请求，看到参数和和结果，
+   最主要是拿到fid，也就是文件id，
+
+   然后模拟另外一个请求，将所有文件一次性的分享，可以设置同一个密码。
+
+   还有个问题，如何批量上传？？
+   利用python工具，bypy来批量上传。
+
+   OK，如何压缩，批量上传，获取文件id，id
+
+   还有问题：
+   1. 在线解压缩
+
+   不对，应该是先搞出网站来。
+   用静态的jekyll，还是什么？
+
+   用最快的速度搞出来才是王道。

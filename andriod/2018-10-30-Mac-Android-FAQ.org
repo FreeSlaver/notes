@@ -1,0 +1,15 @@
+* Mac 安卓 FAQ
+** 安装
+   强烈建议按照此文安装
+** mac idea android Unable to locate adb
+   使用命令行的sdkmanager 安装就好
+   sdkmanager --install platform-tool
+** 安卓模拟器安装哪个好
+** 找不到google support
+/usr/local/Caskroom/android-sdk/4333796
+
+Go to the android/ directory of your react-native project
+Create a file called local.properties with this line:
+
+sdk.dir = /Users/USERNAME/Library/Android/sdk
+Where USERNAME is your OSX username
