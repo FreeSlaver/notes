@@ -1,11 +1,4 @@
 * Hunting a Job
-** Goals
-*** Vision Picuture
-
-*** Job Constraints
-- above 400K/Y and five insurance and one fund normal percentage
-- position: architecture,at least senior above
-- no over work
 ** 规划
    将找工作整体作为一个项目进行规划：
    1.首先过滤出符合要求的招聘岗位
@@ -36,29 +29,6 @@
    What positions you are interviewing for
    Which companies you are interviewing with
    Luck
-** Some Jobs
-   这个鸟外企可以看看，试试
-   https://www.lagou.com/jobs/3920299.html
-   商汤科技的
-   https://www.lagou.com/jobs/3438719.html
-
-   VIVO
-   中间件架构师**
-   https://www.lagou.com/jobs/3682604.html
-   互联网java软件工程师
-   https://www.lagou.com/jobs/3916809.html
-   招商证券
-   JAVA开发工程师
-   https://www.lagou.com/jobs/3270127.html
-   广发证券
-   https://www.lagou.com/jobs/3316232.html
-
-   搞quant的
-   https://www.lagou.com/jobs/3771111.html
-   https://www.lagou.com/jobs/3818372.html
-   蚂蚁金服
-   https://www.lagou.com/jobs/3905266.html
-
 ** review plan
 *** design-pattern
     102 patterns in 10days?i can't plan,because i don't do it before. so i need practice one tomorrow.
@@ -102,3 +72,45 @@
 **** redis cluster 1D
      https://redis.io/topics/cluster-tutorial
      https://redis.io/topics/cluster-spec
+** 2019年1月
+   去github上或者其他地方找内推
+*** 内推微信群
+    深圳的有
+    众安 丁盛
+    今日头条 王鹏举
+    小米 小豆丁
+    大疆 刘明明
+    shoppe 刘详裕
+    顺丰 changle0331@163.com
+    微众银行 alexcai@webank.com
+    YAI-后台开发高级工程师(web系统架构师)
+    ZZT-后台开发工程师
+
+** 面试复习
+*** 陆金所的
+
+1、 精通Java Core/数据结构及算法/J2EE/Struts 2/WebWork 2
+    /JSP/Servlet/Java TCP/IP Socket/Ajax/JavaScript/Xml等WEB系统开发技术；
+2、 精通SQLSERVER/MYSQL等数据库，熟练编写存储过程；
+3、 精通在Linux系统下的应用环境部署及性能优化；
+4、 熟悉jvm重点考虑
+5、 具备较强的面向对象系统分析、系统设计经验；精通面向对象分析设计，熟悉设计模式
+积极主动，能承受高度工作压力，具有良好的信息收集能力、归纳思维能力、团队协作意识强。
+
+
+群体性的行为比大盘指数更有效，昨天所有次新都熄火，今天早盘芭田股份开板到跌停，
+主力对于时机的把握是非常准确的，还好昨天出了爱朋股份，所有那些小技巧在大势面前都不值一提，
+阳光电源错过了十几个点，错过就错过，大盘不好，不参与这是原则性的问题。
+但是东方通信了？所以也要看看情况的，大盘块触底时，搞，比较安全，大盘经过一轮上涨之后，
+开始要跌了，这时最危险。
+
+力量主要通过反对者进行表达，一根阳线和一根阴线都说明不了什么问题，
+问题是阳线以后的阴线和阴线以后的阳线
+
+
+让我进场的是理由，让我出场的还是理由；
+市场是没有方向的，没必要去猜它的方向，猜方向就会养成先入为主的思想，跟着会养成了死扛的思想，你只要学会在支撑阻力位上开平仓就行了。
+** 再次找工作，苦，一切为了交易
+*** 计划安排
+    先将简历完善，关键是离职的那段时间如何写？或者直接写个商城项目，然后github上面找一个复习一下。
+***

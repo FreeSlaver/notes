@@ -1,0 +1,8 @@
+* Docker总结
+  容器，快速部署，安全性，易分享
+  Docker containers wrap up software and its dependencies into a standardized unit for software development that includes everything it
+  其实就是个容器，将应用需要的所有东西都打包好，而且能够快速在多台机器之间分发，不用担心机器间配置环境的不同造成的各种莫名其妙的bug，
+  也不用运维在每台机器上进行配置，应用，依赖包的版本冲突什么的也不用担心了，其实本质就是就运维的工作模块化了，复用化了。
+
+  带环境安装，
+  方案：虚拟机，Docker 把应用程序及其依赖，打包在 image 文件里面。
