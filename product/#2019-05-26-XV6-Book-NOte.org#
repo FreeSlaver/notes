@@ -1,0 +1,7 @@
+* XV6读书笔记
+  The job of an operating system is to share a computer among multiple programs。
+  
+  on the one hand,we would like the interface to be simple and narrow because that
+  makes it easier to get the implementation right.
+
+  
