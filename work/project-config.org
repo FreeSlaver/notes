@@ -1,0 +1,42 @@
+* 项目配置
+** nacos
+ 192.168.4.87:8848
+  192.168.4.87:8848
+** mysql数据库相关配置
+测试环境
+192.168.5.110:3306  root/sole@123456
+用的saas库，saas是基础库，对应的代码分支是dev-1.1.0，saas_other对应的尿素版本dev-special,saas_sccp对应的供应链，删了很多表
+
+** 端口规划：
+操，这么多微服务
+auth 8080 手动改8081了
+这个因为使用的不是start-web而是使用的jboss的undertow,这个玩意不能读取yml文件，
+但是能读取properties，或者直接代码中写，在Application启动类中加入
+System.getProperties().put( "server.port", 8181 );
+来修改端口
+user 8084
+organization 8081
+product 8082
+shop 8083
+sso 8090
+relationship 8091
+product 8092
+system 8093
+order 8094
+file 9090
+
+ registry, sole-k8s-out user-service 192.168.5.238:8080 register finished
+** 商城项目后台地址
+  商家端是192.168.5.180:31000。
+  管理端是192.168.5.180:31001.
+  商城端：192.168.5.180:31002（商城端暂无部署）
+** 常见项目启动问题
+    "dynamic.classpath": "true",
+    禁止转义：![CDATA[
+
+
+    o.s.b.w.embedded.undertow.UndertowServletWebServer - Undertow started on port(s) 8080 (http) with context path ''
+
+    A component required a bean of type 'com.sole.saas.common.apis.SystemClient' that could not be found.
+** Lamda表达式
+    还是他妈的看源码是最快的，学起来最快，然后自己参照源码写2段代码，运行，跑一下看看问题。

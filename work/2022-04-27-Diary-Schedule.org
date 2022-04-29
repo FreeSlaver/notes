@@ -1,0 +1,70 @@
+* 2022-04-27 每日任务
+** 弄清楚SSO登录逻辑
+** 弄清楚查询商家，订单的逻辑
+
+那个nacos连接本地还是出错啊，
+
+** 重点
+一个auth服务，一个sso登录服务，这两弄清楚
+还有一个system服务，xxjob服务，
+sentinel怎么实现的，
+
+还是要将auth和sso弄清楚，
+
+** 供应链金融
+B2B平台天然具有企业的交易数据、物流信息和资金数据等，更容易对供应链上下游企业进行增信。
+这个模式的典型代表如上海钢联、找钢网、慧聪网、敦煌网等。
+
+做生意最关键的是：稳赚不赔，这个供应链金融，胖猫理财有意思，债权转移给买理财的屁民了。
+胖猫就赚利息，仓储费，物流费等，
+
+** file-service 动态配置
+  能指定文件上传的云服务，或者动态的选择上传的云服务？动态配置。。
+  动态配置几个问题：
+  1.是将所有的参数都配置到db中么？或者能用nacos后台修改？
+  2.这几个实例是全部生成，然后根据db中配置的type来动态选一个实例么？
+  3.实例的参数能动态修改么？？
+  4.前端上传文件能通过参数控制选择哪个实例么？
+  5.lazy 惰性加载？
+*** 现在做第一步最简单的
+  将配置改到数据库中，弄清楚spring的application.yml怎么映射到对象的，
+  file:config:FastDFS，对的有个prefix是file的，StorageConfig这个对象，对的，
+  直接注入到这个对象中，
+
+  FastDFS 系统有三个角色：跟踪服务器(Tracker Server)、存储服务器(Storage Server)和客户端(Client)。
+
+　　Tracker Server：跟踪服务器，主要做调度工作，起到均衡的作用；负责管理所有的 storage server和 group，每个 storage 在启动后会连接 Tracker，告知自己所属 group 等信息，并保持周期性心跳。
+** 20220428 今日任务
+  弄清楚哪个Spring相关的一些注解，看懂哪个MessageService，然后做FileService的动态配置。
+  培训
+  你要思考下，为撒公司要花这么多时间做员工培训，培训的内容为撒这样设计，所有的事件背后都是有原因的，因果律。
+
+  看下MessageService中怎么实现的，照葫芦画瓢。
+  MessageManager中有实现，
+  SmsConfig config = smsConfigMapper.findSmsConfigByEnable();
+        Class clazz = Class.forName(config.getType());
+        log.info(config.getType());
+        SmsMessageClient smsMessageClient = (SmsMessageClient) clazz.newInstance();
+        return smsMessageClient.config(config,smsContentMapper);
+        这代码写的不敢恭维啊。
+
+        这重试直接写这里，要是服务挂了，咋弄？重试不了。
+
+   大概都清楚了，现在想想怎么弄：
+   对，这个StorageConfig是根据那个配置文件自动装配的，项目启动的时候就自动装配的，
+   哦，看看这个类和那个yml文件是对应的，
+
+   那个核心的实现在StorageConfigManager中，有注入那个StorageConfig，而这个注入的其实已经生成好了
+   create table file_storage_config
+
+   表建立了，现在要做的是在里面替换掉，(
+   把mapper包放到resources目录下， 并且application.yml做如下修改：
+   mybatis-plus:
+  mapper-locations:
+    classpath:/mapper/**Mapper.xml
+    这个方法是可以的，明天要弄清楚的就是springboot 怎么配置mybatis，
+
+    嗯，看了message-service，那个build目录下的resources下的mappers里面也是有编译的mapper.xml文件的。
+** 20220429 今日任务
+   1.搞清楚那个mybatis mapper的配置相关
+   2.将file-service的动态配置功能完成

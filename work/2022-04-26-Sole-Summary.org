@@ -1,0 +1,142 @@
+* Service总体
+现在要做的是弄清楚每个service是做什么的，然后每个service里面的每个controller有哪些功能，
+请求的url中，第一个斜杠后对应的是service，第二个斜杠对应的是controller，第三个对应的是controller中的方法。
+然后对应的数据库db在项目resource目录下的generator目录中的generator.properties中，
+然后你能看具体的表是干什么的，有哪些字段，看表就清楚了。
+mappers xml文件在mappers目录下和controller同级的
+
+** file-service 阿里华为腾讯云等的上传下载删除文件服务
+** sso-service 单点登录服务
+** user-service 用户服务
+LoginController 用户登录
+MenuController 用户对应的菜单
+HomePageController 用户首页
+AdminController 后台管理员
+organization-service  组织服务
+** api-gateway
+** ad-service  广告服务
+BannerController  banner信息相关
+BottomModuleController  底部信息相关
+BottomModuleLinkController 底部模块链接
+BrandFloorController 品牌地板？
+HomeRecommendedController  首页推荐分类
+FloorController
+MallMenuController 首页菜单
+NewsController  新闻
+OfficeBrandController 办公室品牌
+
+
+** pay-service 空
+** goods-service 撒也没有
+** product-service 商品服务
+AgreementController  协议controller
+SkuController  商品sku
+SpuController  商品spu
+UnitController
+BrandAuthorizationController
+BrandController  商品品牌
+ProductCategroyController 商品分类
+CompanyBrandController  公司品牌
+
+
+** delivery-service  运货单服务
+DeliveryController  运货单凭证
+DeliveryInfoController  物流信息表
+DeliveryNewController  添加物流信息
+DeliveryNoteController  送货单  好像是批量导出送货单信息的
+MobileController
+CompanyAddressController  公司地址
+DeliDeliveryTemplateController  空
+DeliDeliveryTemplateDictController 空
+DeliveryCompanyController  快递公司及编码表
+
+
+** finance-service  财务服务
+CompanyInvoiceController 发票信息
+ReceivablesAuditRecordController  付款单审核记录
+ReceivablesController  付款单信息
+ReceivablesInvoiceController  付款单发票信息
+ReceivablesPaymentInfoController  付款单付款信息
+SettlementAuditRecordController  结算单审核记录
+SettlementController  结算单
+SettlementInvoiceController  结算单对象发票信息 空
+SettlementOrderController  结算订单绑定
+SettlementPackageController  结算包裹绑定 空
+SettlementPackageDetailController  结算包裹详情绑定 空
+** shop-service 商铺服务
+ShopController  商铺  shop_shop
+ShopCustomerController  商铺客服
+ShopRecordController  shop_shop_record
+
+** comparison-service  询价比价服务
+InquiryController 询价单
+InquiryQuotationController  供应商报价信息
+InquiryQuotationDetailController  供应商报价详情信息
+
+**contract-service  合同服务
+ContractTemplateController 合同模板  cont_order_contract
+OrderContractController 订单合同
+
+** relationship-service  关系服务  采购商供应商定向关系
+AuditRecordController  定向关系审核记录
+CoopController   合作关系信息
+CoopPerfController  合作提交的线下业绩
+CoopQualController  合作提交的行业资质/授权文件 信息 前端控制器
+
+** mall-service  商城外部对接模块
+AdController 商城广告
+FinanceController  财务
+FloorController
+ProductController
+ShopController
+ShoppingCartController  商城购物车
+UserController 用户
+
+** storage-service 仓库仓储服务  空
+tender-service  招投标服务
+BidMallController
+** reporter-service 报表服务
+** activitit-service 空
+
+
+现在要搞清楚的一个是，比如尿素商城每个功能是怎么实现的，后台服务之间是怎么组合的，调用的。
+
+
+
+** 运营管理后台项目
+登录模块
+调用了sso登录  http://gateway.chinajicai.com/sso/login/saas?login=MhCGCiIoTsVq+TQGLv4f5keX4s7K0ysA757vqNPdgL2sZTQlSbSBU1QAImF7JIjm0Kvmy4vr940qxn5mywOab7iNVwzzHnwq/8RhlmkAd/NwAKePQ0LTWG/HCOXaHI4ilh01uhjaHUoPguKhBLYeijL4UKHzi4LJD84G+f8jE60=&redirect=
+查询用户信息  http://gateway.chinajicai.com/user/user/queryUserData
+查询用户主页 http://gateway.chinajicai.com/user/homePage/list
+查询推荐给用户的广告  http://gateway.chinajicai.com/ad/news/newsList?pageIndex=1&pageSize=10&type=2
+
+商家模块
+商家列表  http://gateway.chinajicai.com/org/companyInfo/findCompanyManagementList
+待审商家  http://gateway.chinajicai.com/org/companyInfoRecords/findCompanyPendingList
+潜在商家  http://gateway.chinajicai.com/org/companyInfo/getUnRegisterCompanyInfo?pageIndex=1&pageSize=10&companyName=&createTime=
+
+物料管理模块
+商铺管理
+*** 复杂逻辑
+SSO登录
+主要是哪个AuthClient调用的token方法找不到
+sso系统中是否存在该用户，然后又去userservice中对应的user系统中判断是否存在用户，最后去admin表里面判断是否存在管理员用户。
+这个地方那注册的时候不是要2个系统要数据同步，做事务？
+而且用户可能是同时能登录多个系统的，即是供应商又是采购商还是管理员？让用户选。
+得到用户之后再用authClient生成token，然后放到redis中，这个jb设置cookie又是撒意思啊操。
+
+
+http://auth-service/oauth/token?client_id=admin&client_secret=D0DCBF0D12A6B1E7FBFA2CE5848F3EFF&grant_type=password
+商家查询，为撒需要查询那么多东西？
+** 核心概念
+*** 采购
+采购，既是一个商流过程，也是一个物流过程
+在这个过程中，一是要实现将资源的物质实体从供应商手中转移到用户手中。
+前者是一个商流过程，主要通过商品交易、等价交换来实现商品所有权的转移。
+后者是一个物流过程，主要通过运输、储存、包装、装卸、流通加工等手段来实现商品空间位置和时间位置的完整结合，缺一不可。
+**** 采购流程
+收集信息，询价，比价、议价，评估，索样，决定，请购，订购，协调与沟通，催交，进货检收，整理付款。
+合同、协议管理：是采购定价结果的体现，也是采购实施的依据，包括采购品的价格信息、交货条件、付款方式等主要信息。可以手工录入合同，也可以根据采购定价项目的中标结果直接生成合同。
+供应商管理及评估：供应商通过网上注册，申请成为供应商企业，经过对供应商注册信息校对、验证通过，供应商真正注册成为采购网供应商；
+采购商可对供应商进行认证，使其成为自己的潜在供应商；拥有供货资质的供应商称为正式供应商；采购商可对正式供应商进行评估，选出合格供应商。
+*** 供应商

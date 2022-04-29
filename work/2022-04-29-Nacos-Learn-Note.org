@@ -1,0 +1,41 @@
+* Nacos 笔记
+** 带着问题去学习
+
+
+** 五一的任务就是搞定nacos，gradle，spring cloud这一套。
+
+大概的意思好像是这样的，在nacos中配置了common-redis.yml
+
+哦，搞懂了，比如user-service中的bootstrap.yml中指定了依赖的config有
+common-redis.yml，这样就能在系统变量中，SystemProperties中拿到所有redis相关的配置，
+然后通过spring的redis templage来注入这些属性，
+
+那是怎么注入的了？如果修改common-redis.yml中的字段会出问题吗？
+
+果然order-service中的RedisUtil就是用的common-service中的，
+那user中不会有2个RedisUtils？的确也有，但是为撒navigate只查出来一个？
+
+现在要弄清楚的是怎么注入进去的？
+在common-service中SqlAutoUpdateConfiguration中配置的，nacos中配置的common-datasource.yml
+对应到这个类中的DruidDataSource，
+想想怎么把项目打包拿回家看，项目直接压缩包，还需要些什么？nacos的配置，mysql的配置，redis的配置？
+
+InitializeDataConfiguration
+
+
+在哪个common-service中有哪个InitializeDataConfiguration，会根据哪个服务名称去db中查询出服务对应的字典表
+比如system-service通过feign调用，Response<String> commonDict = systemClient.findCommonDict();
+
+最终在service中调用的是DictServiceImpl中的这个方法：
+public String findCommonDict() {
+        List<Dict> roots = list();//这里半天没看懂窝草，list是直接查表的，
+        DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements DictService
+        就直接查询的Dict的表
+        List<Dict> list = roots.stream().filter(e -> e.getParentId() == 0).collect(Collectors.toList());
+        List<Dict> childrenList = roots.stream().filter(e -> e.getParentId() != 0).collect(Collectors.toList());
+        Map<Integer, List<Dict>> collect = childrenList.stream().collect(Collectors.groupingBy(Dict::getParentId));
+        Map<String, List<KV>> map = new HashMap<>();
+        //添加根据typeName分类的数据
+        list.forEach(e -> map.put(e.getTypeName(), convertList(collect.get(e.getId()))));
+        return JSON.toJSONString(map);
+    }
