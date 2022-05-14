@@ -2,6 +2,7 @@
 ** 带着问题去学习
 
 
+
 ** 五一的任务就是搞定nacos，gradle，spring cloud这一套。
 
 大概的意思好像是这样的，在nacos中配置了common-redis.yml
@@ -36,6 +37,34 @@ public String findCommonDict() {
         Map<Integer, List<Dict>> collect = childrenList.stream().collect(Collectors.groupingBy(Dict::getParentId));
         Map<String, List<KV>> map = new HashMap<>();
         //添加根据typeName分类的数据
-        list.forEach(e -> map.put(e.getTypeName(), convertList(collect.get(e.getId()))));
-        return JSON.toJSONString(map);
-    }
+        list.forEach(e -> map.put(e.getTypeName(),
+
+** nacos
+大概是这么个意思，默认就是使用内部的derby数据库，然后要使用mysql的话，把前面的注释去掉，执行下config中的sql语句。
+spring.datasource.platform=mysql
+db.num=1
+db.url.0=jdbc:mysql://127.0.0.1:3306/nacos_config?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=Hongkong
+db.user=root
+db.password =123456
+
+执行下面的nacos-mysql.sql和schema.sql。
+
+** nacos常见问题
+  nacos-client升级了，但是spring-cloud-alibaba中的没升级，需要依赖中exclude出去，然后另外添加。
+  客户端 CPU 高，或者内存耗尽的问题
+  其中一种情况是 Nacos 客户端实例在 Spring Cloud Alibaba 服务框架中被反复构造了多次，可以参考 Issue
+  日志打印频繁的问题
+  access 日志大量打印，相关 Issue 点击这里。
+
+主要表现是 {nacos.home}/logs/access_log.2019-xx-xx.log 类似格式文件名的日志大量打印，而且还不能自动清理和滚动。
+这个日志是 Spring Boot 提供的 Tomcat 访问日志打印，Spring Boot 在关于该日志的选项中，没有最大保留天数或者日志大小控制的选项。因此这个日志的清理必须由应用新建 Crontab 任务来完成，或者通过以下命令关闭日志的输出（在生产环境我们还是建议开启该日志，以便能够有第一现场的访问记录）：
+server.tomcat.accesslog.enabled=false
+
+服务端业务日志大量打印且无法动态调整日志级别。这个问题在 1.1.3 已经得到优化，可以通过 API 的方式来进行日志级别的调整，调整日志级别的方式如下：
+
+# 调整naming模块的naming-raft.log的级别为error:
+curl -X PUT '$nacos_server:8848/nacos/v1/ns/operator/log?logName=naming-raft&logLevel=error'
+# 调整config模块的config-dump.log的级别为warn:
+curl -X PUT '$nacos_server:8848/nacos/v1/cs/ops/log?logName=config-dump&logLevel=warn'
+
+nacos client 1.4.1不可用

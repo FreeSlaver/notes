@@ -1,0 +1,21 @@
+* Spring Cloud Gateway详解
+ Spring WebFlux
+ provide cross cutting concerns to them such as: security, monitoring/metrics, and resiliency.
+ routes
+ Predicates，Filters
+ Circuit Breaker
+
+** Route
+ defined by an ID, a destination URI, a collection of predicates, and a collection of filters.
+
+** Predicate
+ Spring Framework ServerWebExchange. This lets you match on anything from the HTTP request, such as headers or parameters.
+ 2种方法配置predicates，filters，shortcuts and fully expanded arguments.
+
+** Filter
+GatewayFilter
+
+** 笔记
+网关：统一访问入口，进行路由转发，熔断限流，认证，日志，监控，
+1.x使用的Zuul网关，2.x使用的Gateway
+gateway给予webflux，
