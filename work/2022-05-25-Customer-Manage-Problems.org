@@ -1,0 +1,30 @@
+* 客户管理的一些问题
+** auditStatus
+basic表是没有auditStatus，即使有，也会出问题，要通过business得到auditStatus
+business分一下几种情况：
+1.business不存在，只添加了basic信息，这时auditStatus=0，customerContact状态也是0
+2.business存在，一条，草稿状态，编辑完善资料后保存，auditStatus=2
+3.business存在，一条，审核状态，编辑完善资料后提交审核 auditStatus=1，basicRecord记录一条
+4.business存在，一条，审核通过，auditStatus=0，不太对，审核通过不是删掉么？不对business不能删，basicRecord要删
+5.business存在，二条，审核通过正常的和待审核的，因为提交过审核，再次编辑后只能提交审核，auditStatus=0或1
+6.business存在，一条，再次审核通过，删除老的business即auditStatus=0的，再将新的auditStatus改成0
+
+
+** 连表查询
+*** groupPage
+因为busines有2条记录，contact有n条记录，这时候连表查询，即使知道auditStatus，contact也可能有多条，
+所以连表查询，最多只查basic和business联合的，
+
+*** opensea
+客户公海，这个连表肯定有问题，那个business如果有多条就有问题
+** 20220527
+spu下sku重复
+
+** 20220528
+把物料模板库，标准物料池这些做完，好多jb细节的东西没做，等他调试了边条边做吧
+好几把麻烦啊，先把物料模板添加给做了，然后查询详情，
+先想一下想清楚，在写吧，
+保存的categoryName在添加的时候要加入进来。，
+
+提交审核重新加个接口，完成，草稿，
+操，这个供应商的还没
