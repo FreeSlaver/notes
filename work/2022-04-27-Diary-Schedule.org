@@ -454,3 +454,23 @@ AbstractAutowireCapableNBeanFactory类
 
 ** 20220613
 还是学习Spring，CGLIB，
+
+The JSR-250 @PostConstruct and @PreDestroy annotations are generally considered best practice for receiving lifecycle callbacks in a modern Spring application. Using these annotations means that your beans are not coupled to Spring-specific interfaces.
+
+** 20220614
+1. 简历写了
+2。投简历
+
+项目名称：数智化供应链平台，
+项目描述：主要做工业产品的采购，供应链系统，采购商来平台发布产品，创建采购订单等，
+然后系统将采购需求单推送给符合的有资质的供应商，撮合交易。
+项目主要包括的功能模块有：客户管理，供应商管理，销售管理，采购管理，物料管理，
+合同管理，物流管理，财务协同等模块。
+
+负责数智化供应链平台的架构设计，微服务模块划分，框架搭建，技术选型，公共模块开发等
+
+还是要把简历，项目都弄清楚啊，
+
+今天下午就吧1.简历写好，项目的业务搞清楚；2.复习
+简单来说就是有供应商和采购商，来我们这个平台发布商品，物料，然后我们通过撮合交易，
+开店等收取中介费用，提供各种订单，物料管理来收费。
