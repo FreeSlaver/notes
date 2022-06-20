@@ -1,0 +1,127 @@
+* Spring Core笔记
+
+The JSR-250 @PostConstruct and @PreDestroy annotations are generally considered best practice for receiving lifecycle callbacks in a modern Spring application. Using these annotations means that your beans are not coupled to Spring-specific interfaces.
+
+BeanPostProcessor implementations to process any callback interfaces it can find and call the appropriate methods
+
+
+
+ Spring-managed objects may also implement the Lifecycle interface so that those objects can participate in the startup and shutdown process, as driven by the container’s own lifecycle.
+
+ InitializingBean interface lets a bean perform initialization work after the container has set all necessary properties on the bean
+
+void afterPropertiesSet() throws Exception;
+
+We recommend that you do not use the InitializingBean interface, because it unnecessarily couples the code to Spring. Alternatively, we suggest using the @PostConstruct annotation or specifying a POJO initialization method.
+
+As of Spring 2.5, you have three options for controlling bean lifecycle behavior:
+
+The InitializingBean and DisposableBean callback interfaces
+
+Custom init() and destroy() methods
+
+The @PostConstruct and @PreDestroy annotations. You can combine these mechanisms to control a given bean.
+
+Destroy methods are called in the same order:
+
+Methods annotated with @PreDestroy
+
+destroy() as defined by the DisposableBean callback interface
+
+A custom configured destroy() method
+
+ for more than one of these lifecycle mechanisms, that method is run once,
+
+implement the Lifecycle interface. Then, when the ApplicationContext itself receives start and stop signals
+it cascades those calls to all Lifecycle implementations defined within that context. It does this by delegating to a LifecycleProcessor,
+
+
+public interface Phased {
+
+    int getPhase();
+}
+When starting, the objects with the lowest phase start first.
+ When stopping, the reverse order is followed.
+
+That enables asynchronous shutdown where necessary,
+
+The 'refresh' callback, on the other hand, enables another feature of SmartLifecycle beans. When the context is refreshed (after all objects have been instantiated and initialized), that callback is invoked.
+ At that point, the default lifecycle processor checks the boolean value returned by each SmartLifecycle object’s isAutoStartup() method. If true, that object is started at that point rather than waiting for an explicit invocation of the context’s or its own start()
+
+
+ public interface ApplicationContextAware {
+
+    void setApplicationContext(ApplicationContext applicationContext) throws BeansException;
+}
+bean可以操纵ApplicatonContext，但是不建议，1.bean和Spring耦合了；2.违反了IOC约定。
+
+ApplicationContext provide access to file resources, publishing application events, and accessing a MessageSource
+BeanNameAware这个接口就是让自身知道自己这个bean被引用的名称？
+setBeanName这个方法或者说所有的Aware接口都在
+The callback is invoked after population of normal bean properties but before an initialization callback such as InitializingBean.afterPropertiesSet() or a custom init-method.
+填充属性之后，实例化之前调用，
+Aware接口就是反向注入依赖的实例，
+
+A bean definition can contain a lot of configuration information, including constructor arguments, property values, and container-specific information,
+such as the initialization method, a static factory method name, and so on. A child bean definition inherits configuration data from a parent definition.
+
+To change the actual bean definition (that is, the blueprint that defines the bean), you instead need to use a BeanFactoryPostProcessor,
+ the post-processor gets a callback from the container both before container initialization methods (such as InitializingBean.afterPropertiesSet() or any declared init method) are called,
+ and after any bean initialization callbacks. The post-processor can take any action with the bean instance, including ignoring the callback completely.
+ A bean post-processor typically checks for callback interfaces, or it may wrap a bean with a proxy. Some Spring AOP infrastructure classes are implemented as bean post-processors in order to provide proxy-wrapping logic.
+
+
+ BeanFactoryPostProcessor operates on the bean configuration metadata. That is, the Spring IoC container lets a BeanFactoryPostProcessor read the configuration metadata and potentially change it before the container instantiates any beans other than BeanFactoryPostProcessor instances.
+
+  in order to apply changes to the configuration metadata that define the container. Spring includes a number of predefined bean factory post-processors, such as PropertyOverrideConfigurer and PropertySourcesPlaceholderConfigurer
+
+
+  So, for a given FactoryBean with an id of myBean, invoking getBean("myBean") on the container returns the product of the FactoryBean, whereas invoking getBean("&myBean") returns the FactoryBean instance itself.
+
+** 5. AOP
+The key unit of modularity in OOP is the class, whereas in AOP the unit of modularity is the aspect.
+Aspects enable the modularization of concerns (such as transaction management) that cut across multiple types and objects. (Such concerns are often termed “crosscutting” concerns in AOP literature.)
+
+AOP complements Spring IoC to provide a very capable middleware solution.
+AOP is used in the Spring Framework to:
+
+Provide declarative enterprise services. The most important such service is declarative transaction management.
+
+Let users implement custom aspects, complementing their use of OOP with AOP.
+*** AOP核心概念
+Aspect: A modularization of a concern that cuts across multiple classes. Transaction management is a good example of a crosscutting concern in enterprise Java applications.
+Join point: A point during the execution of a program, such as the execution of a method or the handling of an exception. In Spring AOP, a join point always represents a method execution.
+织入点：程序执行中的一个点
+Advice: Action taken by an aspect at a particular join point. Different types of advice include “around”, “before” and “after” advice.
+Many AOP frameworks, including Spring, model an advice as an interceptor and maintain a chain of interceptors around the join point.
+
+Pointcut: A predicate that matches join points. Advice is associated with a pointcut expression and runs at any join point matched by the pointcut (for example, the execution of a method with a certain name). The concept of join points as matched by pointcut expressions is central to AOP, and Spring uses the AspectJ pointcut expression language by default.
+
+Introduction: Declaring additional methods or fields on behalf of a type. Spring AOP lets you introduce new interfaces (and a corresponding implementation) to any advised object. For example, you could use an introduction to make a bean implement an IsModified interface, to simplify caching. (An introduction is known as an inter-type declaration in the AspectJ community.)
+
+Target object: An object being advised by one or more aspects. Also referred to as the “advised object”. Since Spring AOP is implemented by using runtime proxies, this object is always a proxied object.
+
+AOP proxy: An object created by the AOP framework in order to implement the aspect contracts (advise method executions and so on). In the Spring Framework, an AOP proxy is a JDK dynamic proxy or a CGLIB proxy.
+
+Weaving: linking aspects with other application types or objects to create an advised object. This can be done at compile time (using the AspectJ compiler, for example), load time, or at runtime. Spring AOP, like other pure Java AOP frameworks, performs weaving at runtime.
+
+*** AOP通知种类
+Spring AOP includes the following types of advice:
+
+Before advice: Advice that runs before a join point but that does not have the ability to prevent execution flow proceeding to the join point (unless it throws an exception).
+
+After returning advice: Advice to be run after a join point completes normally (for example, if a method returns without throwing an exception).
+
+After throwing advice: Advice to be run if a method exits by throwing an exception.
+
+After (finally) advice: Advice to be run regardless of the means by which a join point exits (normal or exceptional return).
+
+Around advice: Advice that surrounds a join point such as a method invocation. This is the most powerful kind of advice. Around advice can perform custom behavior before and after the method invocation. It is also responsible for choosing whether to proceed to the join point or to shortcut the advised method execution by returning its own return value or throwing an exception.
+
+The concept of join points matched by pointcuts is the key to AOP, which distinguishes it from older technologies offering only interception. Pointcuts enable advice to be targeted independently of the object-oriented hierarchy
+*** Spring AOP的能力和目标
+
+One of the central tenets of the Spring Framework is that of non-invasiveness
+没有侵入性，
+
+*** 5.4定义一个切面
