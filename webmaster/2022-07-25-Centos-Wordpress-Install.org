@@ -1,0 +1,84 @@
+* Centos 7 Wordpress安装
+  还要搞个模板收藏，还有Java脚手架等，
+
+  整个流程环节太多了，但是肯定还是有人能赚钱，在做这个东西，
+  所以在整个的环节中最关键的一个环节是什么？？？
+  1.流量，seo？2.变现？？？3.网站方向？
+  思路是：你可以掌握这整个环节中的最关键的一环，然后其他的找人来做
+  关键是你找其他人来做，这个就是投入的成本，在一分钱都没入账之前你就投入出去的成本，
+  所以说这个的风险就很大了，出了投入的资金，请的人，你自己的时间也是成本，机会成本。
+
+  就做这么简单的个东西，卧槽，要搞这么多新的环节，东西。
+  1.用工具导出公众号所有文章；
+  2.购买vps（妈的这步就花了好久时间，全jb是玩坏的vps）
+  3.购买域名，配置，较快
+  4.安装lamp环境，安装wordpress，配置wordepress，还行
+  5.域名，ip绑定，提交域名
+  6.
+
+
+** wordpress建站
+   nameino
+   sitegroud
+   liquidweb
+
+** 安装LAMP环境
+*** 清理环境
+    cat /etc/redhat-release
+    yum clean all
+    yum update
+*** 安装Apache
+    yum -y install httpd
+    firewall-cmd --permanent --add-service=http -add-service=https
+    firewall-cmd --reload
+    systemctl start httpd
+    systemctl enable httpd
+
+*** 安装MySQL/MariaDB
+    yum -y install mariadb-server
+    systemctl start mariadb
+    systemctl enable mariadb
+*** 安装php
+    yum -y install centos-release-scl.noarch
+    yum -y install rh-php72
+    ln -s /opt/rh/rh-php72/root/usr/bin/php /usr/bin/php
+    yum -y install rh-php72-php-mysqlnd
+    systemctl restart httpd
+
+** 建表
+   CREATE USER adminuser@localhost IDENTIFIED BY 'password';
+   GRANT ALL PRIVILEGES ON wordpress.* TO adminuser@localhost IDENTIFIED BY 'password';
+** 安装wordpress
+   wget http://wordpress.org/latest.tar.gz
+   tar -xzvf latest.tar.gz
+   sudo rsync -avP ~/wordpress/ /var/www/html/
+   mkdir /var/www/html/wp-content/uploads
+   sudo chown -R apache:apache /var/www/html/*
+*** 配置wordpress
+    cd /var/www/html
+    cp wp-config-sample.php wp-config.php
+    vim  wp-config.php
+** 故障问题
+   php not running
+
+
+   Every time I have this problem, it is because I did something like:
+
+# yum install httpd php-mysql
+# yum install php-fpm
+# systemctl start httpd
+Finally I remember that this is not a dependency and get it working:
+
+# yum install php
+# apachectl -M | grep -i php
+ php5_module (shared)
+
+# systemctl enable httpd
+# systemctl restart httpd
+
+   我当时怎么想的？就是必须要搞一个小程序端，而wordpres能直接转小程序。
+
+** 参考
+   https://www.liquidweb.com/kb/install-lamp-stack-centos-7/
+   https://serverfault.com/questions/738441/php-not-working-with-apache-on-centos-7
+   https://techglimpse.com/install-update-php-centos7/
